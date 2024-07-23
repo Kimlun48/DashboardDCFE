@@ -14,10 +14,10 @@ function ChartStorage() {
     const fetchData = async () => {
         try {
             const responses = await Promise.all([
-                Api.get('api/v2statisticcashpicking'),
-                Api.get('api/v2statisticdeliverypicking'),
                 Api.get('api/v2statisticputaway'),
-                Api.get('api/v2statisticreplenishment')
+                Api.get('api/v2statisticreplenishment'),
+                Api.get('api/v2statisticdeliverypicking'),
+                Api.get('api/v2statisticcashpicking'),
             ]);
 
             const data = responses.map(response => response.data.data);
@@ -32,7 +32,9 @@ function ChartStorage() {
             );
             setHasLateData(lateData);
 
-            if (lateData) {
+            const cashPickingCondition = data[3].total > 0;
+
+            if (lateData || cashPickingCondition) {
                 speak("Ada barang yang terlambat di storage mohon untuk segera di proses");
             }
         } catch (error) {
