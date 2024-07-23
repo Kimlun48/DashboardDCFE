@@ -45,9 +45,9 @@ const ChartInboundItrIn = () => {
 
     const handleClick = (entry) => {
         if (entry.name === 'QTY LATE' || entry.name === 'DOC LATE') {
-            navigate('/late-details'); // Adjust navigation path
+            navigate('#'); // Adjust navigation path
         } else if (entry.name === 'QTY ON TIME' || entry.name === 'DOC ON TIME') {
-            navigate('/ontime-details'); // Adjust navigation path
+            navigate('#'); // Adjust navigation path
         }
     };
 

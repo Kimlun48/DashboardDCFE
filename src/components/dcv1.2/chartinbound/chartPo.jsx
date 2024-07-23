@@ -47,9 +47,9 @@ const ChartInboundPo = () => {
 
     const handleClick = (entry) => {
         if (entry.name === 'QTY LATE' || entry.name === 'DOC LATE') {
-            navigate('/putawaystoragelate');
+            navigate('#');
         } else if (entry.name === 'QTY ON TIME' || entry.name === 'DOC ON TIME') {
-            navigate('/putawaystorageunlate');
+            navigate('#');
         }
     };
 

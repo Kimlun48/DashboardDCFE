@@ -182,11 +182,11 @@ const ChartArReserve = () => {
 
     const handleClick = (entry) => {
         if (entry.name === 'DOC LATE') {
-            navigate('/late-details'); // Adjust navigation path
+            navigate('#'); // Adjust navigation path
         } else if (entry.name === 'DOC TODAY') {
-            navigate('/ontime-details'); // Adjust navigation path
+            navigate('#'); // Adjust navigation path
         } else if (entry.name === 'DOC H-1') {
-            navigate('/dday-details'); // Adjust navigation path
+            navigate('#'); // Adjust navigation path
         }
     };
 
