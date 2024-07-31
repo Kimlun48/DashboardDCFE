@@ -54,6 +54,11 @@ body {
   border-radius: 50px;
 } */
 
+.container-login {
+  color: #ffffff !important;
+  
+}
+
 /* Tambahkan ini ke file CSS Anda */
 .list-group-item .dropdown-content {
   max-height: 0;
@@ -257,6 +262,46 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   font-size: 0.875rem;
 }
 
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  margin: 50px auto;
+  width: 40px;
+  height: 40px;
+  position: relative; /* Agar ikon bisa diatur posisinya relatif terhadap spinner */
+}
+
+.spinner-border {
+  width: 100%;
+  height: 100%;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #efeff3;
+  border-radius: 50%;
+  animation: spinner 1s linear infinite;
+}
+
+.spinner .icon {
+  position: absolute; /* Posisi absolut untuk mengatur ikon di tengah */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Menyelaraskan ikon di tengah */
+  width: 20px; /* Ukuran ikon, sesuaikan sesuai kebutuhan */
+  height: 20px; /* Ukuran ikon, sesuaikan sesuai kebutuhan */
+  pointer-events: none; /* Agar ikon tidak terpengaruh oleh animasi */
+}
+
+
+
+
+
 /* Filename: App.css */
 /* dcv1.2 */
 * {
@@ -362,7 +407,30 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 /* Chart.css */
 
+/* ChartGrpoLastMonth.css */
+.custom-label {
+  fill: #135ed5; /* Set the font color here */
+  font-size: 16px; /* Set the font size here */
+  font-family: Arial, sans-serif; /* Optional: Set the font family here */
+  font-weight: bold; /* Optional: Set the font weight here */
+}
+
+
 /* ChartInboundPo.css */
+.chart-title-po {
+  font-size: 16px;
+  text-align:left;
+  margin-bottom: 0px;
+  color: #ffffff; /* Title font color */
+  margin-top: 1px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+.total-value {
+  color: #fbfcfc;
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
 
 .chart-title {
   font-size: 20px;
@@ -383,7 +451,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   position: relative;
   width: 100%;
   height: 350px;
-  background-color: #01062c !important; /* Background color */
+  background-color: #01062c !important;
   padding: 20px;
   border-radius: 10px;
 }
@@ -538,7 +606,7 @@ html, body {
   display: flex;
   justify-content: center;
   /* font-family: 'Manrope' !important; */
-  background-color: #000638; /* Light grey background color */
+  background-color: #000638; 
   margin-bottom: 0px;
   margin-top: 0px !important;
 }
@@ -701,6 +769,21 @@ html, body {
   background-color: #007bff;
   border-color: #007bff;
 }
+
+/* styles.css */
+.data-table-container {
+  width: 100%;
+  max-width: 100%; 
+  /* overflow-x: auto; */
+  height: 350px;
+  
+ 
+}
+
+.data-table {
+  width: 100%; /* Ensures the table takes the full width of its container */
+}
+
 
 .table-responsive {
   max-height: 400px; /* Ubah sesuai kebutuhan Anda */

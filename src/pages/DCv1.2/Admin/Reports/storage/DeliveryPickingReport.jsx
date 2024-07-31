@@ -18,7 +18,7 @@ function DeliveryPickingReport() {
     const [search, setSearch] = useState('');
     const { formatDate } = useFormatDate();
 
-    const time = 2 * 60 * 1000; 
+   // const time = 2 * 60 * 1000; 
 
     const fetchData = async () => {
         try {
@@ -32,17 +32,20 @@ function DeliveryPickingReport() {
 
     useEffect (() => {
         fetchData();
-        const interval = setInterval(() => {
-            fetchData();
-            console.log("ok");
-          }, time);
-          return () => clearInterval(interval);
+        // const interval = setInterval(() => {
+        //     fetchData();
+        //     console.log("ok");
+        //   }, time);
+        //   return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
         const lowercasedSearch = search.toLowerCase();
         const filtered = grpo.filter(item =>
-            item.ITEM_DESC.toLowerCase().includes(lowercasedSearch) 
+            item.ITEM_DESC.toLowerCase().includes(lowercasedSearch) ||
+            item.DOCNUM.toLowerCase().includes(lowercasedSearch)||
+            item.NOWAVE.toLowerCase().includes(lowercasedSearch) ||
+            item.PICKER.toLowerCase().includes(lowercasedSearch)
         );
         setFilteredData(filtered);
     }, [search, grpo]);
@@ -57,17 +60,18 @@ function DeliveryPickingReport() {
     };
 
     const columns = [
-        { name: 'Customer', selector: row => row.CustomerName, sortable: true,width:'150px' },
-        { name: 'No Document', selector: row => row.DocNum, sortable: true, width:'200px' },
-        { name: 'Wave', selector: row => row.NoWave, sortable: true , width:'100px'},
+       // { name: 'Customer', selector: row => row.CUSTOMER_NAME, sortable: true,width:'150px' },
+        { name: 'No Document', selector: row => row.DOCNUM, sortable: true, width:'200px' },
+        { name: 'Wave', selector: row => row.NOWAVE, sortable: true , width:'100px'},
+        { name: 'Picker', selector: row => row.PICKER, sortable: true ,width:'200px'},
         // { name: 'RECEIPT_DATE', selector: row => row.RECEIPT_DATE ? formatDate(row.RECEIPT_DATE) : 'No Data', sortable: true }, 
         { name: 'Item', selector: row => row.ITEM, sortable: true ,width:'200px'},  
         { name: 'Description', selector: row => row.ITEM_DESC, sortable: true ,width:'400px'},
-        { name: 'QTY', selector: row => row.Total_QTY, sortable: true ,width:'100px'}, 
+        { name: 'QTY', selector: row => row.TOTAL_QTY, sortable: true ,width:'100px'}, 
         // { name: 'Available', selector: row => row.Available ? formatDate(row.DATE_TIME_STAMP_PLUS_7H) : 'No Data', sortable: true }, 
        
-        { name: 'Late', selector: row => row.Late, sortable: true ,width:'100px'},
-        { name: 'remark', selector: row => row.Catatan, sortable: true ,width:'600px'},                
+        { name: 'Late', selector: row => row.LATE, sortable: true ,width:'100px'},
+       // { name: 'remark', selector: row => row.REMARKS, sortable: true ,width:'600px'},                
     ];
 
     const customStyles = {

@@ -18,7 +18,7 @@ function PutAwayReport() {
     const [search, setSearch] = useState('');
     const { formatDate } = useFormatDate();
 
-    const time = 2 * 60 * 1000; 
+   // const time = 2 * 60 * 1000; 
 
     const fetchData = async () => {
         try {
@@ -32,17 +32,20 @@ function PutAwayReport() {
 
     useEffect (() => {
         fetchData();
-        const interval = setInterval(() => {
-            fetchData();
-            console.log("ok");
-          }, time);
-          return () => clearInterval(interval);
+        // const interval = setInterval(() => {
+        //     fetchData();
+        //     console.log("ok");
+        //   }, time);
+        //   return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
         const lowercasedSearch = search.toLowerCase();
         const filtered = grpo.filter(item =>
-            item.ITEM_DESC.toLowerCase().includes(lowercasedSearch) 
+          
+            item.ITEM_DESC.toLowerCase().includes(lowercasedSearch) ||
+            item.CONTAINER_ID.toLowerCase().includes(lowercasedSearch)
+            //item.NOWAVE.toLowerCase().includes(lowercasedSearch)
         );
         setFilteredData(filtered);
     }, [search, grpo]);
@@ -62,11 +65,11 @@ function PutAwayReport() {
         { name: 'QTY', selector: row => row.QTY, sortable: true , width:'100px'},
         // { name: 'RECEIPT_DATE', selector: row => row.RECEIPT_DATE ? formatDate(row.RECEIPT_DATE) : 'No Data', sortable: true }, 
         { name: 'OUM', selector: row => row.QUANTITY_UM, sortable: true ,width:'100px'},  
-        { name: 'From Location', selector: row => row.FROM_LOCATION, sortable: true ,width:'100px'},
-        { name: 'To Location', selector: row => row.TO_LOCATION, sortable: true ,width:'100px'}, 
+        { name: 'From Location', selector: row => row.FROM_LOCATION, sortable: true ,width:'200px'},
+        { name: 'To Location', selector: row => row.TO_LOCATION, sortable: true ,width:'200px'}, 
         // { name: 'Available', selector: row => row.Available ? formatDate(row.DATE_TIME_STAMP_PLUS_7H) : 'No Data', sortable: true }, 
-        { name: 'License Plate', selector: row => row.CONTAINER_ID, sortable: true ,width:'100px'},
-        { name: 'Late', selector: row => row.late, sortable: true ,width:'100px'},
+        { name: 'License Plate', selector: row => row.CONTAINER_ID, sortable: true ,width:'200px'},
+        { name: 'Late', selector: row => row.LATE, sortable: true ,width:'100px'},
         { name: 'User', selector: row => row.USER_STAMP, sortable: true ,width:'100px'},                
     ];
 

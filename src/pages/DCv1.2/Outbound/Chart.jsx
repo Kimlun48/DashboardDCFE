@@ -16,7 +16,7 @@ import FooterDc from "../../../components/footer";
 function ChartOutbound() {
     const [chartinbound, setChartinbound] = useState([]);
     const [hasLateData, setHasLateData] = useState(false);
-    const time = 2 * 60 * 1000;
+    const time = 30 * 60 * 1000;
 
     const fetchData = async () => {
         try {
@@ -24,6 +24,10 @@ function ChartOutbound() {
                 Api.get('api/v2statisticarreserve'),
                 Api.get('api/v2statisticitrout'),
                 Api.get('api/v2statisticsalesorder'),
+                Api.get('api/v2latearreserve'),
+                Api.get('api/v2latesalesorder'),
+                Api.get('api/v2lateitrout'),
+                
               
             ]);
             const data = responses.map(response => response.data.data);
@@ -33,14 +37,41 @@ function ChartOutbound() {
             console.log('Data received from APIs:', data);
 
             // Check if there is any late data in any of the responses
-            const lateData = data.some(endpointData =>
-                endpointData.late > 0
-            );
-            setHasLateData(lateData);
+            // const lateData = data.some(endpointData =>
+            //     endpointData.late > 0
+            // );
+            // setHasLateData(lateData);
 
-            if (lateData) {
-                speak("Ada barang yang terlambat di outbound mohon untuk segera di proses");
-            }
+            // if (lateData) {
+            //     speak("Ada barang yang terlambat di outbound mohon untuk segera di proses");
+            // }
+            // Check if there is any late data in any of the responses
+            let hasLateData = false;
+            data.forEach((endpointData, index) => {
+                if (endpointData.LATE > 0) {
+                    hasLateData = true;
+                    [data[3], data[4], data[5]].forEach(lateDataArray => {
+                        // if (Array.isArray(lateDataArray)) {
+                        //     lateDataArray.forEach(item => {
+                        //         // speak(`Ada barang yang terlambat di outbound nomor receipt: ${item.DocNum}`);
+                        //         const notif = String(item.NOTIF);
+                        //         speak(`Ada barang yang terlambat di outbound nomor receipt: ${notif}`);
+                        //     });
+                            
+                        // }
+                        if (Array.isArray(lateDataArray)) {
+                            lateDataArray.forEach(item => {
+                                if (item && typeof item.NOTIF === 'string') {
+                                    speak(`Ada barang yang terlambat di outbound nomor receipt: ${item.NOTIF.split('').join(' ')}`);
+                                } else {
+                                    console.error('Invalid item or NOTIF:', item);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            setHasLateData(hasLateData);
         } catch (error) {
             console.error('Error fetching data:', error);
         }

@@ -17,7 +17,12 @@ function ChartStorage() {
                 Api.get('api/v2statisticputaway'),
                 Api.get('api/v2statisticreplenishment'),
                 Api.get('api/v2statisticdeliverypicking'),
-                Api.get('api/v2statisticcashpicking'),
+                Api.get('api/v2statisticcashpicking'),  
+                Api.get('api/v2lateputaway'),
+                Api.get('api/v2latereplenishment'),
+                Api.get('api/v2latedeliverypicking'),
+                Api.get('api/v2latecashpicking'),
+               
             ]);
 
             const data = responses.map(response => response.data.data);
@@ -27,16 +32,32 @@ function ChartStorage() {
             console.log('Data received from APIs:', data);
 
             // Check if there is any late data in any of the responses
-            const lateData = data.some(endpointData =>
-                endpointData.late > 0
-            );
-            setHasLateData(lateData);
-
-            const cashPickingCondition = data[3].total > 0;
-
-            if (lateData || cashPickingCondition) {
-                speak("Ada barang yang terlambat di storage mohon untuk segera di proses");
-            }
+            let hasLateData = false;
+            data.forEach((endpointData, index) => {
+                if (endpointData.LATE > 0) {
+                    // speak(`Ada barang yang terlambat di storage nomor receipt`);
+                    hasLateData = true;
+                    [data[4], data[5], data[6], data[7]].forEach(lateDataArray => {
+                        // if (Array.isArray(lateDataArray)) {
+                        //     lateDataArray.forEach(item => {
+                        //         //speak(`Ada barang yang terlambat di storage nomor receipt: ${item.NOTIF}`);
+                        //         const notif = String(item.NOTIF);
+                        //         speak(`Ada barang yang terlambat di storage nomor receipt: ${notif}`);
+                        //     });
+                        // }
+                        if (Array.isArray(lateDataArray)) {
+                            lateDataArray.forEach(item => {
+                                if (item && typeof item.NOTIF === 'string') {
+                                    speak(`Ada barang yang terlambat di storage nomor receipt: ${item.NOTIF.split('').join(' ')}`);
+                                } else {
+                                    console.error('Invalid item or NOTIF:', item);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            setHasLateData(hasLateData);
         } catch (error) {
             console.error('Error fetching data:', error);
         }

@@ -18,7 +18,7 @@ function CashPickingReport() {
     const [search, setSearch] = useState('');
     const { formatDate } = useFormatDate();
 
-    const time = 2 * 60 * 1000; 
+   // const time = 2 * 60 * 1000; 
 
     const fetchData = async () => {
         try {
@@ -32,17 +32,19 @@ function CashPickingReport() {
 
     useEffect (() => {
         fetchData();
-        const interval = setInterval(() => {
-            fetchData();
-            console.log("ok");
-          }, time);
-          return () => clearInterval(interval);
+        // const interval = setInterval(() => {
+        //     fetchData();
+        //     console.log("ok");
+        //   }, time);
+        //   return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
         const lowercasedSearch = search.toLowerCase();
         const filtered = grpo.filter(item =>
-            item.ITEM_DESC.toLowerCase().includes(lowercasedSearch) 
+            item.ITEM_DESC.toLowerCase().includes(lowercasedSearch)||
+            item.DOCNUM.toLowerCase().includes(lowercasedSearch)||
+            item.NOWAVE.toLowerCase().includes(lowercasedSearch)
         );
         setFilteredData(filtered);
     }, [search, grpo]);
@@ -58,15 +60,15 @@ function CashPickingReport() {
 
     const columns = [
        
-        { name: 'No Document', selector: row => row.DocNum, sortable: true, width:'200px' },
+        { name: 'No Document', selector: row => row.DOCNUM, sortable: true, width:'200px' },
         { name: 'No Receipt', selector: row => row.ERP_ORDER, sortable: true ,width:'200px'},  
-        { name: 'Wave', selector: row => row.NoWave, sortable: true , width:'100px'},
+        { name: 'Wave', selector: row => row.NOWAVE, sortable: true , width:'100px'},
         // { name: 'RECEIPT_DATE', selector: row => row.RECEIPT_DATE ? formatDate(row.RECEIPT_DATE) : 'No Data', sortable: true }, 
         { name: 'Item', selector: row => row.ITEM, sortable: true ,width:'150px'},  
         { name: 'Description', selector: row => row.ITEM_DESC, sortable: true ,width:'400px'},
-        { name: 'QTY', selector: row => row.Total_QTY, sortable: true ,width:'100px'}, 
+        { name: 'QTY', selector: row => row.TOTAL_QTY, sortable: true ,width:'100px'}, 
         // { name: 'Available', selector: row => row.Available ? formatDate(row.DATE_TIME_STAMP_PLUS_7H) : 'No Data', sortable: true }, 
-        { name: 'Remark', selector: row => row.Catatan, sortable: true ,width:'800px'},
+        { name: 'Remark', selector: row => row.REMARKS, sortable: true ,width:'800px'},
                
     ];
 

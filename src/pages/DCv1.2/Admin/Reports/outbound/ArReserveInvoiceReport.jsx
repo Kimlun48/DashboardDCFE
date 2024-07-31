@@ -15,33 +15,41 @@ function ArReserveInReport() {
     const [grpo, setGrpo] = useState ([]);
     const [filteredData, setFilteredData] = useState([]);
     const [search, setSearch] = useState('');
+    const [loading, setLoading] = useState(true);
     const { formatDate } = useFormatDate();
+   
 
-    const time = 2 * 60 * 1000; 
+   // const time = 2 * 60 * 1000; 
 
     const fetchData = async () => {
         try {
+            setLoading(true);
             const response = await Api.get('api/v2arreserve')
             setGrpo(response.data.data)
             setFilteredData(response.data.data)
         } catch (error) {
             console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
         }
     }
 
     useEffect (() => {
         fetchData();
-        const interval = setInterval(() => {
-            fetchData();
-            console.log("ok");
-          }, time);
-          return () => clearInterval(interval);
+        // const interval = setInterval(() => {
+        //     fetchData();
+        //     console.log("ok");
+        //   }, time);
+        //   return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
         const lowercasedSearch = search.toLowerCase();
         const filtered = grpo.filter(item =>
-            item.ITEM_DESC.toLowerCase().includes(lowercasedSearch) 
+            item.CUSTOMERNAME.toLowerCase().includes(lowercasedSearch) ||
+            item.DOCNUM.toLowerCase().includes(lowercasedSearch) ||
+            item.WAVENO.toLowerCase().includes(lowercasedSearch) ||
+            item.STATUS.toLowerCase().includes(lowercasedSearch) 
         );
         setFilteredData(filtered);
     }, [search, grpo]);
@@ -127,20 +135,29 @@ function ArReserveInReport() {
                                         value={search}
                                         onChange={e => setSearch(e.target.value)}
                                     />
-                                    <DataTable
-                                        columns={columns}
-                                        data={filteredData}
-                                        pagination
-                                        paginationPerPage={5}
-                                        paginationRowsPerPageOptions={[5, 10, 15, 20]}
-                                        highlightOnHover
-                                        customStyles={customStyles}
-                                        noDataComponent={
-                                            <div className="alert alert-danger mb-0">
-                                                Data Belum Tersedia!
-                                            </div>
-                                        }
-                                    />
+                                     {loading ? (
+                                       <div class="spinner">
+                                       <div class="spinner-border"></div>
+                                       <img src="/icons/Group 1146.png" alt="Icon" class="icon"></img>
+                                     </div>
+                                    ) : (
+                                        <DataTable
+                                            columns={columns}
+                                            data={filteredData}
+                                            pagination
+                                            paginationPerPage={5}
+                                            paginationRowsPerPageOptions={[5, 10, 15, 20]}
+                                            highlightOnHover
+                                            customStyles={customStyles}
+                                            noDataComponent={
+                                                <div className="alert alert-danger mb-0">
+                                                    Data Belum Tersedia!
+                                                </div>
+                                            }
+                                        />
+                                    )}
+                                    
+                                    
                                 </div>
                             </div>
                         </div>

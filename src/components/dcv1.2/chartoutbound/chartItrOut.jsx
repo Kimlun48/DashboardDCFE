@@ -16,10 +16,10 @@ const ChartItrOut = () => {
         try {
             const response = await Api.get('api/v2statisticitrout');
             const data = response.data.data;
-            setTotalDocLate(data.Total_Doc_late);
-            setTotalDocToday(data.Total_Doc_today);
-            setTotalDday(data.Total_Doc_dDay);
-            setTotal(data.total);
+            setTotalDocLate(data.TOTAL_DOC_LATE);
+            setTotalDocToday(data.TOTAL_DOC_TODAY);
+            setTotalDday(data.TOTAL_DOC_DDAY);
+            setTotal(data.TOTAL);
         } catch (error) {
             console.error('Error fetching data:', error);
             // Display error to the user

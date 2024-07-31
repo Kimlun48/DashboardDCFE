@@ -7,6 +7,7 @@ import Api from "../../../../../api";
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { set } from "date-fns";
 
 function ReplenishmentReport() {
 
@@ -17,35 +18,42 @@ function ReplenishmentReport() {
     const [filteredData, setFilteredData] = useState([]);
     const [search, setSearch] = useState('');
     const { formatDate } = useFormatDate();
+    const [loading, setLoading] = useState(true);
 
-    const time = 2 * 60 * 1000; 
+   // const time = 2 * 60 * 1000; 
 
     const fetchData = async () => {
         try {
+            setLoading(true);
             const response = await Api.get('api/v2replenishment')
             setGrpo(response.data.data)
             setFilteredData(response.data.data)
         } catch (error) {
             console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false); 
         }
     }
 
     useEffect (() => {
         fetchData();
-        const interval = setInterval(() => {
-            fetchData();
-            console.log("ok");
-          }, time);
-          return () => clearInterval(interval);
+        // const interval = setInterval(() => {
+        //     fetchData();
+        //     console.log("ok");
+        //   }, time);
+        //   return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
         const lowercasedSearch = search.toLowerCase();
         const filtered = grpo.filter(item =>
-            item.ITEM_DESC.toLowerCase().includes(lowercasedSearch) 
+            item.DESCRIPTION.toLowerCase().includes(lowercasedSearch) ||
+            item.UM.toLowerCase().includes(lowercasedSearch)
         );
         setFilteredData(filtered);
     }, [search, grpo]);
+
+   
 
     const exportToExcel = () => {
         const worksheet = XLSX.utils.json_to_sheet(filteredData);
@@ -61,9 +69,9 @@ function ReplenishmentReport() {
         { name: 'Description', selector: row => row.DESCRIPTION, sortable: true, width:'400px' },
         { name: 'QTY', selector: row => row.QTY, sortable: true , width:'100px'},
         // { name: 'RECEIPT_DATE', selector: row => row.RECEIPT_DATE ? formatDate(row.RECEIPT_DATE) : 'No Data', sortable: true }, 
-        { name: 'UM', selector: row => row.QUANTITY_UM, sortable: true ,width:'100px'},  
+        { name: 'UM', selector: row => row.UM, sortable: true ,width:'100px'},  
         { name: 'Start Date', selector: row => row.START_DATE ? formatDate(row.START_DATE) : 'No Data', sortable: true },
-        { name: 'Late', selector: row => row.TO_LOCATION, sortable: true ,width:'100px'}, 
+        { name: 'Late', selector: row => row.LATE, sortable: true ,width:'100px'}, 
         // { name: 'Available', selector: row => row.Available ? formatDate(row.DATE_TIME_STAMP_PLUS_7H) : 'No Data', sortable: true }, 
         // { name: 'License Plate', selector: row => row.CONTAINER_ID, sortable: true ,width:'100px'},
         // { name: 'Late', selector: row => row.late, sortable: true ,width:'100px'},
@@ -110,20 +118,28 @@ function ReplenishmentReport() {
                                         value={search}
                                         onChange={e => setSearch(e.target.value)}
                                     />
-                                    <DataTable
-                                        columns={columns}
-                                        data={filteredData}
-                                        pagination
-                                        paginationPerPage={5}
-                                        paginationRowsPerPageOptions={[5, 10, 15, 20]}
-                                        highlightOnHover
-                                        customStyles={customStyles}
-                                        noDataComponent={
-                                            <div className="alert alert-danger mb-0">
-                                                Data Belum Tersedia!
-                                            </div>
-                                        }
-                                    />
+                                    {loading ? (
+                                       <div class="spinner">
+                                       <div class="spinner-border"></div>
+                                       <img src="/icons/Group 1146.png" alt="Icon" class="icon"></img>
+                                     </div>
+                                    ) : (
+                                        <DataTable
+                                            columns={columns}
+                                            data={filteredData}
+                                            pagination
+                                            paginationPerPage={5}
+                                            paginationRowsPerPageOptions={[5, 10, 15, 20]}
+                                            highlightOnHover
+                                            customStyles={customStyles}
+                                            noDataComponent={
+                                                <div className="alert alert-danger mb-0">
+                                                    Data Belum Tersedia!
+                                                </div>
+                                            }
+                                        />
+                                    )}
+                                    
                                 </div>
                             </div>
                         </div>

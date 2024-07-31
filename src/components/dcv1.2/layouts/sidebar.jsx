@@ -6,6 +6,8 @@ import StorageIcon from '@mui/icons-material/Storage';
 import OutputIcon from '@mui/icons-material/Output';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CancelPresentationSharpIcon from '@mui/icons-material/CancelPresentationSharp';
+import Cookies from "js-cookie";
+import toast from "react-hot-toast";
 
 function Sidebar() {
     const navigate = useNavigate();
@@ -19,6 +21,26 @@ function Sidebar() {
         subReports2: false,
         subReports3: false,
     });
+
+    const handleLogout = (navigate) => {
+        // Hapus token dari cookies
+        Cookies.remove("access_token");
+        Cookies.remove("refresh_token");
+    
+        // Arahkan pengguna ke halaman login
+        navigate("/");
+    
+        // Display success toast (opsional)
+        toast.success("Logout Successfully.", {
+            duration: 4000,
+            position: "top-right",
+            style: {
+                borderRadius: '10px',
+                background: '#333',
+                color: '#fff',
+            },
+        });
+    };
 
     const handleRadioChange = (path, dropdownName) => {
         navigate(path);
@@ -134,6 +156,12 @@ function Sidebar() {
                                         Replenishment
                                     </label>
                                 </div>
+                                <div className="form-check mb-2">
+                                    <input className="form-check-input" type="radio" name="storageOptions" id="listpicking" checked={pathname.includes("listpicking")} onChange={() => handleRadioChange("/admin/storage/listpicking", 'subReports2')} />
+                                    <label className="form-check-label" htmlFor="listpicking">
+                                        List Picking
+                                    </label>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -167,9 +195,16 @@ function Sidebar() {
                     </div>
                 </div>
             </div>
-            <Link className={`list-group-item list-group-item-action list-group-item-light p-3 ${splitLocation[2] === "exit" ? "active" : ""} transparent-background`} to="/">
+            {/* <Link className={`list-group-item list-group-item-action list-group-item-light p-3 ${splitLocation[2] === "exit" ? "active" : ""} transparent-background`} to="/">
                 <CancelPresentationSharpIcon className="me-2" />Exit
-            </Link>
+            </Link> */}
+            <Link
+            className={`list-group-item list-group-item-action list-group-item-light p-3 ${splitLocation[2] === "exit" ? "active" : ""} transparent-background`}
+            to="/"
+            onClick={() => handleLogout(navigate)}
+        >
+            <CancelPresentationSharpIcon className="me-2" />Exit
+        </Link>
         </React.Fragment>
     );
 }

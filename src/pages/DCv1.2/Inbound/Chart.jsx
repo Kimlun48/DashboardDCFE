@@ -1,4 +1,3 @@
-
 import { Card } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import Api from "../../../api";
@@ -8,11 +7,10 @@ import ChartInboundItrIn from "../../../components/dcv1.2/chartinbound/chartItrI
 import ChartInboundCrossdock from "../../../components/dcv1.2/chartinbound/chartCrossdock";
 import ChartInboundReturn from "../../../components/dcv1.2/chartinbound/chartReturn";
 
-
 function ChartInbound() {
     const [chartinbound, setChartinbound] = useState([]);
     const [hasLateData, setHasLateData] = useState(false);
-    const time = 2 * 60 * 1000;
+    const time = 30 * 60 * 1000;
 
     const fetchData = async () => {
         try {
@@ -20,7 +18,11 @@ function ChartInbound() {
                 Api.get('api/v2statisticitrin'),
                 Api.get('api/v2statisticcrossdock'),
                 Api.get('api/v2statisticpo'),
-                Api.get('api/v2statisticreturn')
+                Api.get('api/v2statisticreturn'),
+                Api.get('api/v2lateitrin'),
+                Api.get('api/v2latecrossdock'),
+                Api.get('api/v2latepo'),
+                Api.get('api/v2latereturn'),
             ]);
 
             const data = responses.map(response => response.data.data);
@@ -30,14 +32,45 @@ function ChartInbound() {
             console.log('Data received from APIs:', data);
 
             // Check if there is any late data in any of the responses
-            const lateData = data.some(endpointData =>
-                endpointData.late > 0
-            );
-            setHasLateData(lateData);
+            // let hasLateData = false;
+            // [data[4], data[5], data[6], data[7]].forEach(lateDataArray => {
+            //     if (Array.isArray(lateDataArray)) {
+            //         lateDataArray.forEach(item => {
+            //             if (item.late > 0) {
+            //                 hasLateData = true;
+            //                 speak(`Ada barang yang terlambat di inbound nomor receipt: ${item.receipt_id}`);
+            //             }
+            //         });
+            //     }
+            // });
+            // setHasLateData(hasLateData);
 
-            if (lateData) {
-                speak("Ada barang yang terlambat di inbound mohon untuk segera di proses");
-            }
+            let hasLateData = false;
+            data.forEach((endpointData, index) => {
+                if (endpointData.LATE > 0) {
+                    hasLateData = true;
+                    [data[4], data[5], data[6], data[7]].forEach(lateDataArray => {
+                        // if (Array.isArray(lateDataArray)) {
+                        //     lateDataArray.forEach(item => {
+                        //         // Pastikan `item.NOTIF` adalah string
+                        //         const notif = String(item.NOTIF);
+                        //         speak(`Ada barang yang terlambat di inbound nomor receipt: ${notif}`);
+                        //     });
+                        // }
+                        if (Array.isArray(lateDataArray)) {
+                            lateDataArray.forEach(item => {
+                                if (item && typeof item.NOTIF === 'string') {
+                                    speak(`Ada barang yang terlambat di inbound nomor receipt: ${item.NOTIF.split('').join(' ')}`);
+                                } else {
+                                    console.error('Invalid item or NOTIF:', item);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            setHasLateData(hasLateData);
+
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -64,50 +97,40 @@ function ChartInbound() {
         <React.Fragment>
             <div className="container-fullscreen ">
                 <h2 className="text-center chart-top-title">INBOUND</h2>
-            
-        {/* {hasLateData && (
-            <div className="alert alert-danger text-center">
-                Ada barang yang terlambat di inbound mohon untuk segera di proses!
-            </div>
-        )} */}
-        <div className="row">
-            <div className="col-md-6 mb-6">
-                <Card className="border-top-success card-dashboard">
-                    <Card.Body>
-                        <ChartInboundPo />
-                    </Card.Body>
-                </Card>
-            </div>
-            <div className="col-md-6 mb-6">
-                <Card className="border-top-success card-dashboard">
-                    <Card.Body>
-                        <ChartInboundItrIn />
-                    </Card.Body>
-                </Card>
-            </div>
-            <div className="col-md-6 mb-6">
-                <Card className="border-top-success card-dashboard">
-                    <Card.Body>
-                        <ChartInboundReturn />
-                    </Card.Body>
-                </Card>
-            </div>
-            <div className="col-md-6 mb-6">
-                <Card className="border-top-success card-dashboard">
-                    <Card.Body>
-                        <ChartInboundCrossdock />
-                    </Card.Body>
-                </Card>
-            </div>
-        </div>
-        </div>
-        
 
-
-           
+                <div className="row">
+                    <div className="col-md-6 mb-6">
+                        <Card className="border-top-success card-dashboard">
+                            <Card.Body>
+                                <ChartInboundPo />
+                            </Card.Body>
+                        </Card>
+                    </div>
+                    <div className="col-md-6 mb-6">
+                        <Card className="border-top-success card-dashboard">
+                            <Card.Body>
+                                <ChartInboundItrIn />
+                            </Card.Body>
+                        </Card>
+                    </div>
+                    <div className="col-md-6 mb-6">
+                        <Card className="border-top-success card-dashboard">
+                            <Card.Body>
+                                <ChartInboundReturn />
+                            </Card.Body>
+                        </Card>
+                    </div>
+                    <div className="col-md-6 mb-6">
+                        <Card className="border-top-success card-dashboard">
+                            <Card.Body>
+                                <ChartInboundCrossdock />
+                            </Card.Body>
+                        </Card>
+                    </div>
+                </div>
+            </div>
         </React.Fragment>
     );
 }
 
 export default ChartInbound;
-

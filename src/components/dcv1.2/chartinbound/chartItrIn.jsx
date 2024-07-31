@@ -16,11 +16,11 @@ const ChartInboundItrIn = () => {
         try {
             const response = await Api.get('api/v2statisticitrin');
             const data = response.data.data;
-            setTotalQtyLate(data.total_QTY_late);
-            setTotalQtyOntime(data.total_QTY_ontime);
-            setTotalDocLate(data.Total_Doc_late);
-            setTotalDocOntime(data.Total_Doc_Ontime);
-            setTotal(data.total);
+            setTotalQtyLate(data.TOTAL_QTY_LATE);
+            setTotalQtyOntime(data.TOTAL_QTY_ONTIME);
+            setTotalDocLate(data.TOTAL_DOC_LATE);
+            setTotalDocOntime(data.TOTAL_DOC_ONTIME);
+            setTotal(data.TOTAL);
         } catch (error) {
             console.error('Error fetching data:', error);
             // Display error to the user

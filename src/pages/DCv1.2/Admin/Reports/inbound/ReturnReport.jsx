@@ -17,7 +17,7 @@ function ReturnReport() {
     const [search, setSearch] = useState('');
     const { formatDate } = useFormatDate();
 
-    const time = 2 * 60 * 1000; 
+ //   const time = 2 * 60 * 1000; 
 
     const fetchData = async () => {
         try {
@@ -31,11 +31,11 @@ function ReturnReport() {
 
     useEffect (() => {
         fetchData();
-        const interval = setInterval(() => {
-            fetchData();
-            console.log("ok");
-          }, time);
-          return () => clearInterval(interval);
+        // const interval = setInterval(() => {
+        //     fetchData();
+        //     console.log("ok");
+        //   }, time);
+        //   return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
@@ -56,14 +56,14 @@ function ReturnReport() {
     };
 
     const columns = [
-        { name: 'Receipt No', selector: row => row.receipt_id, sortable: true, width:'200px' },
+        { name: 'Receipt No', selector: row => row.RECEIPT_ID, sortable: true, width:'200px' },
        
       
         { name: 'Customer', selector: row => row.SOURCE_NAME, sortable: true ,width:'400px'},  
-        { name: 'Item', selector: row => row.item, sortable: true ,width:'200px'},
+        { name: 'Item', selector: row => row.ITEM, sortable: true ,width:'200px'},
         { name: 'Description', selector: row => row.ITEM_DESC, sortable: true ,width:'400px'}, 
-        { name: 'Receipt Date', selector: row => row.DATE_TIME_STAMP_PLUS_7H ? formatDate(row.DATE_TIME_STAMP_PLUS_7H) : 'No Data', sortable: true }, 
-        { name: 'Late', selector: row => row.Deadline, sortable: true ,width:'100px'},           
+        { name: 'Receipt Date', selector: row => row.DATE_TIME_STAMP ? formatDate(row.DATE_TIME_STAMP) : 'No Data', sortable: true }, 
+        { name: 'Late', selector: row => row.DEADLINE, sortable: true ,width:'100px'},           
     ];
 
     const customStyles = {

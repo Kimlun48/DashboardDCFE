@@ -18,7 +18,7 @@ function CrossdockReport() {
     const [search, setSearch] = useState('');
     const { formatDate } = useFormatDate();
 
-    const time = 2 * 60 * 1000; 
+   // const time = 2 * 60 * 1000; 
 
     const fetchData = async () => {
         try {
@@ -32,11 +32,11 @@ function CrossdockReport() {
 
     useEffect (() => {
         fetchData();
-        const interval = setInterval(() => {
-            fetchData();
-            console.log("ok");
-          }, time);
-          return () => clearInterval(interval);
+        // const interval = setInterval(() => {
+        //     fetchData();
+        //     console.log("ok");
+        //   }, time);
+        //   return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
@@ -58,11 +58,11 @@ function CrossdockReport() {
 
     const columns = [
         
-        { name: 'Item', selector: row => row.item, sortable: true ,width:'150px'},
+        { name: 'Item', selector: row => row.ITEM, sortable: true ,width:'150px'},
         { name: 'Description', selector: row => row.ITEM_DESC, sortable: true ,width:'500px'}, 
-        { name: 'QTY', selector: row => row.qty, sortable: true ,width:'100px'}, 
-        { name: 'Date Time', selector: row => row.latest_date_time_stamp ? formatDate(row.latest_date_time_stamp) : 'No Data', sortable: true }, 
-        { name: 'Late', selector: row => row.late, sortable: true ,width:'100px'},        
+        { name: 'QTY', selector: row => row.QTY, sortable: true ,width:'100px'}, 
+        { name: 'Date Time', selector: row => row.LATES_DATE_TIME_STAMP ? formatDate(row.LATES_DATE_TIME_STAMP) : 'No Data', sortable: true }, 
+        { name: 'Late', selector: row => row.LATE, sortable: true ,width:'100px'},        
     ];
 
     const customStyles = {
