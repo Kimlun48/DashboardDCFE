@@ -31,14 +31,22 @@ function TableGrpo() {
 
     const columns = [
         {
-            name: 'No Purchase Order',
+            name: 'Receipt ID',
             selector: row => (
-                <div style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: '16px' }}>
+                <div style={{ color: '#FFFFFF', fontWeight: 'normal', fontSize: '12px' }}>
                     {row.RECEIPT_ID}
                 </div>
             ),
-            center: true,
-            
+            center: true,            
+        },
+        {
+            name: 'Late',
+            selector: row => (
+                <div style={{ color: '#FFFFFF', fontWeight: 'normal', fontSize: '12px' }}>
+                    {row.DEADLINE}
+                </div>
+            ),
+            center: true,            
         },
         
     ];
@@ -135,18 +143,8 @@ function TableGrpo() {
                     </div>
                     </div>
                 {/* </div> */}
-                <div className="col-12 mb-2">
-                    <div className="card-total-bawah">
-                        <div className="text-center">
-                            <div className="total-text">
-                                {/* <div className="square-icon" style={{ backgroundColor: '#32ADE6' }}>OnTime</div>
-                                <div className="square-icon" style={{ backgroundColor: '#FF4B3D' }}>Late</div> */}
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>  
-              
+                
+                
         </React.Fragment>
     );
 }

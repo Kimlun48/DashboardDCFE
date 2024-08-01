@@ -16,7 +16,7 @@ import FooterDc from "../../../components/footer";
 function ChartOutbound() {
     const [chartinbound, setChartinbound] = useState([]);
     const [hasLateData, setHasLateData] = useState(false);
-    const time = 30 * 60 * 1000;
+    const time = 60 * 60 * 1000;
 
     const fetchData = async () => {
         try {

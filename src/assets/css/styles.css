@@ -771,13 +771,28 @@ html, body {
 }
 
 /* styles.css */
-.data-table-container {
-  width: 100%;
-  max-width: 100%; 
-  /* overflow-x: auto; */
-  height: 350px;
+
+  
+  
   
  
+.title-dash {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.chart-title {
+  margin: 0;
+  
+}
+
+
+.custom-label {
+  fill: #edebe9; /* Ganti dengan warna yang diinginkan */
+  font-size: 14px; /* Sesuaikan ukuran font jika diperlukan */
 }
 
 .data-table {
@@ -902,6 +917,9 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 }
 
 
+.pointer-cursor {
+  cursor: pointer;
+}
 
 
 
@@ -1024,6 +1042,60 @@ li:nth-child(3) {
   -webkit-animation: loadbars 0.6s ease-in-out infinite -0.4s;
   animation: loadbars 0.6s ease-in-out infinite -0.4s;
 } */
+
+.card-header {
+  padding: 1rem;
+ 
+ 
+}
+
+.title-dash {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.chart-title-dash {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.container-fullscreen {
+  padding: 1rem;
+}
+
+.chart-top-title {
+  margin-bottom: 2rem;
+}
+
+.card-dashboard {
+  margin-bottom: 2rem;
+  border-top-width: 4px;
+}
+
+@media (max-width: 768px) {
+  .col-md-6 {
+      width: 100%;
+      margin-bottom: 1rem;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .card-header .row {
+      flex-direction: column;
+  }
+
+  .col-md-6 {
+      width: 100%;
+      margin-bottom: 1rem;
+  }
+
+  .title-dash {
+      text-align: center;
+      margin-bottom: 1rem;
+  }
+}
+
 
 
 @media (min-width: 1200px) {
