@@ -216,7 +216,7 @@ const ChartCashPicking = () => {
                                         padding: '8px' 
                                     }} 
                                 />
-                                <Bar dataKey="value" radius={[0, 10, 10, 0]} onClick={(data) => handleClick(data)} className="chart-bar">
+                                <Bar dataKey="value" barSize={60} radius={[0, 10, 10, 0]} onClick={(data) => handleClick(data)} className="chart-bar">
                                     <LabelList dataKey="value" position="right" style={{ fontSize: 16, fill: '#fff' }} className="chart-label-list" />
                                     {data.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill="#FF6259" />
