@@ -63,15 +63,15 @@ function Login() {
             const accessToken = response.data.access_token;
             const refreshToken = response.data.refresh_token;
     
-            // Ensure tokens are defined before setting cookies
+           
             if (accessToken && refreshToken) {
                 Cookies.set("access_token", accessToken, { 
-                  //  secure: process.env.NODE_ENV === 'production', // Hanya jika di lingkungan produksi dengan HTTPS
-                  //  sameSite: "None" // Hanya jika di lingkungan produksi dengan HTTPS
+                  //  secure: process.env.NODE_ENV === 'production', //untuk produksi dengan HTTPS
+                  //  sameSite: "None" //untuk produksi dengan HTTPS
                 });
                 Cookies.set("refresh_token", refreshToken, { 
-                    // secure: process.env.NODE_ENV === 'production', // Hanya jika di lingkungan produksi dengan HTTPS
-                    //  sameSite: "None" // Hanya jika di lingkungan produksi dengan HTTPS
+                    // secure: process.env.NODE_ENV === 'production', // untuk produksi dengan HTTPS
+                    //  sameSite: "None" // untuk produksi dengan HTTPS
                 });
     
                 // Verify cookies are set correctly
@@ -94,7 +94,7 @@ function Login() {
             if (error.response && error.response.data) {
                 setValidation(error.response.data);
 
-                // Display validation errors using toast
+                
                 if (error.response.data.message) {
                     toast.error(error.response.data.message, {
                         duration: 4000,

@@ -3,6 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.cdnfonts.com/css/segoe-ui-4');
 
 
 /* ----- VARIABLES ----- */
@@ -411,7 +412,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .custom-label {
   fill: #135ed5; /* Set the font color here */
   font-size: 16px; /* Set the font size here */
-  font-family: Arial, sans-serif; /* Optional: Set the font family here */
+  /* font-family: Arial, sans-serif; */
   font-weight: bold; /* Optional: Set the font weight here */
 }
 
@@ -845,7 +846,9 @@ html, body {
 
 
 body {
- font-family: 'Manrope' !important;
+ /* font-family: 'Manrope' !important; */
+ font-family: 'Segoe UI', sans-serif !important;
+                                                
   /* background: var(--body-color) !important; */
   /* background-image: url("../images/3040791.jpg"); */
   /* background: radial-gradient(circle, rgb(252, 249, 250) 30%, rgb(144, 187, 242) 100%)!important; */
@@ -1071,6 +1074,91 @@ li:nth-child(3) {
   margin-bottom: 2rem;
   border-top-width: 4px;
 }
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.chart-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.no-data {
+  text-align: center;
+  padding: 5rem;
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1px;
+  /* margin-top: 1rem; */
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+}
+
+.square-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.square-icon.ontime {
+  background-color: #32ADE6;
+}
+
+.square-icon.late {
+  background-color: #FF4B3D;
+}
+
+.square-icon.today {
+  background-color: #32ADE6;
+}
+
+.square-icon.H-1 {
+  background-color: #00FFA3;
+}
+
+
+
+
+
+@media (max-width: 768px) {
+  .header {
+      font-size: 1rem;
+  }
+
+  .chart-section {
+      height: auto;
+  }
+
+  .no-data {
+      padding: 2rem;
+  }
+
+  .square-icon {
+      width: 15px;
+      height: 15px;
+  }
+}
+
 
 @media (max-width: 768px) {
   .col-md-6 {

@@ -22,6 +22,9 @@ import ItrinReport from '../pages/DCv1.2/Admin/Reports/inbound/ItrinReport.jsx';
 import ReturnReport from '../pages/DCv1.2/Admin/Reports/inbound/ReturnReport.jsx';
 import CrossdockReport from '../pages/DCv1.2/Admin/Reports/inbound/Crossdock.jsx';
 import ListPickingReport from '../pages/DCv1.2/Admin/Reports/storage/ListPickingReport.jsx';
+import GrpothreelateReport from '../pages/DCv1.2/Admin/Reports/inbound/GrpothreelateReport.jsx';
+import GrpothreeontimeReport from '../pages/DCv1.2/Admin/Reports/inbound/GrpothreeontimeReport.jsx';
+
 //storage
 import CashPickingReport from '../pages/DCv1.2/Admin/Reports/storage/CashPickingReport.jsx';
 import DeliveryPickingReport from '../pages/DCv1.2/Admin/Reports/storage/DeliveryPickingReport.jsx';
@@ -58,6 +61,12 @@ function RoutesIndex() {
 
              {/*route "/outbound/chart" */}
              <Route path="/outbound/chart" element={<ChartOutbound />}/>
+
+             {/* route "/inbound/report/grpothreelate" */}
+             <Route path="/inbound/report/grpothreelate" element={<GrpothreelateReport />}/>
+
+              {/* route "/inbound/report/grpothreeontime" */}
+              <Route path="/inbound/report/grpothreeontime" element={<GrpothreeontimeReport />}/>
 
             
 

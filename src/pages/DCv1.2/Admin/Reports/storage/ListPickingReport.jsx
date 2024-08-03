@@ -348,7 +348,7 @@ function ListPickingReport() {
         const filtered = grpo.filter(item =>
             item.ITEM_DESC.toLowerCase().includes(lowercasedSearch) ||
             item.DOCNUM.toLowerCase().includes(lowercasedSearch) ||
-            item.WAVENO.toLowerCase().includes(lowercasedSearch) ||
+           // item.WAVENO.toLowerCase().includes(lowercasedSearch) ||
             item.CUSTOMERNAME.toLowerCase().includes(lowercasedSearch)
         );
         setFilteredData(filtered);

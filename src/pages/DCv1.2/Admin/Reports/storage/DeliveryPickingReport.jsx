@@ -42,9 +42,8 @@ function DeliveryPickingReport() {
     useEffect(() => {
         const lowercasedSearch = search.toLowerCase();
         const filtered = grpo.filter(item =>
-            item.ITEM_DESC.toLowerCase().includes(lowercasedSearch) ||
+            item.ITEM_DESC.toLowerCase().includes(lowercasedSearch)||
             item.DOCNUM.toLowerCase().includes(lowercasedSearch)||
-            item.NOWAVE.toLowerCase().includes(lowercasedSearch) ||
             item.PICKER.toLowerCase().includes(lowercasedSearch)
         );
         setFilteredData(filtered);

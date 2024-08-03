@@ -46,7 +46,7 @@ function SalesOrderReport() {
         const lowercasedSearch = search.toLowerCase();
         const filtered = grpo.filter(item =>
             item.CUSTOMERNAME.toLowerCase().includes(lowercasedSearch) ||
-            item.NOWAVE.toLowerCase().includes(lowercasedSearch) ||
+         //   item.NOWAVE.toLowerCase().includes(lowercasedSearch) ||
             item.DOCNUM.toLowerCase().includes(lowercasedSearch) ||
             item.ITEM_DESC.toLowerCase().includes(lowercasedSearch)  
         );

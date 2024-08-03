@@ -185,8 +185,9 @@ const ChartPutaway = () => {
                         </ResponsiveContainer>
                     </div>
                 </div>
+                
             </div>
-            <div className="col-12 mb-2">
+            {/* <div className="col-12 mb-2">
                 <div className="card-total-bawah">
                     <div className="text-center">
                         <div className="total-text">
@@ -195,6 +196,14 @@ const ChartPutaway = () => {
                             <div className="square-icon" style={{ backgroundColor: '#32ADE6' }}>OnTime</div>
                         </div>
                     </div>
+                </div>
+            </div> */}
+            <div className="legend">
+                <div className="legend-item">
+                    <div className="square-icon ontime"></div> OnTime
+                </div>
+                <div className="legend-item">
+                    <div className="square-icon late"></div> Late
                 </div>
             </div>
 

@@ -47,7 +47,7 @@ function InventoryOutReport() {
         const filtered = grpo.filter(item =>
             item.ITEM_DESC.toLowerCase().includes(lowercasedSearch)||
             item.CABANG.toLowerCase().includes(lowercasedSearch)||
-            item.NOWAVE.toLowerCase().includes(lowercasedSearch)||
+           // item.NOWAVE.toLowerCase().includes(lowercasedSearch)||
             item.DOCNUM.toLowerCase().includes(lowercasedSearch)
         );
         setFilteredData(filtered);

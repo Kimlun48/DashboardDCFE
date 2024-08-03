@@ -48,7 +48,7 @@ function ArReserveInReport() {
         const filtered = grpo.filter(item =>
             item.CUSTOMERNAME.toLowerCase().includes(lowercasedSearch) ||
             item.DOCNUM.toLowerCase().includes(lowercasedSearch) ||
-            item.WAVENO.toLowerCase().includes(lowercasedSearch) ||
+          //  item.WAVENO.toLowerCase().includes(lowercasedSearch) ||
             item.STATUS.toLowerCase().includes(lowercasedSearch) 
         );
         setFilteredData(filtered);

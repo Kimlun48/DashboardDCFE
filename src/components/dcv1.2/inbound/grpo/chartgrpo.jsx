@@ -39,9 +39,11 @@ function ChartGrpoLastMonth() {
 
     const handleClick = (entry) => {
         if (entry.name === 'Lates last 3 month') {
-            navigate('/putawaystoragelate');
+            // navigate('/putawaystoragelate');
+            window.open('/inbound/report/grpothreelate', '_blank');
         } else if (entry.name === 'On Times last 3 month') {
-            navigate('/putawaystorageunlate');
+            // navigate('/putawaystorageunlate');
+            window.open('/inbound/report/grpothreeontime', '_blank');
         }
     };
 
@@ -49,7 +51,7 @@ function ChartGrpoLastMonth() {
 
     return (
         <React.Fragment>
-            <div className="row mt-4">
+            {/* <div className="row mt-4">
                 <div className="text">
                     <h4 className="chart-title-po">Good Receipt PO Last 3 Month</h4>
                     <div className="total-value">Total: {all}</div>
@@ -110,7 +112,66 @@ function ChartGrpoLastMonth() {
                         </div>
                     </div>
                 </div>
+            </div> */}
+             <div className="container mt-4">
+            <div className="header">
+                <h4 className="chart-title-po">Good Receipt PO Last 3 Month</h4>
+                
             </div>
+            <div className="chart-section">
+                {isDataEmpty ? (
+                    <div className="no-data">
+                        <h3>No Data</h3>
+                    </div>
+                ) : (
+                    <ResponsiveContainer width="100%" height={240}>
+                        <PieChart width={800} height={400}>
+                            <defs>
+                                <linearGradient id="colorLate" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stopColor="#FF4B3D" />
+                                    <stop offset="100%" stopColor="#FF4B3D" />
+                                </linearGradient>
+                                <linearGradient id="colorOntime" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stopColor="#3399FF" />
+                                    <stop offset="100%" stopColor="#33CCFF" />
+                                </linearGradient>
+                            </defs>
+                            <Pie
+                                data={data}
+                                cx="50%"
+                                cy="50%"
+                                outerRadius="80%"
+                                stroke="none"
+                                innerRadius="40%"
+                                fill="#8884d8"
+                                dataKey="value"
+                                paddingAngle={3}
+                                onClick={(data, index) => handleClick(data)}
+                                className="pointer-cursor"
+                            >
+                                {data.map((entry, index) => (
+                                    <Cell
+                                        key={`cell-${index}`}
+                                        fill={entry.name === 'Lates last 3 month' ? 'url(#colorLate)' : 'url(#colorOntime)'}
+                                    />
+                                ))}
+                                <LabelList dataKey="value" position="inside" className="custom-label" />
+                            </Pie>
+                            <Tooltip />
+                        </PieChart>
+                        <div className="legend">
+                         <div className="legend-item">
+                         <div className="square-icon ontime"></div> OnTime
+                         </div>
+                        <div className="legend-item">
+                         <div className="square-icon late"></div> Late
+                        </div>
+                     </div>
+                    </ResponsiveContainer>
+                )}
+            </div>
+            
+        </div>
         </React.Fragment>
     );
 }
