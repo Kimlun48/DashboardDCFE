@@ -56,8 +56,18 @@ function GrpothreelateReport() {
             style : {
                 backgroundColor : '#0e0f65',
                 color : 'white',
-                // fontSize : '16px',
-                // fontWeight : 'bold',
+                fontSize : '14px',
+                 fontWeight : 'normal',
+            },
+        },
+        rows: {
+            style: {
+                backgroundColor: '#f2f2f2', // Custom row background color
+                '&:nth-of-type(odd)': {
+                    backgroundColor: '#e6e6e6', // Custom alternating row background color
+                },
+                fontSize: '14px', // Custom font size for rows
+                color: '#333', // Custom font color for rows
             },
         },
     };

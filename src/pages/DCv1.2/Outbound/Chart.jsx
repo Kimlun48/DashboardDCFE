@@ -62,7 +62,7 @@ function ChartOutbound() {
                         if (Array.isArray(lateDataArray)) {
                             lateDataArray.forEach(item => {
                                 if (item && typeof item.NOTIF === 'string') {
-                                    speak(`Ada barang yang terlambat di outbound nomor receipt: ${item.NOTIF.split('').join(' ')}`);
+                                    speak(`Ada dokumen yang harus diproses di outbound dengan nomor: ${item.NOTIF.split('').join(' ')}`);
                                 } else {
                                     console.error('Invalid item or NOTIF:', item);
                                 }
@@ -107,21 +107,21 @@ function ChartOutbound() {
                     </div>
                 )} */}
         <div className="row">
-            <div className="col-md-6 mb-6">
+            <div className="col-lg-6 col-md-12 mb-4">
                 <Card className="border-top-success card-dashboard">
                     <Card.Body>
                         <ChartArReserve />
                     </Card.Body>
                 </Card>
             </div>
-            <div className="col-md-6 mb-6">
+            <div className="col-lg-6 col-md-12 mb-4">
                 <Card className="border-top-success card-dashboard">
                     <Card.Body>
                         <ChartSalesOrder />
                     </Card.Body>
                 </Card>
             </div>
-            <div className="col-md-6 mb-6">
+            <div className="col-lg-6 col-md-12 mb-4">
                 <Card className="border-top-success card-dashboard">
                     <Card.Body>
                         <ChartItrOut />

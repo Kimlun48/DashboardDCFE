@@ -119,17 +119,7 @@ const ChartInboundPo = () => {
                     <div className="square-icon late"></div> Late
                 </div>
             </div>
-            {/* <div className="col-12 mb-2">
-                <div className="card-total-bawah">
-                    <div className="text-center">
-                        <div className="total-text">
-                           
-                            <div className="square-icon" style={{ backgroundColor: '#FF6259' }}>Late</div>
-                            <div className="square-icon" style={{ backgroundColor: '#32ADE6' }}>OnTime</div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
+           
             
                
             

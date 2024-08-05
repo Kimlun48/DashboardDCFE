@@ -6,7 +6,8 @@ import ChartInboundPo from "../../../components/dcv1.2/chartinbound/chartPo";
 import ChartInboundItrIn from "../../../components/dcv1.2/chartinbound/chartItrIn";
 import ChartInboundCrossdock from "../../../components/dcv1.2/chartinbound/chartCrossdock";
 import ChartInboundReturn from "../../../components/dcv1.2/chartinbound/chartReturn";
-
+import TableGrpo from "../../../components/dcv1.2/inbound/grpo/tablegrpo";
+import ChartGrpoLastMonth from "../../../components/dcv1.2/inbound/grpo/chartgrpo";
 function ChartInbound() {
     const [chartinbound, setChartinbound] = useState([]);
     const [hasLateData, setHasLateData] = useState(false);
@@ -19,6 +20,7 @@ function ChartInbound() {
                 Api.get('api/v2statisticcrossdock'),
                 Api.get('api/v2statisticpo'),
                 Api.get('api/v2statisticreturn'),
+                 
                 Api.get('api/v2lateitrin'),
                 Api.get('api/v2latecrossdock'),
                 Api.get('api/v2latepo'),
@@ -42,12 +44,23 @@ function ChartInbound() {
                         if (Array.isArray(lateDataArray)) {
                             lateDataArray.forEach(item => {
                                 if (item && typeof item.NOTIF === 'string') {
-                                    speak(`Ada barang yang terlambat di inbound nomor receipt: ${item.NOTIF.split('').join(' ')}`);
+                                    speak(`Ada dokumen yang harus diproses di inbound dengan nomor: ${item.NOTIF.split('').join(' ')}`);
                                 } else {
                                     console.error('Invalid item or NOTIF:', item);
                                 }
                             });
                         }
+
+                        // if (Array.isArray(lateDataArray)) {
+                        //     lateDataArray.forEach(item => {
+                        //         const spacedNotif = item.NOTIF.split('').join(' ');
+
+                        //         speak(`ada dokumen yang harus di proses di inbound nomor receipt ${spacedNotif}`);
+                        //       //  console.log(`Speaking: ${item.NOTIF2}`);
+                              
+                                
+                        //     });
+                        // }
                     });
                 }
             });
@@ -80,11 +93,18 @@ function ChartInbound() {
             <div className="container-fullscreen">
     <h2 className="text-center chart-top-title">INBOUND</h2>
 
-    <div className="row">
+    {/* <div className="row">
         <div className="col-md-6 mb-6">
             <Card className="border-top-success card-dashboard">
                 <Card.Body>
-                    <ChartInboundPo />
+                <div className="row mt-4">
+                <div className="col-md-6">
+                                            <TableGrpo />
+                                        </div>
+                                        <div className="col-md-6">
+                                            <ChartGrpoLastMonth />
+                                        </div>
+                                        </div>
                 </Card.Body>
             </Card>
         </div>
@@ -109,7 +129,52 @@ function ChartInbound() {
                 </Card.Body>
             </Card>
         </div>
+    </div> */}
+    <div className="row">
+    {/* <div className="col-lg-6 col-md-12 mb-4">
+        <Card className="border-top-success card-dashboard">
+            <Card.Body>
+                <div className="row mt-4">
+                    <div className="col-md-6">
+                        <TableGrpo />
+                    </div>
+                    <div className="col-md-6">
+                        <ChartGrpoLastMonth />
+                    </div>
+                </div>
+            </Card.Body>
+        </Card>
+    </div> */}
+    <div className="col-lg-6 col-md-12 mb-4">
+        <Card className="border-top-success card-dashboard">
+            <Card.Body>
+                <ChartInboundPo/>
+            </Card.Body>
+        </Card>
     </div>
+    <div className="col-lg-6 col-md-12 mb-4">
+        <Card className="border-top-success card-dashboard">
+            <Card.Body>
+                <ChartInboundItrIn />
+            </Card.Body>
+        </Card>
+    </div>
+    <div className="col-lg-6 col-md-12 mb-4">
+        <Card className="border-top-success card-dashboard">
+            <Card.Body>
+                <ChartInboundReturn />
+            </Card.Body>
+        </Card>
+    </div>
+    <div className="col-lg-6 col-md-12 mb-4">
+        <Card className="border-top-success card-dashboard">
+            <Card.Body>
+                <ChartInboundCrossdock />
+            </Card.Body>
+        </Card>
+    </div>
+</div>
+
 </div>
 
         </React.Fragment>

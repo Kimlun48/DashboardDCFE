@@ -443,9 +443,15 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .chart-top-title {
   font-size: 5px;
   text-align:center;
+  color: #ffffff; /* Title font color */
+}
+
+.text-title-chart{
+  font-size: 12px;
+  text-align:center;
   margin-bottom: 0px;
   color: #ffffff; /* Title font color */
-  margin-top: 15px;
+  margin-top: 1px;
 }
 
 .chart-container-chart {
@@ -964,11 +970,8 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 .card-dashboard {
   margin-bottom: 200px;
-  height: 490px;
-  
-  
-  
-  
+   /*buat responsiv */
+   /* height: 490px;     */
 }
 .card{
   /* background-color: #0C134F; */
@@ -1135,6 +1138,8 @@ li:nth-child(3) {
 .square-icon.H-1 {
   background-color: #00FFA3;
 }
+
+
 
 
 

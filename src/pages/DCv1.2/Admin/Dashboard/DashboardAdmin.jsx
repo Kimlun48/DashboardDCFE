@@ -195,7 +195,7 @@ function DashboardAdmin() {
     const [storageData, setStorageData] = useState([]);
     const [outboundData, setOutboundData] = useState([]);
     const [hasLateData, setHasLateData] = useState(false);
-    const time = 2 * 60 * 1000;
+    const time = 30 * 60 * 1000;
 
     const fetchData = async () => {
         try {

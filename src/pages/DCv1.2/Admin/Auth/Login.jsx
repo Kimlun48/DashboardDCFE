@@ -150,8 +150,9 @@ function Login() {
                     </div>
                 </div>
             </div>
-            {/* <FooterDc /> */}
+           
         </div>
+       
     );
 }
 

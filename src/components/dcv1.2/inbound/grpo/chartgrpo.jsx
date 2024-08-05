@@ -113,7 +113,7 @@ function ChartGrpoLastMonth() {
                     </div>
                 </div>
             </div> */}
-             <div className="container mt-4">
+            <div className="container-po mt-4">
             <div className="header">
                 <h4 className="chart-title-po">Good Receipt PO Last 3 Month</h4>
                 
@@ -140,9 +140,9 @@ function ChartGrpoLastMonth() {
                                 data={data}
                                 cx="50%"
                                 cy="50%"
-                                outerRadius="80%"
+                                outerRadius="100%"
                                 stroke="none"
-                                innerRadius="40%"
+                                innerRadius="60%"
                                 fill="#8884d8"
                                 dataKey="value"
                                 paddingAngle={3}
@@ -159,7 +159,13 @@ function ChartGrpoLastMonth() {
                             </Pie>
                             <Tooltip />
                         </PieChart>
-                        <div className="legend">
+                       
+                    </ResponsiveContainer>
+                )}
+            </div>
+            
+        </div>
+        <div className="legend">
                          <div className="legend-item">
                          <div className="square-icon ontime"></div> OnTime
                          </div>
@@ -167,11 +173,6 @@ function ChartGrpoLastMonth() {
                          <div className="square-icon late"></div> Late
                         </div>
                      </div>
-                    </ResponsiveContainer>
-                )}
-            </div>
-            
-        </div>
         </React.Fragment>
     );
 }

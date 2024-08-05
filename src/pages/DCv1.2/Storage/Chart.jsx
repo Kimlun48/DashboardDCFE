@@ -48,7 +48,7 @@ function ChartStorage() {
                         if (Array.isArray(lateDataArray)) {
                             lateDataArray.forEach(item => {
                                 if (item && typeof item.NOTIF === 'string') {
-                                    speak(`Ada barang yang terlambat di storage nomor receipt: ${item.NOTIF.split('').join(' ')}`);
+                                    speak(`Ada dokumen yang harus diproses di storage dengan nomor: ${item.NOTIF.split('').join(' ')}`);
                                 } else {
                                     console.error('Invalid item or NOTIF:', item);
                                 }
@@ -90,28 +90,28 @@ function ChartStorage() {
                     </div>
                 )} */}
                 <div className="row">
-                    <div className="col-md-6 mb-6">
+                    <div className="col-lg-6 col-md-12 mb-4">
                         <Card className="border-top-success card-dashboard">
                             <Card.Body>
                                 <ChartPutaway />
                             </Card.Body>
                         </Card>
                     </div>
-                    <div className="col-md-6 mb-6">
+                    <div className="col-lg-6 col-md-12 mb-4">
                         <Card className="border-top-success card-dashboard">
                             <Card.Body>
                                 <ChartReplenishment />
                             </Card.Body>
                         </Card>
                     </div>
-                    <div className="col-md-6 mb-6">
+                    <div className="col-lg-6 col-md-12 mb-4">
                         <Card className="border-top-success card-dashboard">
                             <Card.Body>
                                 <ChartDeliveryPicking />
                             </Card.Body>
                         </Card>
                     </div>
-                    <div className="col-md-6 mb-6">
+                    <div className="col-lg-6 col-md-12 mb-4">
                         <Card className="border-top-success card-dashboard">
                             <Card.Body>
                                 <ChartCashPicking />

@@ -3,10 +3,42 @@ import { NavDropdown } from "react-bootstrap";
 import Sidebar from "./sidebar";
 import { useNavigate, Link } from "react-router-dom";
 import WarehouseIcon from '@mui/icons-material/Warehouse';
+import Api from "../../../api";
+import Cookies from 'js-cookie';
 
 const AdminLayout = ({children}) => {
     const [sidebarToggle, setSidebarToggle] = useState(false);
     const navigate = useNavigate();
+    const [user, setUser] = useState({});
+    const token = Cookies.get('access_token');
+
+
+    const fetchData = async () => {
+
+        //fetch on Rest API
+        await Api.get('/api/user', {
+            headers: {
+                
+                //header Bearer + Token
+                Authorization: `Bearer ${token}`,
+            }
+        })
+        .then((response) => {
+
+            //set state "user"
+            setUser(response.data);
+            console.log(response.data); // Log data pengguna ke konsol
+        })
+    };
+
+    //hook useEffect
+    useEffect(() => {
+
+        //call function "fetchData"
+        fetchData();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const sidebarToggleHandler = (e) => {
         e.preventDefault();
@@ -36,6 +68,7 @@ const AdminLayout = ({children}) => {
                 <strong>Distribution Center</strong>
                 <br/>
                 <WarehouseIcon/>
+                <p>{user.name}</p>
             </div>
             
             <Sidebar />
