@@ -173,7 +173,7 @@ function DashboardStoreIndex() {
                     </div>
                     <div className="row mt-4">
                         <div className="col-md-12">
-                            {/* <div className="card border-0 rounded shadow-sm border-top-success"> */}
+                            <div className="card border-0 rounded shadow-sm border-top-success">
                                 <div className="card-body">
                                     <DataTable
                                         columns={columns}
@@ -185,7 +185,7 @@ function DashboardStoreIndex() {
                                             </div>
                                         }
                                     />
-                                {/* </div> */}
+                                </div>
                             </div>
                         </div>
                         
