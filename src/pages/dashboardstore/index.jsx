@@ -61,7 +61,7 @@ function DashboardStoreIndex() {
         return () => clearInterval(interval);
     }, []);
 
-    const time = 2 * 60 * 1000;
+    const time = 1 * 60 * 1000;
 
     useEffect(() => {
         fetchData();
