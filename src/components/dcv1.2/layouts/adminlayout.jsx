@@ -27,8 +27,9 @@ const AdminLayout = ({children}) => {
 
             //set state "user"
             setUser(response.data);
-            console.log(response.data); // Log data pengguna ke konsol
+            //console.log(response.data); // Log data pengguna ke konsol
         })
+       
     };
 
     //hook useEffect
@@ -67,7 +68,7 @@ const AdminLayout = ({children}) => {
             <div className="sidebar-heading bg-light text-center transparent-background" onClick={() => navigate("/")}>
                 <strong>Distribution Center</strong>
                 <br/>
-                <WarehouseIcon/>
+                <WarehouseIcon />
                 <p>{user.name}</p>
             </div>
             

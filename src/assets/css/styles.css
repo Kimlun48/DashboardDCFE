@@ -25,16 +25,47 @@
   --shadowP: 0 1px 1px rgb(250 255 255/ 0.8);
 } */
 
-*,
-html,
+
 body {
+  /* font-family: 'Manrope' !important; */
+  font-family: 'Segoe UI', sans-serif !important;
   scroll-behavior: smooth !important;
-  
+   /* background: var(--body-color) !important; */
+   /* background-image: url("../images/3040791.jpg"); */
+   /* background: radial-gradient(circle, rgb(252, 249, 250) 30%, rgb(144, 187, 242) 100%)!important; */
+   /* background: rgb(221, 55, 9) !important; */
+   /* background: #000638; */
+   
+   margin: 0;
+   padding: 0;
+   background-color: #000638;
+   -webkit-font-smoothing: antilased;
+   -moz-osx-font-smoothing: grayscale;
+   line-height: 1.6;
+   letter-spacing: 0.5;
+   font-size: 1.2em;
+   font-weight: 300;
+   
+ }
+ .home {
+   margin-top: 20px;
+ }
+
+/* .body .font {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  font-size: 1.2em;
+  font-weight: 300;
+
+  background: linear-gradient(to right, #ffffff, #cccccc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.white-font {
-  color: white;
-}
+.white-font:hover {
+  color: #ffdd57;
+  transition: color 0.3s ease-in-out;
+} */
 
 
 
@@ -65,10 +96,11 @@ body {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease-out;
+  border-radius: 5px;
 }
 
 .list-group-item .dropdown-content.show {
-  max-height: 500px; /* Sesuaikan dengan tinggi maksimum konten dropdown Anda */
+  max-height: 850px; /* Sesuaikan dengan tinggi maksimum konten dropdown Anda */
   background-color: rgba(0,0,0,0.4) !important;
   backdrop-filter: blur(5px) !;
 }
@@ -77,12 +109,26 @@ body {
   overflow-x: hidden;
   
 }
-
+.side-dash {
+  background-color: #252831;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+.side-report {
+  background-color: #252831;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+.side-logout {
+  background-color: #252831;
+  border-radius: 5px;
+  
+}
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
   transition: margin 0.25s ease-out;
-  background-color: rgba(0,0,0,0.4) !important;
+  /* background-color: rgba(152, 147, 147, 0.4) !important; */
   backdrop-filter: blur(5px) !;
 
 }
@@ -92,18 +138,58 @@ body {
 }
 
 
+.custom-radio {
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  
+}
+
+.custom-radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.custom-radio .form-check-label {
+  margin-bottom: 0;
+  font-weight:lighter;
+  color: white;
+}
+
+
+
+.custom-radio input:checked ~ .form-check-label {
+  color: #565657;
+}
+
+.custom-radio  :hover {
+  color: #97979b !important;
+}
+
+
+
+
 
 #sidebar-wrapper .sidebar-heading {
+  margin-top:5px;
   padding: 0.875rem 1.25rem;
   font-size: 1.2rem;
   background-color: rgba(131, 163, 238, 0.4) !important;
   backdrop-filter: blur(5px) !;
   color: #f5f5f5;
+  border-radius: 5px;
+  margin-bottom: 5px;
 
+}
+.custom-icon {
+  color: #f6f6f8;
 }
 
 #sidebar-wrapper .list-group {
   width: 15rem;
+  
   
 }
 
@@ -118,7 +204,9 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 .list-group-item:hover {
   
-  color: #0379cd !important; 
+  /* color: #0379cd !important;  */
+  color: #97979b !important;
+  
 }
 
 .list-group-item.active:hover {
@@ -701,24 +789,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 
 
-body {
- /* font-family: 'Manrope' !important; */
- font-family: 'Segoe UI', sans-serif !important;
-                                                
-  /* background: var(--body-color) !important; */
-  /* background-image: url("../images/3040791.jpg"); */
-  /* background: radial-gradient(circle, rgb(252, 249, 250) 30%, rgb(144, 187, 242) 100%)!important; */
-  /* background: rgb(221, 55, 9) !important; */
-  /* background: #000638; */
-  
-  margin: 0;
-  padding: 0;
- 
-  background-color: #000638;
-}
-.home {
-  margin-top: 20px;
-}
+
 
 .mt-100 {
   margin-top: 100px;
@@ -917,25 +988,6 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ////////////////////////////////////////////////////////////////////////// */
 
 
@@ -1076,6 +1128,33 @@ html, body {
   overflow-y: auto; 
 } */
 
+.sidebar {
+    width: 240px;
+    transition: width 0.3s ease; /* Transisi halus saat ukuran berubah */
+}
+
+
+.sidebar.hidden {
+  transform: translateX(-100%);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 240px; /* Lebar lebih kecil pada tablet */
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        width: 180px; /* Lebar lebih kecil pada ponsel */
+    }
+}
+
+@media (max-width: 400px) {
+    .sidebar {
+        width: 100px; /* Lebar lebih kecil pada layar sangat kecil */
+    }
+}
 
 
 
