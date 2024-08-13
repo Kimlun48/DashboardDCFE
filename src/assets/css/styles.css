@@ -43,8 +43,8 @@ body {
    -moz-osx-font-smoothing: grayscale;
    line-height: 1.6;
    letter-spacing: 0.5;
-   font-size: 1.2em;
-   font-weight: 300;
+   
+  
    
  }
  .home {
@@ -109,21 +109,59 @@ body {
   overflow-x: hidden;
   
 }
+
+.sidebar {
+  width: 240px;
+  transition: width 0.3s ease; /* Transisi halus saat ukuran berubah */
+  color: white !important;
+}
+
+
+
 .side-dash {
-  background-color: #252831;
+  background-color: rgba(190, 184, 184, 0.1);
   border-radius: 5px;
   margin-bottom: 5px;
 }
+
+
 .side-report {
-  background-color: #252831;
+  background-color: rgba(190, 184, 184, 0.1);
   border-radius: 5px;
   margin-bottom: 5px;
 }
 .side-logout {
-  background-color: #252831;
+  background-color: rgba(190, 184, 184, 0.1);
   border-radius: 5px;
+  margin-bottom: 5px;
   
 }
+
+.list-group-item {
+color: white; /* Warna teks putih untuk item */
+background-color: transparent; /* Latar belakang transparan */
+}
+
+.dropdown-content {
+background-color: rgba(0, 0, 0, 0.7); /* Latar belakang dropdown dengan opacity */
+border-radius: 5px;
+}
+
+.custom-icon {
+color: white; /* Warna ikon putih */
+}
+
+.transparent-background {
+background-color: transparent; /* Latar belakang transparan untuk item list */
+}
+
+.sidebar.hidden {
+transform: translateX(-100%);
+}
+
+
+
+
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
@@ -142,7 +180,7 @@ body {
   position: relative;
   padding-left: 25px;
   cursor: pointer;
-  font-size: 16px;
+  
   
 }
 
@@ -1128,15 +1166,7 @@ html, body {
   overflow-y: auto; 
 } */
 
-.sidebar {
-    width: 240px;
-    transition: width 0.3s ease; /* Transisi halus saat ukuran berubah */
-}
 
-
-.sidebar.hidden {
-  transform: translateX(-100%);
-}
 
 @media (max-width: 768px) {
     .sidebar {
