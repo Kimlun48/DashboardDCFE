@@ -184,6 +184,7 @@ transform: translateX(-100%);
   
 }
 
+
 .custom-radio input {
   position: absolute;
   opacity: 0;
@@ -281,6 +282,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 .card-header{
   color: #ffffff;
+ 
 }
 
 
@@ -640,6 +642,17 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   margin-top: 0px;
 }
 
+.containers {
+  margin-top: 0.5rem;   /* Jarak atas container */
+  margin-bottom: 0.5rem; /* Jarak bawah container */
+}
+
+/* Jika Anda ingin menambah jarak hanya di antara containers */
+.containers + .containers {
+  margin-top: 0.5rem; /* Jarak antar containers */
+}
+
+
 
 .card-total {
   
@@ -824,6 +837,9 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
  
   
 }
+
+
+
 
 
 

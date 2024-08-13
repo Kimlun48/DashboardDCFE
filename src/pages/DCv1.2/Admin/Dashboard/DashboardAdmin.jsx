@@ -257,7 +257,8 @@ function DashboardAdmin() {
     return (
         <React.Fragment>
             <AdminLayout>
-                <div className="containers mt-4 mb-5">
+                {/* <div className="containers mt-4 mb-5"> */}
+                <div className="containers">
                     <div className="row mt-4">
                         <div className="col-12">
                             <div className="card border-0 rounded shadow-sm border-top-success">
@@ -316,7 +317,8 @@ function DashboardAdmin() {
                         </div>
                     </div>
                 </div>
-                <div className="containers mt-4 mb-5">
+                {/* <div className="containers mt-5 mb-5"> */}
+                <div className="containers">
                     <div className="row mt-4">
                         <div className="col-12">
                             <div className="card border-0 rounded shadow-sm border-top-success">
