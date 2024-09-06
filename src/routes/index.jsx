@@ -25,6 +25,8 @@ import ListPickingReport from '../pages/DCv1.2/Admin/Reports/storage/ListPicking
 import GrpothreelateReport from '../pages/DCv1.2/Admin/Reports/inbound/GrpothreelateReport.jsx';
 import GrpothreeontimeReport from '../pages/DCv1.2/Admin/Reports/inbound/GrpothreeontimeReport.jsx';
 
+import Logistic from '../pages/DCv1.2/Inbound/Logistic.jsx';
+
 //storage
 import CashPickingReport from '../pages/DCv1.2/Admin/Reports/storage/CashPickingReport.jsx';
 import DeliveryPickingReport from '../pages/DCv1.2/Admin/Reports/storage/DeliveryPickingReport.jsx';
@@ -34,10 +36,15 @@ import ReplenishmentReport from '../pages/DCv1.2/Admin/Reports/storage/Replenish
 import ArReserveInReport from '../pages/DCv1.2/Admin/Reports/outbound/ArReserveInvoiceReport.jsx';
 import InventoryOutReport from '../pages/DCv1.2/Admin/Reports/outbound/InventoryTroReport.jsx';
 import SalesOrderReport from '../pages/DCv1.2/Admin/Reports/outbound/SalesOrderReport.jsx';
+import QrCodeScanner from '../pages/DCv1.2/Inbound/QrCodeScanner.jsx';
 
 //admin
 import Login from '../pages/DCv1.2/Admin/Auth/Login.jsx';
 
+//kaliurang
+import ChartKaliurang from '../pages/DCv1.2/Store/Kaliurang/Chart.jsx';
+import KaliurangBinINReport from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinIN.jsx';
+import KaliurangBinTransitReport from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinTransit.jsx';
 
 function RoutesIndex() {
     return (
@@ -68,9 +75,8 @@ function RoutesIndex() {
               {/* route "/inbound/report/grpothreeontime" */}
               <Route path="/inbound/report/grpothreeontime" element={<GrpothreeontimeReport />}/>
 
-            
-
-
+               {/* route "/qrcode" */}
+               <Route path="/qrcode" element={<QrCodeScanner />}/>
 
 
            
@@ -79,7 +85,20 @@ function RoutesIndex() {
              <Route path="/" element={<Dashboard />} />
 
               {/* route "/dashboardstore" */}
-             <Route path="/dashboardstore" element={<DashboardStoreIndex />} />      
+             <Route path="/dashboardstore" element={<DashboardStoreIndex />} />
+
+
+             {/* route "/chartkaliurang" */}
+             <Route path="/kaliurang" element={<ChartKaliurang />} />
+
+              {/* route "/kaliurang/bininreport" */}
+              <Route path="/kaliurang/bininreport" element={<KaliurangBinINReport />} />
+
+               {/* route "/kaliurang/binreport" */}
+               <Route path="/kaliurang/bintransitreport" element={<KaliurangBinTransitReport />} />
+
+
+
 
 
             {/* private route "/admin/dashboard" */}
@@ -131,7 +150,19 @@ function RoutesIndex() {
             <CrossdockReport/>
             </PrivateRoutes>
             }
+            /> 
+
+            {/*private route "/admin/inbound/logistic" */}
+            <Route 
+            path="/admin/inbound/logistic" 
+            element={
+              <PrivateRoutes>
+            <Logistic/>
+            </PrivateRoutes>
+            }
             />  
+
+
 
             {/*private route "/admin/storage/cashpicking" */}
             <Route 

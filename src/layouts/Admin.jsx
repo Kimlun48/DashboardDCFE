@@ -16,6 +16,8 @@ export default function AdminLayout({ children }) {
                 <Nav className="me-auto mb-2 mb-lg-0">
                   <Nav.Link as={Link} to="/" className="fw-bold">HOME</Nav.Link>
                   <Nav.Link as={Link} to="/admin/login" className="fw-bold">ADMIN</Nav.Link>
+                  <Nav.Link as={Link} to="/qrcode" className="fw-bold">SCAN QR</Nav.Link>
+                  <Nav.Link as={Link} to="/kaliurang" className="fw-bold">KALIURANG</Nav.Link>
                   <Nav.Link href="http://10.1.0.56:8080/logistic" target="_blank"> <i className="fa fa-external-link-alt me-2"></i>GoTo Logistic</Nav.Link>
 
                   {/* <Nav.Link as={Link} to="/ilssps" className="fw-bold">CROSSDOCK ALL</Nav.Link>

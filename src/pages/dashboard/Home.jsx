@@ -84,7 +84,7 @@ function Home() {
                                 <div className="card-body p-0 d-flex align-items-center">
                                     <Link to="/dashboardstore" target="_blank" rel="noopener noreferrer"  className="d-flex align-items-center" style={{ textDecoration: 'none', color: 'inherit' }}>
                                         <div className="bg-primary py-4 px-5 mfe-3" style={{ width: "130px" }}>
-                                            <i className="fas fa-shopping-cart fa-4x text-white"></i>
+                                            <i className="fas fa fa-shopping-cart fa-4x text-white"></i>
                                         </div>
                                         <div>
                                           
