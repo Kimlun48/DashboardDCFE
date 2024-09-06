@@ -20,12 +20,15 @@
     "@syncfusion/ej2-react-navigations": "^25.2.6",
     "animate.css": "^4.1.1",
     "axios": "^1.2.1",
-    "bootstrap": "^5.1.0",
+    "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
     "date-fns": "^3.6.0",
     "file-saver": "^2.0.5",
     "howler": "^2.2.4",
     "js-cookie": "^3.0.1",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.45",
+    "qrcode.react": "^4.0.1",
     "react": "^18.2.0",
     "react-animated-text": "^0.1.4",
     "react-bootstrap": "^2.5.0",
@@ -33,6 +36,7 @@
     "react-confirm-alert": "^3.0.6",
     "react-data-table-component": "^7.6.2",
     "react-data-table-component-extensions": "^1.6.0",
+    "react-datepicker": "^7.3.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^5.2.1",
@@ -40,6 +44,8 @@
     "react-moving-text": "^0.0.7",
     "react-paginate": "^8.2.0",
     "react-pro-sidebar": "^1.1.0",
+    "react-qr-reader": "^3.0.0-beta-1",
+    "react-qr-scanner": "^1.0.0-alpha.11",
     "react-router-dom": "^6.24.1",
     "react-text-to-speech": "^0.16.1",
     "recharts": "^2.12.7",
@@ -51,5 +57,11 @@
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
     "vite": "^4.2.0"
+  },
+  "overrides": {
+  "react-qr-reader": {
+    "react": "$react",
+    "react-dom": "$react-dom"
   }
+}
 }

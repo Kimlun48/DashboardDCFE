@@ -8,7 +8,7 @@ function PrivateRoutes ({ children }){
     
 
     if (!access_token) {
-        return <Navigate to="/" replace />;
+        return <Navigate to="/admin/login" replace />;
     }
 
     return children

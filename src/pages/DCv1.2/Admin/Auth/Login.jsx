@@ -14,6 +14,8 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 import FooterDc from "../../../../components/footer";
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import WarehouseIcon from '@mui/icons-material/Warehouse';
 
 function Login() {
     // Set title page
@@ -119,39 +121,60 @@ function Login() {
 
     return (
         <div className="container-fluid container-login d-flex justify-content-center align-items-center min-vh-100">
-            <Toaster />
-            <div className="row justify-content-center w-100">
-                <div className="col-lg-4 col-md-6 col-sm-8 col-10 mt-5">
-                    <div className="text-center mb-4">
-                        <h4><i className="fa fa-map-marked-alt"></i> <strong>Distribution Center</strong></h4>
+    <Toaster />
+    <div className="row justify-content-center w-100">
+        <div className="col-lg-4 col-md-6 col-sm-8 col-10 mt-5">
+            <div className="text-center mb-4">
+                {/* Mengganti <i> dengan komponen icon untuk lebih konsisten */}
+                <h4><WarehouseIcon className="me-2 custom-icon" /><strong>Distribution Center</strong></h4>
+            </div>
+            <div className="card border-0 rounded shadow-sm">
+                <div className="card-body-login">
+                    <div className="text-center">
+                        <h6 className="fw-bold">LOGIN ADMIN</h6>
+                        <hr />
                     </div>
-                    <div className="card border-0 rounded shadow-sm">
-                        <div className="card-body">
-                            <div className="text-center">
-                                <h6 className="fw-bold">LOGIN ADMIN</h6>
-                                <hr />
-                            </div>
-                            <form onSubmit={loginHandler}>
-                                <label className="mb-1">USERNAME</label>
-                                <div className="input-group mb-3">
-                                    <span className="input-group-text"><i className="fa fa-user"></i></span>
-                                    <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} placeholder="Username" />
-                                </div>
-
-                                <label className="mb-1">PASSWORD</label>
-                                <div className="input-group mb-3">
-                                    <span className="input-group-text"><i className="fa fa-lock"></i></span>
-                                    <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-                                </div>
-
-                                <button className="btn btn-primary shadow-sm rounded-sm px-4 w-100" type="submit" disabled={isLoading}> {isLoading ? "LOADING..." : "LOGIN"} </button>
-                            </form>
+                    <form onSubmit={loginHandler}>
+                        <label className="mb-1">USERNAME</label>
+                        <div className="input-group mb-3">
+                            <span className="input-group-text"><i className="fa fa-user"></i></span>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                value={name} 
+                                onChange={(e) => setName(e.target.value)} 
+                                placeholder="Username" 
+                                required
+                            />
                         </div>
-                    </div>
+
+                        <label className="mb-1">PASSWORD</label>
+                        <div className="input-group mb-3">
+                            <span className="input-group-text"><i className="fa fa-lock"></i></span>
+                            <input 
+                                type="password" 
+                                className="form-control" 
+                                value={password} 
+                                onChange={(e) => setPassword(e.target.value)} 
+                                placeholder="Password" 
+                                required
+                            />
+                        </div>
+
+                        <button 
+                            className="btn btn-primary shadow-sm rounded-sm px-4 w-100" 
+                            type="submit" 
+                            disabled={isLoading}
+                        >
+                            {isLoading ? "LOADING..." : "LOGIN"}
+                        </button>
+                    </form>
                 </div>
             </div>
-           
         </div>
+    </div>
+</div>
+
        
     );
 }
