@@ -63,12 +63,16 @@ const ChartKaliurangGrpo = () => {
                                 tick={{ fontSize: 12 }} 
                                 className="chart-x-axis" 
                                 domain={[0, 'dataMax + 1500']} 
+                                textAnchor="end"
+                               // angle={-45}
                                 />
                                 <YAxis 
                                 dataKey="name" 
                                 type="category" 
                                 tick={{ fontSize: 12 }} 
-                                className="chart-y-axis" 
+                                className="chart-y-axis"
+                                textAnchor="end"
+                               // angle={-45} 
                                 />
                                 <Tooltip 
                                     contentStyle={{ 

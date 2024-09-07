@@ -2,11 +2,12 @@ import { Card } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import Api from "../../../../api";
 import ChartKaliurangGrpo from "../../../../components/dcv1.2/store/kaliurang/inboundGrpo";
+import KaliurangCashPickingReport from "../../../../components/dcv1.2/store/kaliurang/CashPicking";
 
 function ChartKaliurang() {
     const [chartinbound, setChartinbound] = useState([]);
     const [hasLateData, setHasLateData] = useState(false);
-    const time = 30 * 60 * 1000;
+    const time = 2 * 60 * 1000;
 
     // const fetchData = async () => {
     //     try {
@@ -83,6 +84,13 @@ function ChartKaliurang() {
         <Card className="border-top-success card-dashboard">
             <Card.Body>
                 <ChartKaliurangGrpo />
+            </Card.Body>
+        </Card>
+    </div>
+    <div className="mb-4"> 
+        <Card className="border-top-success card-dashboard">
+            <Card.Body>
+                <KaliurangCashPickingReport />
             </Card.Body>
         </Card>
     </div>
