@@ -114,11 +114,11 @@ function KaliurangCashPickingReport() {
                                     paginationRowsPerPageOptions={[10, 15, 20, 25]}
                                     highlightOnHover
                                     customStyles={customStyles}
-                                    // noDataComponent={
-                                    //     <div className="alert alert-danger mb-0">
-                                    //         Data Belum Tersedia!
-                                    //     </div>
-                                    // }
+                                    noDataComponent={
+                                        <div className="alert alert-danger mb-0">
+                                            No orders cash picking
+                                        </div>
+                                    }
                                 />
                             </div>
                         </div>
