@@ -12,6 +12,7 @@ function KaliurangCashPickingReport() {
     const [search, setSearch] = useState('');
     const [error, setError] = useState(null);
     const { formatDate } = useFormatDate();
+    const time = 2 * 60 * 1000; // 2 minutes
 
     const fetchData = async () => {
         try {
@@ -21,13 +22,17 @@ function KaliurangCashPickingReport() {
             setFilteredData(data);
             console.log('Data received from API:', data);
         } catch (error) {
-            setError('Error fetching data. Please try again later.');
             console.error('Error fetching data:', error);
         }
     };
 
     useEffect(() => {
         fetchData();
+        const interval = setInterval(() => {
+            fetchData();
+        }, time);
+
+        return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
@@ -36,7 +41,8 @@ function KaliurangCashPickingReport() {
             const filtered = cashpicking.filter(item =>
                 item.NOSTRUK.toLowerCase().includes(lowercasedSearch) ||
                 item.CardName.toLowerCase().includes(lowercasedSearch) ||
-                item.DocNum.toLowerCase().includes(lowercasedSearch) 
+                item.DocNum.toLowerCase().includes(lowercasedSearch) ||
+                item.Dscription.toLowerCase().includes(lowercasedSearch)
                 // item.QTY.toString().toLowerCase().includes(lowercasedSearch)
             );
             setFilteredData(filtered);
@@ -44,14 +50,14 @@ function KaliurangCashPickingReport() {
     }, [search, cashpicking]);
 
     const columns = [
-        { name: 'NO', selector: row => row.NOSTRUK, sortable: true },
-        { name: 'DOC NUM', selector: row => row.DocNum, sortable: true },
+        { name: 'NO', selector: row => row.NOSTRUK, sortable: true, width:'200px' },
+        { name: 'Doc Num', selector: row => row.DocNum, sortable: true,width: '150px' },
         { name: 'Date', selector: row => row.TGLTRANSAKSI ? formatDate(row.TGLTRANSAKSI) : 'No Data',sortable: true, width: '140px' },
-        { name: 'Customer', selector: row => row.CardName, sortable: true, width: '600px' },
-        { name: 'Item code', selector: row => row.ItemCode, sortable: true, width: '600px' },
-        { name: 'Description', selector: row => row.Dscription, sortable: true},
-        { name: 'Avail Release', selector: row => row.AVAIL_RELEASE, sortable: true},
-        { name: 'STOCK', selector: row => row.STOCK, sortable: true},
+        { name: 'Customer', selector: row => row.CardName, sortable: true, width: '150px' },
+        { name: 'Item code', selector: row => row.ItemCode, sortable: true, width: '150px' },
+        { name: 'Description', selector: row => row.Dscription, sortable: true, width: '500px'},
+        { name: 'A.Release', selector: row => row.AVAIL_RELEASE, sortable: true, width: '150px'},
+        { name: 'Stock', selector: row => row.STOCK, sortable: true},
         
     ];
 
@@ -108,11 +114,11 @@ function KaliurangCashPickingReport() {
                                     paginationRowsPerPageOptions={[10, 15, 20, 25]}
                                     highlightOnHover
                                     customStyles={customStyles}
-                                    noDataComponent={
-                                        <div className="alert alert-danger mb-0">
-                                            Data Belum Tersedia!
-                                        </div>
-                                    }
+                                    // noDataComponent={
+                                    //     <div className="alert alert-danger mb-0">
+                                    //         Data Belum Tersedia!
+                                    //     </div>
+                                    // }
                                 />
                             </div>
                         </div>
