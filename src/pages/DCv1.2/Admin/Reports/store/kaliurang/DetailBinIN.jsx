@@ -21,7 +21,7 @@ function KaliurangBinINReport() {
             setFilteredData(data);
             console.log('Data received from API:', data);
         } catch (error) {
-            setError('Error fetching data. Please try again later.');
+           
             console.error('Error fetching data:', error);
         }
     };
