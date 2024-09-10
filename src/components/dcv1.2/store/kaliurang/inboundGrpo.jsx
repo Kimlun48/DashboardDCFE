@@ -157,13 +157,18 @@ const ChartKaliurangGrpo = () => {
         { name: 'Bin Transit', value: onhandtransit },
     ];
 
+    
+
     const handleClick = (entry) => {
         if (entry.name === 'Bin IN') {
+            // navigate('/putawaystoragelate');
             window.open('/kaliurang/bininreport', '_blank');
         } else if (entry.name === 'Bin Transit') {
+            // navigate('/putawaystorageunlate');
             window.open('/kaliurang/bintransitreport', '_blank');
         }
     };
+
 
     return (
         <React.Fragment>
@@ -175,7 +180,7 @@ const ChartKaliurangGrpo = () => {
                     <div className="chart-container-chart">
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart layout="vertical" data={data} margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
-                                <defs>
+                            <defs>
                                     <linearGradient id="colorBinIN" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stopColor="#b259ff" stopOpacity={1}/>
                                         <stop offset="100%" stopColor="#b259ff" stopOpacity={0.5}/>
@@ -186,18 +191,21 @@ const ChartKaliurangGrpo = () => {
                                     </linearGradient>
                                 </defs>
                                 <XAxis 
-                                    type="number" 
-                                    tick={{ fontSize: 12 }} 
-                                    className="chart-x-axis" 
-                                    domain={[0, 'dataMax + 2000']} 
-                                    textAnchor="end"
+                                type="number" 
+                                tick={{ fontSize: 12 }} 
+                                className="chart-x-axis" 
+                                domain={[0, 'dataMax + 2000']} 
+                                textAnchor="end"
+                               // angle={-45}
+                               
                                 />
                                 <YAxis 
-                                    dataKey="name" 
-                                    type="category" 
-                                    tick={{ fontSize: 12 }} 
-                                    className="chart-y-axis"
-                                    textAnchor="end"
+                                dataKey="name" 
+                                type="category" 
+                                tick={{ fontSize: 12 }} 
+                                className="chart-y-axis"
+                                textAnchor="end"
+                               // angle={-45} 
                                 />
                                 <Tooltip 
                                     contentStyle={{ 
@@ -209,8 +217,8 @@ const ChartKaliurangGrpo = () => {
                                         padding: '8px' 
                                     }} 
                                 />
-                                <Bar dataKey="value" radius={[0, 10, 10, 0]} onClick={handleClick} barSize={100}>
-                                    <LabelList dataKey="value" position="right" style={{ fontSize: 16, fill: '#fff' }} />
+                                <Bar dataKey="value" radius={[0, 10, 10, 0]} onClick={handleClick} className="chart-bar" barSize={100}>
+                                    <LabelList dataKey="value" position="right" style={{ fontSize: 16, fill: '#fff' }} className="chart-label-list" />
                                     {data.map((entry, index) => {
                                         let fillColor;
                                         switch (entry.name) {
@@ -221,9 +229,9 @@ const ChartKaliurangGrpo = () => {
                                                 fillColor = 'url(#colorBinTransit)';
                                                 break;
                                             default:
-                                                fillColor = '#8884d8';
+                                                fillColor = '#8884d8'; // Default color if needed
                                         }
-                                        return <Cell key={`cell-${index}`} fill={fillColor} style={{ filter: 'drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.3))' }} />;
+                                        return <Cell key={`cell-${index}`} fill={fillColor} />;
                                     })}
                                 </Bar>
                             </BarChart>
@@ -244,4 +252,3 @@ const ChartKaliurangGrpo = () => {
 };
 
 export default ChartKaliurangGrpo;
-
