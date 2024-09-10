@@ -4,6 +4,7 @@
 //import routes
 import RoutesIndex from "./routes"
 import { Toaster } from "react-hot-toast"
+import LogoutOnClose from "./components/utilites/LogoutOnClose"
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
     <>
       <RoutesIndex />
       <Toaster />
+      {/* <LogoutOnClose /> */}
     </>
   )
 }
