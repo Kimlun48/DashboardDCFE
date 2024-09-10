@@ -48,22 +48,66 @@ function Sidebar() {
         fetchData();
     }, [token]);
 
-    const handleLogout = async () => {
-        try {
-            await Api.post("/api/logout", {}, {
-                headers: {
-                    Authorization: `Bearer ${Cookies.get("access_token")}`,
-                },
-            });
+    // const handleLogout = async () => {
+    //     try {
+    //         await Api.post("/api/logout", {}, {
+    //             headers: {
+    //                 Authorization: `Bearer ${Cookies.get("access_token")}`,
+    //             },
+    //         });
     
             
+    //         Cookies.remove("access_token");
+    //         Cookies.remove("refresh_token");
+    
+            
+    //         navigate("/");
+    
+            
+    //         toast.success("Logout Successfully.", {
+    //             duration: 4000,
+    //             position: "top-right",
+    //             style: {
+    //                 borderRadius: '10px',
+    //                 background: '#333',
+    //                 color: '#fff',
+    //             },
+    //         });
+    //     } catch (error) {
+    //         console.error("Error during logout", error);
+    //         toast.error("Logout Failed.", {
+    //             duration: 4000,
+    //             position: "top-right",
+    //             style: {
+    //                 borderRadius: '10px',
+    //                 background: '#333',
+    //                 color: '#fff',
+
+    //             },
+    //         });
+    //         Cookies.remove("access_token");
+    //         Cookies.remove("refresh_token");
+    
+            
+    //         navigate("/");
+    //     }
+    // };
+    const handleLogout = async () => {
+        try {
+            // await Api.post("/api/logout", {}, {
+            //     headers: {
+            //         Authorization: `Bearer ${Cookies.get("access_token")}`,
+            //     },
+            // });
+    
+            // Manually remove tokens from cookies after logout
             Cookies.remove("access_token");
             Cookies.remove("refresh_token");
     
-            
+            // Navigate to the home page after successful logout
             navigate("/");
     
-            
+            // Show success toast
             toast.success("Logout Successfully.", {
                 duration: 4000,
                 position: "top-right",
@@ -75,6 +119,8 @@ function Sidebar() {
             });
         } catch (error) {
             console.error("Error during logout", error);
+    
+            // Show error toast
             toast.error("Logout Failed.", {
                 duration: 4000,
                 position: "top-right",
@@ -84,8 +130,20 @@ function Sidebar() {
                     color: '#fff',
                 },
             });
+    
+            // Remove tokens and navigate even if logout fails
+            // Cookies.remove("access_token");
+            // Cookies.remove("refresh_token");
+
+            Cookies.remove("access_token", { path: '/'});
+            Cookies.remove("refresh_token", { path: '/'});
+        
+            navigate("/");
+    
+          //  navigate("/");
         }
     };
+    
 
     const handleRadioChange = (path, dropdownName) => {
         navigate(path);
