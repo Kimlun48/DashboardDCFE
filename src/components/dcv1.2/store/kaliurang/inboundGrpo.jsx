@@ -127,7 +127,9 @@ import Api from "../../../../api";
 
 const ChartKaliurangGrpo = () => {
     const [onhandin, setOnhandin] = useState(0);
+    const [onhandout, setOnhandout] = useState(0);
     const [onhandtransit, setOnhandtransit] = useState(0);
+    
     const navigate = useNavigate();
     const time = 2 * 60 * 1000; // 2 minutes
 
@@ -135,7 +137,12 @@ const ChartKaliurangGrpo = () => {
         try {
             const response = await Api.get('api/grpokaliurangheaderstatistic');
             const data = response.data;
+           
+            // setOnhandin(120);
+            // setOnhandout(120);
+            // setOnhandtransit(120);
             setOnhandin(data.ONHANDIN || 0);
+            setOnhandout(data.ONHANDOUT || 0);
             setOnhandtransit(data.ONHANDTRANSIT || 0);
             console.log('Data received from API:', data);
         } catch (error) {
@@ -153,17 +160,21 @@ const ChartKaliurangGrpo = () => {
     }, []);
 
     const data = [
-        { name: 'Bin IN', value: onhandin },
-        { name: 'Bin Transit', value: onhandtransit },
+        { name: 'Bin IN WHS', value: onhandin },
+        { name: 'Bin OUT WHS', value: onhandout },
+        { name: 'Bin Transit WHS', value: onhandtransit },
     ];
 
     
 
     const handleClick = (entry) => {
-        if (entry.name === 'Bin IN') {
+        if (entry.name === 'Bin IN WHS') {
             // navigate('/putawaystoragelate');
             window.open('/kaliurang/bininreport', '_blank');
-        } else if (entry.name === 'Bin Transit') {
+        } else if (entry.name === 'Bin OUT WHS') {
+            // navigate('/putawaystorageunlate');
+            window.open('/kaliurang/binoutreport', '_blank');
+        } else if (entry.name === 'Bin Transit WHS') {
             // navigate('/putawaystorageunlate');
             window.open('/kaliurang/bintransitreport', '_blank');
         }
@@ -181,20 +192,24 @@ const ChartKaliurangGrpo = () => {
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart layout="vertical" data={data} margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
                             <defs>
-                                    <linearGradient id="colorBinIN" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#b259ff" stopOpacity={1}/>
-                                        <stop offset="100%" stopColor="#b259ff" stopOpacity={0.5}/>
+                                    <linearGradient id="colorBinINWHS" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#0857bf" stopOpacity={1}/>
+                                        <stop offset="100%" stopColor="#0857bf" stopOpacity={0.5}/>
                                     </linearGradient>
-                                    <linearGradient id="colorBinTransit" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#64c7f5" stopOpacity={1}/>
-                                        <stop offset="100%" stopColor="#64c7f5" stopOpacity={0.5}/>
+                                    <linearGradient id="colorBinOUTWHS" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#4F1787" stopOpacity={1}/>
+                                        <stop offset="100%" stopColor="#4F1787" stopOpacity={0.5}/>
+                                    </linearGradient>
+                                    <linearGradient id="colorBinTransitWHS" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#32ADE6" stopOpacity={1}/>
+                                        <stop offset="100%" stopColor="#32ADE6" stopOpacity={0.5}/>
                                     </linearGradient>
                                 </defs>
                                 <XAxis 
                                 type="number" 
                                 tick={{ fontSize: 12 }} 
                                 className="chart-x-axis" 
-                                domain={[0, 'dataMax + 2000']} 
+                                domain={[0, 'dataMax + 200']} 
                                 textAnchor="end"
                                // angle={-45}
                                
@@ -222,11 +237,14 @@ const ChartKaliurangGrpo = () => {
                                     {data.map((entry, index) => {
                                         let fillColor;
                                         switch (entry.name) {
-                                            case 'Bin IN':
-                                                fillColor = 'url(#colorBinIN)';
+                                            case 'Bin IN WHS':
+                                                fillColor = 'url(#colorBinINWHS)';
                                                 break;
-                                            case 'Bin Transit':
-                                                fillColor = 'url(#colorBinTransit)';
+                                            case 'Bin OUT WHS': 
+                                                fillColor = 'url(#colorBinOUTWHS)';
+                                                break;
+                                            case 'Bin Transit WHS':
+                                                fillColor = 'url(#colorBinTransitWHS)';
                                                 break;
                                             default:
                                                 fillColor = '#8884d8'; // Default color if needed
@@ -240,13 +258,39 @@ const ChartKaliurangGrpo = () => {
                 </div>
             </div>
             <div className="legend">
-                <div className="legend-item">
-                    <div className="square-icon" style={{ backgroundColor: '#b259ff' }}></div> Bin IN
-                </div>
-                <div className="legend-item">
-                    <div className="square-icon" style={{ backgroundColor: '#64c7f5' }}></div> Bin Transit
-                </div>
+             <div className="legend-item">
+             <div 
+            className="square-icon" 
+            style={{ backgroundColor: '#0857bf', cursor: 'pointer' }} 
+            onClick={() => window.open('/kaliurang/bininreport', '_blank')}
+            >
+            </div> 
+             Bin IN WHS
             </div>
+
+            <div className="legend-item">
+             <div 
+            className="square-icon" 
+            style={{ backgroundColor: '#4F1787', cursor: 'pointer' }} 
+            onClick={() => window.open('/kaliurang/binoutreport', '_blank')}
+            >
+            </div> 
+             Bin OUT WHS
+            </div>
+
+            <div className="legend-item">
+             <div 
+            className="square-icon" 
+            style={{ backgroundColor: '#32ADE6', cursor: 'pointer' }} 
+            onClick={() => window.open('/kaliurang/bintransitreport', '_blank')}
+            >
+            </div> 
+             Bin Transit WHS
+            </div>
+
+            
+            </div>
+
         </React.Fragment>
     );
 };

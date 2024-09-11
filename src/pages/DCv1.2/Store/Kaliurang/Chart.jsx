@@ -76,7 +76,7 @@ function ChartKaliurang() {
     return (
         <React.Fragment>
             <div className="container-fullscreen">
-    <h2 className="text-center chart-top-title">RKM KALIURANG INBOUN/OUTBOUND</h2>
+    <h2 className="text-center chart-top-title">RKM KALIURANG INBOUND/OUTBOUND</h2>
    
     <div className="row">  
     {/* <div className="col-lg-6 col-md-12 mb-4"> */}
