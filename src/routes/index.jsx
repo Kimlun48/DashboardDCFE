@@ -45,6 +45,10 @@ import Login from '../pages/DCv1.2/Admin/Auth/Login.jsx';
 import ChartKaliurang from '../pages/DCv1.2/Store/Kaliurang/Chart.jsx';
 import KaliurangBinINReport from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinIN.jsx';
 import KaliurangBinTransitReport from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinTransit.jsx';
+import KaliurangBinOUTReport from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinOUT.jsx';
+
+//user
+import User from '../pages/DCv1.2/Admin/User/User.jsx';
 
 function RoutesIndex() {
     return (
@@ -94,8 +98,13 @@ function RoutesIndex() {
               {/* route "/kaliurang/bininreport" */}
               <Route path="/kaliurang/bininreport" element={<KaliurangBinINReport />} />
 
+              {/* route "/kaliurang/binoutreport" */}
+              <Route path="/kaliurang/binoutreport" element={<KaliurangBinOUTReport />} />
+
                {/* route "/kaliurang/binreport" */}
                <Route path="/kaliurang/bintransitreport" element={<KaliurangBinTransitReport />} />
+               
+
 
 
 
@@ -242,7 +251,18 @@ function RoutesIndex() {
             <SalesOrderReport/>
             </PrivateRoutes>
             }
-            />     
+            />    
+
+              
+            {/*private route "/admin/user" */}
+            <Route
+            path="/admin/user" 
+            element={
+              <PrivateRoutes>
+            <User/>
+            </PrivateRoutes>
+            }
+            />
                       
            
 
