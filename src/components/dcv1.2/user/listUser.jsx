@@ -147,6 +147,58 @@ function ListUser() {
         return roles.length > 0 ? roles.map(role => role.name).join(', ') : 'No Role';
     };
 
+
+    const columns = [
+        
+            { name: 'Name', selector: row => row.name, sortable: true },
+            { name: 'Email', selector: row => row.email, sortable: true },
+            { 
+                name: 'Role', 
+                selector: row => getRoles(row.roles), 
+                sortable: true 
+            },
+            { 
+                name: 'Actions', 
+                cell: row => (
+                    <>
+                        <Button variant="primary" onClick={() => handleEdit(row)}>
+                            Edit
+                        </Button>
+                        <Button variant="danger" onClick={() => handleDelete(row.id)} className="ms-2">
+                            Delete
+                        </Button>
+                    </>
+                ) 
+            }
+    ];
+
+
+    const customStyles = {
+        rows: {
+            style: {
+              backgroundColor: '#f2f2f2',
+            '&:nth-of-type(odd)': {
+              backgroundColor: '#e6e6e6',
+            },
+                fontSize: '14px',
+                '@media (max-width: 768px)': {
+                    fontSize: '12px',
+                },
+                color: '#333',
+            },
+        },
+        headCells: {
+            style: {
+              backgroundColor: '#0e0f65',
+                fontSize: '16px',
+                '@media (max-width: 768px)': {
+                    fontSize: '14px', 
+                },
+                color: 'white',
+            },
+        },
+    };
+
     return (
         <React.Fragment>
             <div className="containers mt-4 mb-5">
@@ -171,28 +223,8 @@ function ListUser() {
                 </div>
 
                 <DataTable
-                    columns={[
-                        { name: 'Name', selector: row => row.name, sortable: true },
-                        { name: 'Email', selector: row => row.email, sortable: true },
-                        { 
-                            name: 'Role', 
-                            selector: row => getRoles(row.roles), 
-                            sortable: true 
-                        },
-                        { 
-                            name: 'Actions', 
-                            cell: row => (
-                                <>
-                                    <Button variant="primary" onClick={() => handleEdit(row)}>
-                                        Edit
-                                    </Button>
-                                    <Button variant="danger" onClick={() => handleDelete(row.id)} className="ms-2">
-                                        Delete
-                                    </Button>
-                                </>
-                            ) 
-                        }
-                    ]}
+                    columns={columns}
+                    customStyles={customStyles}
                     data={filteredData}
                     pagination
                 />
@@ -226,8 +258,7 @@ function ListUser() {
                                     required
                                 />
                             </Form.Group>
-                            {modalType === 'add' ? 'Add User' : 'Edit User' && (
-                                <>
+                            
                                     <Form.Group>
                                         <Form.Label>Password</Form.Label>
                                         <Form.Control 
@@ -250,8 +281,7 @@ function ListUser() {
                                             required
                                         />
                                     </Form.Group>
-                                </>
-                            )}
+                            
                             <Form.Group>
                                 <Form.Label>Role</Form.Label>
                                 <Form.Control 

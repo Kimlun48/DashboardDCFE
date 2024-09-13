@@ -4,8 +4,8 @@ import DataTable from "react-data-table-component";
 import useFormatDate from "../../../../../../components/utilites/useFormatDate";
 
 
-function KaliurangBinTransitReport() {
-    document.title = "Report-DetailKaliurangBinTransit";
+function KaliurangDetailBinTransitStore() {
+    document.title = "Report-DetailKaliurangBinTransitStore";
 
     const [detailbinin, setDetailBinIn] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -15,7 +15,7 @@ function KaliurangBinTransitReport() {
 
     const fetchData = async () => {
         try {
-            const response = await Api.get('api/grpokaliurangdetailtransit');
+            const response = await Api.get('api/grpokaliurangdetailtransitstore');
             const data = response.data; 
             setDetailBinIn(data);
             setFilteredData(data);
@@ -82,7 +82,7 @@ function KaliurangBinTransitReport() {
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-header d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span className="font-weight-bold">Detail Bin Transit</span>
+                                    <span className="font-weight-bold">Detail Bin Transit Store</span>
                                 </div>
                             </div>
                             <div className="card-body">
@@ -121,4 +121,4 @@ function KaliurangBinTransitReport() {
     );
 }
 
-export default KaliurangBinTransitReport;
+export default KaliurangDetailBinTransitStore;

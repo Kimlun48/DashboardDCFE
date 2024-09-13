@@ -47,6 +47,12 @@ import KaliurangBinINReport from '../pages/DCv1.2/Admin/Reports/store/kaliurang/
 import KaliurangBinTransitReport from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinTransit.jsx';
 import KaliurangBinOUTReport from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinOUT.jsx';
 
+import ChartStoreKaliurang from '../pages/DCv1.2/Store/Kaliurang/ChartStore.jsx';
+import KaliurangDetailBinINStore from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinINStore.jsx';
+import KaliurangDetailBinOutStore from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinOutStore.jsx';
+import KaliurangDetailBinTransitStore from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinTransitStore.jsx';
+import StorePndKaliurang from '../pages/DCv1.2/Store/Kaliurang/PndStore.jsx';
+
 //user
 import User from '../pages/DCv1.2/Admin/User/User.jsx';
 
@@ -92,8 +98,8 @@ function RoutesIndex() {
              <Route path="/dashboardstore" element={<DashboardStoreIndex />} />
 
 
-             {/* route "/chartkaliurang" */}
-             <Route path="/kaliurang" element={<ChartKaliurang />} />
+             {/* route "/kaliurang/warehouse" */}
+             <Route path="/kaliurang/warehouse" element={<ChartKaliurang />} />
 
               {/* route "/kaliurang/bininreport" */}
               <Route path="/kaliurang/bininreport" element={<KaliurangBinINReport />} />
@@ -101,8 +107,20 @@ function RoutesIndex() {
               {/* route "/kaliurang/binoutreport" */}
               <Route path="/kaliurang/binoutreport" element={<KaliurangBinOUTReport />} />
 
-               {/* route "/kaliurang/binreport" */}
-               <Route path="/kaliurang/bintransitreport" element={<KaliurangBinTransitReport />} />
+              {/* route "/kaliurang/binreport" */}
+              <Route path="/kaliurang/bintransitreport" element={<KaliurangBinTransitReport />} />
+
+              {/* route "/kaliurang/store" */}
+              <Route path="/kaliurang/store" element={<ChartStoreKaliurang />} />
+              {/* route "/kaliurang/bininreportstore" */}
+              <Route path="/kaliurang/bininreportstore" element={<KaliurangDetailBinINStore />} />
+              {/* route "/kaliurang/binoutreportstore" */}
+              <Route path="/kaliurang/binoutreportstore" element={<KaliurangDetailBinOutStore />} />
+              {/* route "/kaliurang/binreportstore" */}
+              <Route path="/kaliurang/bintransitreportstore" element={<KaliurangDetailBinTransitStore />} />
+              {/* route "/kaliurang/pndstore" */}
+              <Route path="/kaliurang/pndstore" element={<StorePndKaliurang />} />
+
                
 
 

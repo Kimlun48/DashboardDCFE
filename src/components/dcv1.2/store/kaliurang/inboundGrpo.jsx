@@ -165,7 +165,13 @@ const ChartKaliurangGrpo = () => {
         { name: 'Bin Transit WHS', value: onhandtransit },
     ];
 
-    
+    // const datax = [
+    //     { name: 'Bin IN WHS', value: onhandin },
+    //     { name: 'Bin OUT WHS', value: onhandout },
+    //     { name: 'Bin Transit WHS', value: onhandtransit },
+    // ];
+
+    const dataMax = Math.max(...data.map(item => item.value));
 
     const handleClick = (entry) => {
         if (entry.name === 'Bin IN WHS') {
@@ -193,27 +199,36 @@ const ChartKaliurangGrpo = () => {
                             <BarChart layout="vertical" data={data} margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
                             <defs>
                                     <linearGradient id="colorBinINWHS" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#0857bf" stopOpacity={1}/>
-                                        <stop offset="100%" stopColor="#0857bf" stopOpacity={0.5}/>
-                                    </linearGradient>
-                                    <linearGradient id="colorBinOUTWHS" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#4F1787" stopOpacity={1}/>
-                                        <stop offset="100%" stopColor="#4F1787" stopOpacity={0.5}/>
-                                    </linearGradient>
-                                    <linearGradient id="colorBinTransitWHS" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stopColor="#32ADE6" stopOpacity={1}/>
                                         <stop offset="100%" stopColor="#32ADE6" stopOpacity={0.5}/>
                                     </linearGradient>
+                                    <linearGradient id="colorBinOUTWHS" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#0857bf" stopOpacity={1}/>
+                                        <stop offset="100%" stopColor="#0857bf" stopOpacity={0.5}/>
+                                    </linearGradient>
+                                    <linearGradient id="colorBinTransitWHS" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#4F1787" stopOpacity={1}/>
+                                        <stop offset="100%" stopColor="#4F1787" stopOpacity={0.5}/>
+                                    </linearGradient>
                                 </defs>
-                                <XAxis 
+                                {/* <XAxis 
                                 type="number" 
                                 tick={{ fontSize: 12 }} 
                                 className="chart-x-axis" 
-                                domain={[0, 'dataMax + 200']} 
+                                domain={[0, 'dataMax + 2000']} 
+                                //domain={[0, 'dataMax + 500']} 
                                 textAnchor="end"
                                // angle={-45}
-                               
-                                />
+                                /> */}
+                                 <XAxis
+                                    type="number"
+                                    tick={{ fontSize: 12}}
+                                    className="chart-x-axis"
+                                    // domain={[0, dataMax / 2]} 
+                                   domain={[0, 'dataMax + 480']} 
+                                    textAnchor="end"
+                                    />
+
                                 <YAxis 
                                 dataKey="name" 
                                 type="category" 
@@ -261,7 +276,7 @@ const ChartKaliurangGrpo = () => {
              <div className="legend-item">
              <div 
             className="square-icon" 
-            style={{ backgroundColor: '#0857bf', cursor: 'pointer' }} 
+            style={{ backgroundColor: '#32ADE6', cursor: 'pointer' }} 
             onClick={() => window.open('/kaliurang/bininreport', '_blank')}
             >
             </div> 
@@ -271,7 +286,7 @@ const ChartKaliurangGrpo = () => {
             <div className="legend-item">
              <div 
             className="square-icon" 
-            style={{ backgroundColor: '#4F1787', cursor: 'pointer' }} 
+            style={{ backgroundColor: '#0857bf', cursor: 'pointer' }} 
             onClick={() => window.open('/kaliurang/binoutreport', '_blank')}
             >
             </div> 
@@ -281,7 +296,7 @@ const ChartKaliurangGrpo = () => {
             <div className="legend-item">
              <div 
             className="square-icon" 
-            style={{ backgroundColor: '#32ADE6', cursor: 'pointer' }} 
+            style={{ backgroundColor: '#4F1787', cursor: 'pointer' }} 
             onClick={() => window.open('/kaliurang/bintransitreport', '_blank')}
             >
             </div> 
