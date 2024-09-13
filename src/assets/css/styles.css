@@ -284,12 +284,14 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 }
 
 
+
+
 .card-home {
  
   margin: auto;
   max-width: 1200px; /* Sesuaikan dengan kebutuhan */
   border-radius: 10px;
-  padding: 20px;
+  padding: 5px;
   margin-bottom: 0px;
   
 }
@@ -349,12 +351,15 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .card-home .card-body {
  color: white;
  background-color: #000638;
+ border-radius: 10px;
 
 }
 
 .card-home .card-body .row {
   width: 100%;
   background-color: #c4c0c0;
+  border-radius: 10px;
+ 
  
 }
 
@@ -648,6 +653,14 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 /* Jika Anda ingin menambah jarak hanya di antara containers */
 .containers + .containers {
   margin-top: 0.5rem; /* Jarak antar containers */
+}
+
+.card-title {
+  
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  height: 55px;
 }
 
 
@@ -1007,6 +1020,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   justify-content: center;
   gap: 1rem;
   margin-top: 1px;
+  font-size: 14px;
  
 }
 
@@ -1457,28 +1471,84 @@ body {
 
 
 
+/*  */
+
+
+
+.footer-section {
+  background-color: #000638;; /* Warna latar belakang */
+  padding: 0; /* Jarak atas dan bawah */
+}
+
 .container-footer {
-  height: 100%;
-  width: 100%; /* Menjadikan lebar penuh atau bisa disesuaikan */
-  max-width: 1200px; /* Batas maksimal lebar container */
-  padding: 20px; /* Jarak dalam (padding) */
-  margin: 0 auto; /* Menjadikan container berada di tengah secara horizontal */
-  background-color: #000638; /* Sesuaikan warna latar belakang */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .footer {
-  padding: 10px;
-  color: white;
-  font-size: 14px; /* Ukuran font default, bisa diubah sesuai kebutuhan */
+  font-size: 14px;
 }
 
-.spaced-paragraph {
-  margin-bottom: 5px; /* Jarak antar paragraf */
-  line-height: 1.6; /* Jarak antar baris */
+.footer-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.footer-text {
+  margin: 0;
+}
+
+.footer-version {
+  margin-top: 5px;
+  display: block;
+}
+
+.text-white {
+  color: #fff;
+}
+
+
+/*bar chart*/
+
+
+.chart-x-axis text,
+.chart-y-axis text {
+  font-size: 12px !important; /* Mengatur ukuran font pada axis */
+}
+
+.chart-label-list {
+  font-size: 14px; /* Ukuran font pada label list di dalam chart */
+}
+
+.chart-bar {
+  bar-size: 120px; /* Mengatur ukuran bar */
+}
+
+.tooltip-style {
+  font-size: 10px;
+  background-color: #fff;
+  color: #444;
+  border: none;
+  border-radius: 5px;
+  padding: 8px;
 }
 
 
 
+
+
+
+/* Responsif untuk layar yang lebih kecil */
+@media (max-width: 768px) {
+  .footer-title {
+      font-size: 16px;
+  }
+
+  .footer-version {
+      font-size: 12px;
+  }
+}
 
 
 
