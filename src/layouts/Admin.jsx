@@ -45,7 +45,7 @@ export default function AdminLayout({ children }) {
                         <FaWarehouse className="me-2" /> WareHouse
                       </NavDropdown.Item>
                       <NavDropdown.Item as={Link} to="/kaliurang/pndstore">
-                        <FaBars className="me-2" /> PND
+                        <FaBars className="me-2" /> Customers
                       </NavDropdown.Item>
                     </NavDropdown>
                   </NavDropdown>
