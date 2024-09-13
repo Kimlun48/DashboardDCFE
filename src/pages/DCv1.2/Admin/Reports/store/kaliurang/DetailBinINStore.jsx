@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import Api from "../../../../../../api";
 import DataTable from "react-data-table-component";
 import useFormatDate from "../../../../../../components/utilites/useFormatDate";
+import debounce from "lodash.debounce";
 
-
-function KaliurangBinTransitReport() {
-    document.title = "Report-DetailKaliurangBinTransit";
+function KaliurangDetailBinINStore() {
+    document.title = "Report-DetailKaliurangBinINStore";
 
     const [detailbinin, setDetailBinIn] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -15,7 +15,7 @@ function KaliurangBinTransitReport() {
 
     const fetchData = async () => {
         try {
-            const response = await Api.get('api/grpokaliurangdetailtransit');
+            const response = await Api.get('api/grpokaliurangdetailinstore');
             const data = response.data; 
             setDetailBinIn(data);
             setFilteredData(data);
@@ -82,7 +82,7 @@ function KaliurangBinTransitReport() {
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-header d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span className="font-weight-bold">Detail Bin Transit</span>
+                                    <span className="font-weight-bold">Detail Bin IN Store</span>
                                 </div>
                             </div>
                             <div className="card-body">
@@ -121,4 +121,4 @@ function KaliurangBinTransitReport() {
     );
 }
 
-export default KaliurangBinTransitReport;
+export default KaliurangDetailBinINStore;

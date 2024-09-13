@@ -37,6 +37,7 @@ function KaliurangBinOUTReport() {
                 item.BINCODE.toLowerCase().includes(lowercasedSearch) ||
                 item.ITEMCODE.toLowerCase().includes(lowercasedSearch) ||
                 item.ITEMNAME.toLowerCase().includes(lowercasedSearch) ||
+                item.CREATEDBY.toLowerCase().includes(lowercasedSearch) ||
                 item.QTY.toString().toLowerCase().includes(lowercasedSearch)
             );
             setFilteredData(filtered);
@@ -44,11 +45,11 @@ function KaliurangBinOUTReport() {
     }, [search, detailbinout]);
 
     const columns = [
-        { name: 'BINCODE', selector: row => row.BINCODE, sortable: true },
+        { name: 'BINCODE', selector: row => row.BINCODE, sortable: true, width: '200px' },
         { name: 'ITEM CODE', selector: row => row.ITEMCODE, sortable: true },
         { name: 'ITEM NAME', selector: row => row.ITEMNAME, sortable: true, width: '600px' },
         { name: 'QTY', selector: row => row.QTY, sortable: true},
-        
+        { name: 'USER', selector: row => row.CREATEDBY, sortable: true },
     ];
 
     const customStyles = {

@@ -1425,6 +1425,59 @@ html, body {
 }
 
 
+body {
+  background-color: #000638;
+  /* color: white; */
+}
+
+.navbar, .dropdown-menu {
+  background-color: #000638 !important;
+}
+
+.nav-link, .dropdown-item {
+  color: white !important;
+}
+
+.dropdown-item:hover {
+  background-color: #1a2a4f;
+}
+
+.container-fluid.content-wrapper {
+  padding: 2rem;
+  background-color: #000638;
+}
+.navbar-nav .nav-link {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.navbar-nav .dropdown-menu {
+  margin-right: 15px;
+}
+
+
+
+.container-footer {
+  height: 100%;
+  width: 100%; /* Menjadikan lebar penuh atau bisa disesuaikan */
+  max-width: 1200px; /* Batas maksimal lebar container */
+  padding: 20px; /* Jarak dalam (padding) */
+  margin: 0 auto; /* Menjadikan container berada di tengah secara horizontal */
+  background-color: #000638; /* Sesuaikan warna latar belakang */
+}
+
+.footer {
+  padding: 10px;
+  color: white;
+  font-size: 14px; /* Ukuran font default, bisa diubah sesuai kebutuhan */
+}
+
+.spaced-paragraph {
+  margin-bottom: 5px; /* Jarak antar paragraf */
+  line-height: 1.6; /* Jarak antar baris */
+}
+
+
 
 
 

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import Api from "../../../../../../api";
 import DataTable from "react-data-table-component";
 import useFormatDate from "../../../../../../components/utilites/useFormatDate";
+import debounce from "lodash.debounce";
 
+function KaliurangDetailBinOutStore() {
+    document.title = "Report-DetailKaliurangBinOutStore";
 
-function KaliurangBinTransitReport() {
-    document.title = "Report-DetailKaliurangBinTransit";
-
-    const [detailbinin, setDetailBinIn] = useState([]);
+    const [detailbinout, setDetailBinOut] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [search, setSearch] = useState('');
     const [error, setError] = useState(null);
@@ -15,9 +15,9 @@ function KaliurangBinTransitReport() {
 
     const fetchData = async () => {
         try {
-            const response = await Api.get('api/grpokaliurangdetailtransit');
+            const response = await Api.get('api/grpokaliurangdetailoutstore');
             const data = response.data; 
-            setDetailBinIn(data);
+            setDetailBinOut(data);
             setFilteredData(data);
             console.log('Data received from API:', data);
         } catch (error) {
@@ -31,9 +31,9 @@ function KaliurangBinTransitReport() {
     }, []);
 
     useEffect(() => {
-        if (Array.isArray(detailbinin)) { // Ensure detailbinin is an array
+        if (Array.isArray(detailbinout)) { 
             const lowercasedSearch = search.toLowerCase();
-            const filtered = detailbinin.filter(item =>
+            const filtered = detailbinout.filter(item =>
                 item.BINCODE.toLowerCase().includes(lowercasedSearch) ||
                 item.ITEMCODE.toLowerCase().includes(lowercasedSearch) ||
                 item.ITEMNAME.toLowerCase().includes(lowercasedSearch) ||
@@ -42,7 +42,7 @@ function KaliurangBinTransitReport() {
             );
             setFilteredData(filtered);
         }
-    }, [search, detailbinin]);
+    }, [search, detailbinout]);
 
     const columns = [
         { name: 'BINCODE', selector: row => row.BINCODE, sortable: true, width: '200px' },
@@ -50,7 +50,6 @@ function KaliurangBinTransitReport() {
         { name: 'ITEM NAME', selector: row => row.ITEMNAME, sortable: true, width: '600px' },
         { name: 'QTY', selector: row => row.QTY, sortable: true},
         { name: 'USER', selector: row => row.CREATEDBY, sortable: true },
-        
     ];
 
     const customStyles = {
@@ -82,7 +81,7 @@ function KaliurangBinTransitReport() {
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-header d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span className="font-weight-bold">Detail Bin Transit</span>
+                                    <span className="font-weight-bold">Detail Bin Out Store</span>
                                 </div>
                             </div>
                             <div className="card-body">
@@ -121,4 +120,4 @@ function KaliurangBinTransitReport() {
     );
 }
 
-export default KaliurangBinTransitReport;
+export default KaliurangDetailBinOutStore;

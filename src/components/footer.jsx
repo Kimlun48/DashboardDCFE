@@ -5,7 +5,7 @@ function FooterDc() {
         <React.Fragment>
             <footer>
             {/* <hr /> */}
-                <div className="container mb-5">
+                <div className="container-footer">
                     <div className="footer text-center text-white">
                         
                             {/* <strong>Distribution Center</strong> */}
