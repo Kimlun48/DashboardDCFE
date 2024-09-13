@@ -1,20 +1,13 @@
 import React from 'react';
 function FooterDc() {
-
-    return(
+    return (
         <React.Fragment>
-            <footer>
-            {/* <hr /> */}
+            <footer className="footer-section">
                 <div className="container-footer">
                     <div className="footer text-center text-white">
-                        
-                            {/* <strong>Distribution Center</strong> */}
-                            <p className="spaced-paragraph">Distribution Center</p>
-                            {/* <strong>Copyright &copy; 2024</strong> All rights reserved. */}
-                            <p className="spaced-paragraph">Copyright &copy; 2024 All rights reserved.</p>
-                            <strong>v 1.2</strong>
-                            <p className="spaced-paragraph"></p>
-                        
+                        <p className="footer-title">Distribution Center</p>
+                        <p className="footer-text">Copyright &copy; 2024 All rights reserved.</p>
+                        <strong className="footer-version">v 1.2</strong>
                     </div>
                 </div>
             </footer>

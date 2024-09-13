@@ -2,30 +2,33 @@ import React, { useState, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, LabelList } from 'recharts';
 import Api from "../../../../api";
 
-const ChartStoreGrpoLate = () => {
+const ChartStoreItrOut = () => {
     const [data, setData] = useState([]);
 
     const fetchData = async () => {
         try {
-            const response = await Api.get("/api/grpokaliurangheaderstatisticstorebinlate");
+            const response = await Api.get("/api/kaliurangitroutstorestatistic");
             if (response.status === 200) {
                 // Transformasi data
                 const transformedData = response.data.data.map(item => {
                     let name;
-                    switch (item.BinCode) {
-                        case '01021001-STORE-IN':
-                            name = 'Bin IN Store Late';
+                    switch (item.TYPE) {
+                        case 'ORDER_RECEIVED':
+                            name = 'Order Received';
                             break;
-                        case '01021001-TRANSIT':
-                            name = 'Bin Transit Store Late';
+                        case 'BEING_PROCESSED':
+                            name = 'Being Process';
                             break;
-                        case '01021001-STORE-OUT':
-                            name = 'Bin OUT Store Late';
+                        case 'READY_TO_PICK_UP':
+                            name = 'Ready To PickUp';
                             break;
+                        // case 'ITR_TRANSIT':
+                        //     name = 'ITR Transit';
+                        //     break;
                         default:
                             name = 'Unknown';
                     }
-                    return { name, value: parseInt(item.ONHAND, 10) };
+                    return { name, value: parseInt(item.ORDER_RECEIVED, 10) };
                 });
                 setData(transformedData);
             }
@@ -42,10 +45,10 @@ const ChartStoreGrpoLate = () => {
 
     return (
         <React.Fragment>
-         <div className="col-12 mb-2">
+            <div className="col-12 mb-2">
             <div className="card-title">
                     <div className="text">
-                        <h4 className="chart-title">Bin Late</h4>
+                        <h4 className="chart-title">ITR-Out Process</h4>
                     </div>
                 </div>
             </div>
@@ -55,18 +58,22 @@ const ChartStoreGrpoLate = () => {
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart layout="vertical" data={data} margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
                                 <defs>
-                                    <linearGradient id="colorBinINStoreLate" x1="0" y1="0" x2="0" y2="1">
+                                    <linearGradient id="colorORDER_RECEIVED" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stopColor="#32ADE6" stopOpacity={1}/>
                                         <stop offset="100%" stopColor="#32ADE6" stopOpacity={0.5}/>
                                     </linearGradient>
-                                    <linearGradient id="colorBinOUTStoreLate" x1="0" y1="0" x2="0" y2="1">
+                                    <linearGradient id="colorBEING_PROCESSED" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stopColor="#0857bf" stopOpacity={1}/>
                                         <stop offset="100%" stopColor="#0857bf" stopOpacity={0.5}/>
                                     </linearGradient>
-                                    <linearGradient id="colorBinTransitStoreLate" x1="0" y1="0" x2="0" y2="1">
+                                    <linearGradient id="colorREADY_TO_PICK_UP" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stopColor="#4F1787" stopOpacity={1}/>
                                         <stop offset="100%" stopColor="#4F1787" stopOpacity={0.5}/>
                                     </linearGradient>
+                                    {/* <linearGradient id="colorITR_TRANSIT" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#4F1787" stopOpacity={1}/>
+                                        <stop offset="100%" stopColor="#4F1787" stopOpacity={0.5}/>
+                                    </linearGradient> */}
                                 </defs>
                                 <XAxis
                                     type="number"
@@ -95,15 +102,18 @@ const ChartStoreGrpoLate = () => {
                                     {data.map((entry, index) => {
                                         let fillColor;
                                         switch (entry.name) {
-                                            case 'Bin IN Store':
-                                                fillColor = 'url(#colorBinINStoreLate)';
+                                            case 'Order Received':
+                                                fillColor = 'url(#colorORDER_RECEIVED)';
                                                 break;
-                                            case 'Bin OUT Store':
-                                                fillColor = 'url(#colorBinOUTStoreLate)';
+                                            case 'Being Process':
+                                                fillColor = 'url(#colorBEING_PROCESSED)';
                                                 break;
-                                            case 'Bin Transit Store':
-                                                fillColor = 'url(#colorBinTransitStoreLate)';
+                                            case 'Ready To PickUp':
+                                                fillColor = 'url(#colorREADY_TO_PICK_UP)';
                                                 break;
+                                            // case 'ITR Transit':
+                                            //     fillColor = 'url(#colorITR_TRANSIT)';
+                                            //     break;
                                             default:
                                                 fillColor = '#8884d8'; // Default color if needed
                                         }
@@ -120,34 +130,44 @@ const ChartStoreGrpoLate = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#32ADE6', cursor: 'pointer' }} 
-            onClick={() => window.open('/kaliurang/bininreportstore', '_blank')}
+            onClick={() => window.open('#', '_blank')}
             >
             </div> 
-             Bin IN Store Late
+            Order Received
             </div>
 
             <div className="legend-item">
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#0857bf', cursor: 'pointer' }} 
-            onClick={() => window.open('/kaliurang/binoutreportstore', '_blank')}
+            onClick={() => window.open('#', '_blank')}
             >
             </div> 
-             Bin OUT Store Late
+            Being Process
             </div>
 
             <div className="legend-item">
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#4F1787', cursor: 'pointer' }} 
-            onClick={() => window.open('/kaliurang/bintransitreportstore', '_blank')}
+            onClick={() => window.open('#', '_blank')}
             >
             </div> 
-             Bin Transit Store Late
+            Ready To PickUp
             </div>
+
+            {/* <div className="legend-item">
+             <div 
+            className="square-icon" 
+            style={{ backgroundColor: '#4F1787', cursor: 'pointer' }} 
+            onClick={() => window.open('#', '_blank')}
+            >
+            </div> 
+            ITR In
+            </div> */}
             </div>
         </React.Fragment>
     );
 };
 
-export default ChartStoreGrpoLate;
+export default ChartStoreItrOut;

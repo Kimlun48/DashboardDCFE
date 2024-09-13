@@ -62,8 +62,13 @@ const ChartStoreGrpo = () => {
 
     return (
         <React.Fragment>
+
             <div className="col-12 mb-2">
-                {/* Card total and other elements can be added here */}
+            <div className="card-title">
+                    <div className="text">
+                        <h4 className="chart-title">Bin Progress</h4>
+                    </div>
+                </div>
             </div>
             <div className="col-12 mb-2">
                 <div className="card border-0 overflow-hidden">
@@ -85,15 +90,7 @@ const ChartStoreGrpo = () => {
                                     </linearGradient>
                                 </defs>
 
-                                {/* <XAxis 
-                                type="number" 
-                                tick={{ fontSize: 12 }} 
-                                className="chart-x-axis" 
-                                domain={[0, 'dataMax + 2000']} 
-                                //domain={[0, 'dataMax + 500']} 
-                                textAnchor="end"
-                               // angle={-45}
-                                /> */}
+                             
 
                                 <XAxis
                                     type="number"
