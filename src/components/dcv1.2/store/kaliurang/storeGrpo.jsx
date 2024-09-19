@@ -66,29 +66,28 @@ const ChartStoreGrpo = () => {
                 </div>
             </div>
             
-            <div className="col-12 mb-2">
-                <div className="card border-0 overflow-hidden">
-                    <div className="chart-container-chart">
-                        <ResponsiveContainer width="100%" height={300}>
-                            <BarChart layout="vertical" data={data} margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
+            
+                   
+                        <ResponsiveContainer width="100%" height={250}>
+                            <BarChart layout="vertical" data={data} margin={{ top: 5, right: 10, left: 5, bottom: 5 }}>
                                 <defs>
                                     <linearGradient id="colorBinINStore" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#32ADE6" stopOpacity={1}/>
-                                        <stop offset="100%" stopColor="#32ADE6" stopOpacity={0.5}/>
+                                        <stop offset="0%" stopColor="#01FEFF" stopOpacity={1}/>
+                                        <stop offset="100%" stopColor="#01FEFF" stopOpacity={0.5}/>
                                     </linearGradient>
                                     <linearGradient id="colorBinOUTStore" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#0857bf" stopOpacity={1}/>
-                                        <stop offset="100%" stopColor="#0857bf" stopOpacity={0.5}/>
+                                        <stop offset="0%" stopColor="#CD0099" stopOpacity={1}/>
+                                        <stop offset="100%" stopColor="#CD0099" stopOpacity={0.5}/>
                                     </linearGradient>
                                     <linearGradient id="colorBinTransitStore" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#4F1787" stopOpacity={1}/>
-                                        <stop offset="100%" stopColor="#4F1787" stopOpacity={0.5}/>
+                                        <stop offset="0%" stopColor="#FF6608" stopOpacity={1}/>
+                                        <stop offset="100%" stopColor="#FF6608" stopOpacity={0.5}/>
                                     </linearGradient>
                                 </defs>
 
                                 <XAxis
                                     type="number"
-                                    tick={{ fontSize: 12 }}
+                                    tick={{ fontSize: 10 }}
                                     className="chart-x-axis"
                                     domain={[0, dataMax + 465]} 
                                     textAnchor="end"
@@ -97,14 +96,14 @@ const ChartStoreGrpo = () => {
                                 <YAxis 
                                     dataKey="name" 
                                     type="category" 
-                                    tick={{ fontSize: 12 }} 
+                                    tick={{ fontSize: 9 }} 
                                     className="chart-y-axis"
                                     textAnchor="end"
                                 />
                                 
                                 <Tooltip 
                                     contentStyle={{ 
-                                        fontSize: 12, 
+                                        fontSize: 10, 
                                         backgroundColor: '#fff', 
                                         color: '#444',
                                         border: 'none',
@@ -113,8 +112,8 @@ const ChartStoreGrpo = () => {
                                     }} 
                                 />
 
-                                <Bar dataKey="value" radius={[0, 10, 10, 0]} onClick={handleClick} className="chart-bar" barSize={100}>
-                                    <LabelList dataKey="value" position="right" style={{ fontSize: 16, fill: '#fff' }} className="chart-label-list" />
+                                <Bar dataKey="value" radius={[0, 10, 10, 0]} onClick={handleClick} className="chart-bar" barSize={50}>
+                                    <LabelList dataKey="value" position="right" style={{ fontSize: 10, fill: '#fff' }} className="chart-label-list" />
                                     {data.map((entry, index) => {
                                         let fillColor;
                                         switch (entry.name) {
@@ -135,15 +134,14 @@ const ChartStoreGrpo = () => {
                                 </Bar>
                             </BarChart>
                         </ResponsiveContainer>
-                    </div>
-                </div>
-            </div>
+                    
+                
 
-            <div className="legend">
-                <div className="legend-item">
+            <div className="legend-store">
+                <div className="legend-item-store">
                     <div 
                         className="square-icon" 
-                        style={{ backgroundColor: '#32ADE6', cursor: 'pointer' }} 
+                        style={{ backgroundColor: '#01FEFF', cursor: 'pointer' }} 
                         onClick={() => window.open('/kaliurang/bininreportstore', '_blank')}
                     >
                     </div> 
@@ -153,7 +151,7 @@ const ChartStoreGrpo = () => {
                 <div className="legend-item">
                     <div 
                         className="square-icon" 
-                        style={{ backgroundColor: '#0857bf', cursor: 'pointer' }} 
+                        style={{ backgroundColor: '#CD0099', cursor: 'pointer' }} 
                         onClick={() => window.open('/kaliurang/binoutreportstore', '_blank')}
                     >
                     </div> 
@@ -163,7 +161,7 @@ const ChartStoreGrpo = () => {
                 <div className="legend-item">
                     <div 
                         className="square-icon" 
-                        style={{ backgroundColor: '#4F1787', cursor: 'pointer' }} 
+                        style={{ backgroundColor: '#FF6608', cursor: 'pointer' }} 
                         onClick={() => window.open('/kaliurang/bintransitreportstore', '_blank')}
                     >
                     </div> 

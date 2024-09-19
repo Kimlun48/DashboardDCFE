@@ -204,7 +204,7 @@ const ChartItrInLate = () => {
         return () => clearInterval(interval);
     }, []);
 
-    const COLORS = ['#32ADE6', '#0857bf'];
+    const COLORS = ['#CC2D24', '#2D67AA'];
    // console.log(data);
     const staticData = [
         { name: 'Late', value: 1 },
@@ -230,10 +230,8 @@ const ChartItrInLate = () => {
                     </div>
                 </div>
             </div>
-            <div className="col-12 mb-2">
-                <div className="card border-0 overflow-hidden">
-                    <div className="chart-container-chart">
-                        <ResponsiveContainer width="100%" height={300}>
+          
+            <ResponsiveContainer width="100%" height={250}>
                             <PieChart>
                                 <Pie
                                     data={data}
@@ -241,14 +239,14 @@ const ChartItrInLate = () => {
                                     nameKey="name"
                                     cx="50%"
                                     cy="50%"
-                                    outerRadius={120}
+                                    outerRadius={90}
                                     fill="#8884d8"
                                     label
                                     stroke="none"
                                     innerRadius={60}
                                     onClick={(data, index) => handleClick(data)}
                                     className="pointer-cursor"
-
+                                    paddingAngle={1}
                                 >
                                     {data.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -258,7 +256,7 @@ const ChartItrInLate = () => {
                                 </Pie>
                                 <Tooltip
                                     contentStyle={{
-                                        fontSize: 12,
+                                        fontSize: 10,
                                         backgroundColor: '#fff',
                                         color: '#444',
                                         border: 'none',
@@ -268,30 +266,8 @@ const ChartItrInLate = () => {
                                 />
                             </PieChart>
                         </ResponsiveContainer>
-                    </div>
-                </div>
-            </div>
-            <div className="legend">
-                <div className="legend-item">
-                    <div
-                        className="square-icon"
-                        style={{ backgroundColor: '#32ADE6', cursor: 'pointer' }}
-                        onClick={() => window.open('/kaliurang/itrinlatedetail', '_blank')}
-                    />
-                    Late
-                </div>
-
-                <div className="legend-item">
-                    <div
-                        className="square-icon"
-                        style={{ backgroundColor: '#0857bf', cursor: 'pointer' }}
-                        onClick={() => window.open('/kaliurang/itrinonscheduledetail', '_blank')}
-                    />
-                    On Schedule
-                </div>
-
-               
-            </div>
+                   
+            
         </React.Fragment>
     );
 };
