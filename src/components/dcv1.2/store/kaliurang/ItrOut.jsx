@@ -52,23 +52,21 @@ const ChartStoreItrOut = () => {
                     </div>
                 </div>
             </div>
-            <div className="col-12 mb-2">
-                <div className="card border-0 overflow-hidden">
-                    <div className="chart-container-chart">
-                        <ResponsiveContainer width="100%" height={300}>
-                            <BarChart layout="vertical" data={data} margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
+            
+                        <ResponsiveContainer width="100%" height={250}>
+                            <BarChart layout="vertical" data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
                                 <defs>
                                     <linearGradient id="colorORDER_RECEIVED" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#32ADE6" stopOpacity={1}/>
-                                        <stop offset="100%" stopColor="#32ADE6" stopOpacity={0.5}/>
+                                        <stop offset="0%" stopColor="#01FEFF" stopOpacity={1}/>
+                                        <stop offset="100%" stopColor="#01FEFF" stopOpacity={0.5}/>
                                     </linearGradient>
                                     <linearGradient id="colorBEING_PROCESSED" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#0857bf" stopOpacity={1}/>
-                                        <stop offset="100%" stopColor="#0857bf" stopOpacity={0.5}/>
+                                        <stop offset="0%" stopColor="#CD0099" stopOpacity={1}/>
+                                        <stop offset="100%" stopColor="#CD0099" stopOpacity={0.5}/>
                                     </linearGradient>
                                     <linearGradient id="colorREADY_TO_PICK_UP" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#4F1787" stopOpacity={1}/>
-                                        <stop offset="100%" stopColor="#4F1787" stopOpacity={0.5}/>
+                                        <stop offset="0%" stopColor="#FF6608" stopOpacity={1}/>
+                                        <stop offset="100%" stopColor="#FF6608" stopOpacity={0.5}/>
                                     </linearGradient>
                                     {/* <linearGradient id="colorITR_TRANSIT" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stopColor="#4F1787" stopOpacity={1}/>
@@ -77,19 +75,19 @@ const ChartStoreItrOut = () => {
                                 </defs>
                                 <XAxis
                                     type="number"
-                                    tick={{ fontSize: 12 }}
+                                    tick={{ fontSize: 10 }}
                                     domain={[0, 'dataMax + 10']}
                                     className="chart-x-axis"
                                 />
                                 <YAxis
                                     dataKey="name"
                                     type="category"
-                                    tick={{ fontSize: 12 }}
+                                    tick={{ fontSize: 10 }}
                                     className="chart-y-axis"
                                 />
                                 <Tooltip
                                     contentStyle={{
-                                        fontSize: 12,
+                                        fontSize: 10,
                                         backgroundColor: '#fff',
                                         color: '#444',
                                         border: 'none',
@@ -97,8 +95,8 @@ const ChartStoreItrOut = () => {
                                         padding: '8px'
                                     }}
                                 />
-                                <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={100}>
-                                    <LabelList dataKey="value" position="right" style={{ fontSize: 16, fill: '#fff' }} />
+                                <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={50}>
+                                    <LabelList dataKey="value" position="right" style={{ fontSize: 10, fill: '#fff' }} />
                                     {data.map((entry, index) => {
                                         let fillColor;
                                         switch (entry.name) {
@@ -122,14 +120,12 @@ const ChartStoreItrOut = () => {
                                 </Bar>
                             </BarChart>
                         </ResponsiveContainer>
-                    </div>
-                </div>
-            </div>
-            <div className="legend">
-             <div className="legend-item">
+                  
+            <div className="legend-store">
+             <div className="legend-item-store">
              <div 
             className="square-icon" 
-            style={{ backgroundColor: '#32ADE6', cursor: 'pointer' }} 
+            style={{ backgroundColor: '#01FEFF', cursor: 'pointer' }} 
             onClick={() => window.open('#', '_blank')}
             >
             </div> 
@@ -139,7 +135,7 @@ const ChartStoreItrOut = () => {
             <div className="legend-item">
              <div 
             className="square-icon" 
-            style={{ backgroundColor: '#0857bf', cursor: 'pointer' }} 
+            style={{ backgroundColor: '#CD0099', cursor: 'pointer' }} 
             onClick={() => window.open('#', '_blank')}
             >
             </div> 
@@ -149,7 +145,7 @@ const ChartStoreItrOut = () => {
             <div className="legend-item">
              <div 
             className="square-icon" 
-            style={{ backgroundColor: '#4F1787', cursor: 'pointer' }} 
+            style={{ backgroundColor: '#FF6608', cursor: 'pointer' }} 
             onClick={() => window.open('#', '_blank')}
             >
             </div> 

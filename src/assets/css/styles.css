@@ -579,10 +579,20 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   margin-top: 15px;
 }
 
+
+.chart-container-store {
+ 
+  width: 100%;
+  height: 260px;
+  background-color: #01062c !important;
+  padding: 10px;
+  border-radius: 10px;
+}
+
 .chart-container-chart {
   position: relative;
   width: 100%;
-  height: 350px;
+  height: 260px;
   background-color: #01062c !important;
   padding: 20px;
   border-radius: 10px;
@@ -1025,6 +1035,24 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 }
 
 .legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+}
+
+
+
+.legend-store {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1px;
+  font-size: 10px;
+ 
+}
+
+.legend-item-store {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -1543,6 +1571,26 @@ body {
 .filter-chart {
   color: white;
 }
+
+.custom-col {
+  flex: 0 0 15.5%; /* 12.5% for 8 columns */
+  max-width: 15.5%;
+}
+
+@media (max-width: 768px) {
+  .custom-col {
+      flex: 0 0 50%; /* 2 columns per row on smaller screens */
+      max-width: 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .custom-col {
+      flex: 0 0 100%; /* 1 column per row on extra small screens */
+      max-width: 100%;
+  }
+}
+
 
 
 
