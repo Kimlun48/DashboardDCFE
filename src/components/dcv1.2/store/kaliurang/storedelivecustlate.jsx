@@ -1,42 +1,39 @@
 
 
-
 import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell, Label } from 'recharts';
 import Api from "../../../../api";
 
-const ChartStoreGrpoLate = () => {
+const ChartDelivCustLate = () => {
     const [data, setData] = useState([]);
 
     const fetchData = async () => {
         try {
-            const response = await Api.get("/api/grpokaliurangheaderstatisticstorebinlate");
+            const response = await Api.get("/api/kaliurangstorestatisticdeliverycustomerlate");
             if (response.status === 200 && response.data.data.length > 0) {
                 const transformedData = response.data.data.map(item => {
                     let name;
-                    switch (item.BinCode) {
-                        case '01021001-STORE-IN':
-                            name = 'Bin IN Store Late';
+                    switch (item.TYPE) {
+                        case 'LATE':
+                            name = 'Late';
                             break;
-                        case '01021001-TRANSIT':
-                            name = 'Bin Transit Store Late';
-                            break;
-                        case '01021001-STORE-OUT':
-                            name = 'Bin OUT Store Late';
+                        case 'ONSCHEDULED':
+                            name = 'On Schedule';
                             break;
                         default:
                             name = 'Unknown';
                     }
-                    return { name, value: parseInt(item.ONHAND, 10) };
+                    return { name, value: parseInt(item.LATE, 10) };
                 });
+             //   console.log(transformedData);
 
                 // Cek jika semua ONHAND adalah 0
                 const allZero = transformedData.every(item => item.value === 0);
                 if (allZero) {
                     setData([
-                        { name: 'No Data IN', value: 1 },
-                        { name: 'No Data OUT', value: 1 },
-                        { name: 'No Data Transit', value: 1 },
+                        { name: 'Late', value: 1 },
+                        { name: 'On Schedule', value: 1 },
+                        
                     ]);
                 } else {
                     setData(transformedData);
@@ -53,14 +50,28 @@ const ChartStoreGrpoLate = () => {
         return () => clearInterval(interval);
     }, []);
 
-    const COLORS = ['#32ADE6', '#0857bf', '#4F1787'];
+    const COLORS = ['#32ADE6', '#0857bf'];
+   // console.log(data);
+    const staticData = [
+        { name: 'Late', value: 1 },
+        { name: 'On Schedule', value: 2 },
+        
+    ];
+    const handleClick = (entry) => {
+        if (entry.name === 'Late') {
+            window.open('/kaliurang/deliverycustomerlatedetail', '_blank');
+        } else if (entry.name === 'On Schedule') {
+            // navigate('/putawaystorageunlate');
+            window.open('/kaliurang/deliverycustomeronscheduledetail', '_blank');
+        }
+    };
 
     return (
         <React.Fragment>
             <div className="col-12 mb-2">
                 <div className="card-title">
                     <div className="text">
-                        <h4 className="chart-title">Bin Late</h4>
+                        <h4 className="chart-title">Delivery Customer Late</h4>
                     </div>
                 </div>
             </div>
@@ -77,15 +88,18 @@ const ChartStoreGrpoLate = () => {
                                     cy="50%"
                                     outerRadius={120}
                                     fill="#8884d8"
-                                 //   label
+                                    label
                                     stroke="none"
                                     innerRadius={60}
+                                    onClick={(data, index) => handleClick(data)}
+                                    className="pointer-cursor"
 
                                 >
                                     {data.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
-                                    {/* <Label value="Bin Late Data" position="center" /> */}
+                                    <Label value={`${data.find(item => item.name === 'Late')?.value || 0} Late`} position="center" />
+
                                 </Pie>
                                 <Tooltip
                                     contentStyle={{
@@ -107,32 +121,24 @@ const ChartStoreGrpoLate = () => {
                     <div
                         className="square-icon"
                         style={{ backgroundColor: '#32ADE6', cursor: 'pointer' }}
-                        onClick={() => window.open('/kaliurang/bininlatedetail', '_blank')}
+                        onClick={() => window.open('/kaliurang/deliverycustomerlatedetail', '_blank')}
                     />
-                    Bin IN Store Late
+                    Late
                 </div>
 
                 <div className="legend-item">
                     <div
                         className="square-icon"
                         style={{ backgroundColor: '#0857bf', cursor: 'pointer' }}
-                        onClick={() => window.open('/kaliurang/binoutlatedetail', '_blank')}
+                        onClick={() => window.open('/kaliurang/deliverycustomeronscheduledetail', '_blank')}
                     />
-                    Bin OUT Store Late
+                    On Schedule
                 </div>
 
-                <div className="legend-item">
-                    <div
-                        className="square-icon"
-                        style={{ backgroundColor: '#4F1787', cursor: 'pointer' }}
-                        onClick={() => window.open('/kaliurang/bintransitlatedetail', '_blank')}
-                    />
-                    Bin Transit Store Late
-                </div>
+               
             </div>
         </React.Fragment>
     );
 };
 
-export default ChartStoreGrpoLate;
-
+export default ChartDelivCustLate;
