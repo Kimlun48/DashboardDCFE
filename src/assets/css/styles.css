@@ -1535,6 +1535,16 @@ body {
 }
 
 
+.chart-separator {
+  border-bottom: 2px solid #e0e0e0; /* Warna dan ketebalan garis */
+  margin: 20px 0; /* Jarak atas dan bawah */
+}
+
+.filter-chart {
+  color: white;
+}
+
+
 
 
 

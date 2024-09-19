@@ -46,12 +46,23 @@ import ChartKaliurang from '../pages/DCv1.2/Store/Kaliurang/Chart.jsx';
 import KaliurangBinINReport from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinIN.jsx';
 import KaliurangBinTransitReport from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinTransit.jsx';
 import KaliurangBinOUTReport from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinOUT.jsx';
+import KaliurangBinInLateDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinInLate.jsx';
+import KaliurangBinOutLateDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinOutLate.jsx';
+import KaliurangBinInTransitDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinTransitLate.jsx';
 
 import ChartStoreKaliurang from '../pages/DCv1.2/Store/Kaliurang/ChartStore.jsx';
 import KaliurangDetailBinINStore from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinINStore.jsx';
 import KaliurangDetailBinOutStore from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinOutStore.jsx';
 import KaliurangDetailBinTransitStore from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailBinTransitStore.jsx';
 import StorePndKaliurang from '../pages/DCv1.2/Store/Kaliurang/PndStore.jsx';
+import KaliurangCashCarryLateDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailCashCarryLate.jsx';
+import KaliurangCashCarryOnScheduleDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailCashCarryOnSchedule.jsx';
+import KaliurangDelivCustLateDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailDelivCustLate.jsx';
+import KaliurangDelivCustOnScheduleDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailDelivCustOnSchedule.jsx';
+import KaliurangItrInLateDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailItrInLate.jsx';
+import KaliurangItrInOnScheduleDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailItrInOnSchedule.jsx';
+import KaliurangItrOutLateDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailItrOutLate.jsx';
+import KaliurangItrOutOnScheduleDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailItrOutOnSchedule.jsx';
 
 //user
 import User from '../pages/DCv1.2/Admin/User/User.jsx';
@@ -100,15 +111,38 @@ function RoutesIndex() {
 
              {/* route "/kaliurang/warehouse" */}
              <Route path="/kaliurang/warehouse" element={<ChartKaliurang />} />
-
               {/* route "/kaliurang/bininreport" */}
               <Route path="/kaliurang/bininreport" element={<KaliurangBinINReport />} />
-
               {/* route "/kaliurang/binoutreport" */}
               <Route path="/kaliurang/binoutreport" element={<KaliurangBinOUTReport />} />
-
               {/* route "/kaliurang/binreport" */}
               <Route path="/kaliurang/bintransitreport" element={<KaliurangBinTransitReport />} />
+              {/* route "/kaliurang/bininlatedetail" */}
+              <Route path="/kaliurang/bininlatedetail" element={<KaliurangBinInLateDetail />} />
+              {/* route "/kaliurang/binoutlatedetail" */}
+              <Route path="/kaliurang/binoutlatedetail" element={<KaliurangBinOutLateDetail />} />
+              {/* route "/kaliurang/bintransitlatedetail" */}
+              <Route path="/kaliurang/bintransitlatedetail" element={<KaliurangBinInTransitDetail />} />
+              {/* route "/kaliurang/cashcarrylatedetail" */}
+              <Route path="/kaliurang/cashcarrylatedetail" element={<KaliurangCashCarryLateDetail />} />
+              {/* route "/kaliurang/cashcarryonscheduledetail" */}
+              <Route path="/kaliurang/cashcarryonscheduledetail" element={<KaliurangCashCarryOnScheduleDetail />} />
+              {/* route "/kaliurang/deliverycustomerlatedetail" */}
+              <Route path="/kaliurang/deliverycustomerlatedetail" element={<KaliurangDelivCustLateDetail />} />
+              {/* route "/kaliurang/deliverycustomeronscheduledetail" */}
+              <Route path="/kaliurang/deliverycustomeronscheduledetail" element={<KaliurangDelivCustOnScheduleDetail />} />
+              {/* route "/kaliurang/itrinlatedetail" */}
+              <Route path="/kaliurang/itrinlatedetail" element={<KaliurangItrInLateDetail />} />
+              {/* route "/kaliurang/itrinonscheduledetail" */}
+              <Route path="/kaliurang/itrinonscheduledetail" element={<KaliurangItrInOnScheduleDetail />} />
+              {/* route "/kaliurang/itroutlatedetail" */}
+              <Route path="/kaliurang/itroutlatedetail" element={<KaliurangItrOutLateDetail />} />
+              {/* route "/kaliurang/itroutonscheduledetail" */}
+              <Route path="/kaliurang/itroutonscheduledetail" element={<KaliurangItrOutOnScheduleDetail />} />
+
+
+
+
 
               {/* route "/kaliurang/store" */}
               <Route path="/kaliurang/store" element={<ChartStoreKaliurang />} />
