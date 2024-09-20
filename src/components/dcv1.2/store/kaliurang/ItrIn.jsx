@@ -149,7 +149,7 @@ const ChartStoreItrIn = () => {
             onClick={() => window.open('#', '_blank')}
             >
             </div> 
-            Ready To PickUp
+            Ready PickUp
             </div>
 
             <div className="legend-item">

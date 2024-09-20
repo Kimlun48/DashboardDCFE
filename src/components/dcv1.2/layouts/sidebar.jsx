@@ -183,7 +183,7 @@ function Sidebar() {
         <React.Fragment>
             <div className="sidebar">
                 <div className="side-dash">
-            <Link className={`list-group-item list-group-item-action  p-3 transparent-background`} to="/admin/dashboard">
+            <Link className={`list-group-item list-group-item-action  p-3 `} to="/admin/dashboard">
                 <DashboardIcon className="me-2 custom-icon" />Dashboard
             </Link>
             </div>
