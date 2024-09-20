@@ -378,7 +378,7 @@ function LeadTimes() {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group controlId="mulai">
+                        {/* <Form.Group controlId="mulai">
                             <Form.Label>Start</Form.Label>
                             <Form.Control
                                 type="text"
@@ -394,6 +394,32 @@ function LeadTimes() {
                                 placeholder="Enter Finish"
                                 value={currentData.akhir}
                                 onChange={e => setCurrentData({ ...currentData, akhir: e.target.value })}
+                            />
+                        </Form.Group> */}
+                        <Form.Group controlId="mulai">
+                            <Form.Label>Start</Form.Label>
+                            <DatePicker
+                                selected={currentData.mulai}
+                                onChange={(date) => setCurrentData({ ...currentData, mulai: date })}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={30}
+                                timeCaption="Time"
+                                dateFormat="yyyy-MM-dd HH:mm"
+                                className="form-control"
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="akhir" className="mt-3">
+                            <Form.Label>Finish</Form.Label>
+                            <DatePicker
+                                selected={currentData.akhir}
+                                onChange={(date) => setCurrentData({ ...currentData, akhir: date })}
+                                showTimeSelect
+                                timeFormat="HH:mm"
+                                timeIntervals={30}
+                                timeCaption="Time"
+                                dateFormat="yyyy-MM-dd HH:mm"
+                                className="form-control"
                             />
                         </Form.Group>
                         <Form.Group controlId="jenis_aktivitas">

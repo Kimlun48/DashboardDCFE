@@ -277,94 +277,194 @@ function ChartStoreKaliurang() {
         switch (filter) {
             case "grpo":
                                 return (
-                                    <div className="row">
-                                        <div className="col-lg-6 col-md-6">
-                                            <ChartStoreGrpo />
-                                        </div>
-                                        <div className="col-lg-6 col-md-6">
-                                            <ChartStoreGrpoLate />
-                                        </div>
+                                    // <div className="row">
+                                    //     <div className="col-lg-6 col-md-6">
+                                    //         <ChartStoreGrpo />
+                                    //     </div>
+                                    //     <div className="col-lg-6 col-md-6">
+                                    //         <ChartStoreGrpoLate />
+                                    //     </div>
+                                    // </div>
+
+                    <div className="containers">
+                    <div className="row mt-4">
+                    <div className="col-12">
+                    <div className="card border-0 rounded shadow-sm border-top-success">
+                    <div className="card-header">
+                    <div className="row mt-4">
+                             <div className="col-md-6">
+                                <ChartStoreGrpo />
+                            </div>
+                             <div className="col-md-6">
+                                <ChartStoreGrpoLate />
+                            </div>
+                   
+                    </div>
+                    </div>
+                        </div>
+                            </div>
+                                </div>
                                     </div>
                                 );
+                                
                             case "cashcarry":
                                 return (
-                                    <div className="row">
-                                        <div className="col-lg-6 col-md-6">
-                                            <ChartStoreCashCarry />
-                                        </div>
-                                        <div className="col-lg-6 col-md-6">
-                                            <ChartCashCarryLate />
-                                        </div>
+                                    // <div className="row">
+                                    //     <div className="col-lg-6 col-md-6">
+                                    //         <ChartStoreCashCarry />
+                                    //     </div>
+                                    //     <div className="col-lg-6 col-md-6">
+                                    //         <ChartCashCarryLate />
+                                    //     </div>
+                                    // </div>
+                    <div className="containers">
+                    <div className="row mt-4">
+                    <div className="col-12">
+                    <div className="card border-0 rounded shadow-sm border-top-success">
+                    <div className="card-header">
+                    <div className="row mt-4">
+                             <div className="col-md-6">
+                                <ChartStoreCashCarry />
+                            </div>
+                             <div className="col-md-6">
+                                <ChartCashCarryLate />
+                            </div>
+                   
+                    </div>
+                    </div>
+                        </div>
+                            </div>
+                                </div>
                                     </div>
                                 );
                             case "delivery":
                                 return (
-                                    <div className="row">
-                                        <div className="col-lg-6 col-md-6">
-                                            <ChartStoreDeliveryCus />
-                                        </div>
-                                        <div className="col-lg-6 col-md-6">
-                                            <ChartDelivCustLate />
-                                        </div>
+                                    // <div className="row">
+                                    //     <div className="col-lg-6 col-md-6">
+                                    //         <ChartStoreDeliveryCus />
+                                    //     </div>
+                                    //     <div className="col-lg-6 col-md-6">
+                                    //         <ChartDelivCustLate />
+                                    //     </div>
+                                    // </div>
+                    <div className="containers">
+                    <div className="row mt-4">
+                    <div className="col-12">
+                    <div className="card border-0 rounded shadow-sm border-top-success">
+                    <div className="card-header">
+                    <div className="row mt-4">
+                             <div className="col-md-6">
+                                <ChartStoreDeliveryCus />
+                            </div>
+                             <div className="col-md-6">
+                                <ChartDelivCustLate />
+                            </div>
+                    
+                    </div>
+                    </div>
+                        </div>
+                            </div>
+                                </div>
                                     </div>
                                 );
                             case "itrin":
                                 return (
-                                    <div className="row">
-                                        <div className="col-lg-6 col-md-6">
-                                            <ChartStoreItrIn />
-                                        </div>
-                                        <div className="col-lg-6 col-md-6">
-                                            <ChartItrInLate />
-                                        </div>
+                                    // <div className="row">
+                                    //     <div className="col-lg-6 col-md-6">
+                                    //         <ChartStoreItrIn />
+                                    //     </div>
+                                    //     <div className="col-lg-6 col-md-6">
+                                    //         <ChartItrInLate />
+                                    //     </div>
+                                    // </div>
+                    <div className="containers">
+                    <div className="row mt-4">
+                    <div className="col-12">
+                    <div className="card border-0 rounded shadow-sm border-top-success">
+                    <div className="card-header">
+                    <div className="row mt-4">
+                             <div className="col-md-6">
+                                <ChartStoreItrIn />
+                            </div>
+                             <div className="col-md-6">
+                                <ChartItrInLate />
+                            </div>
+                   
+                    </div>
+                    </div>
+                        </div>
+                            </div>
+                                </div>
                                     </div>
                                 );
                             case "itrout":
                                 return (
-                                    <div className="row">
-                                        <div className="col-lg-6 col-md-6">
-                                            <ChartStoreItrOut />
-                                        </div>
-                                        <div className="col-lg-6 col-md-6">
-                                            <ChartItrOutLate />
-                                        </div>
+                                    // <div className="row">
+                                    //     <div className="col-lg-6 col-md-6">
+                                    //         <ChartStoreItrOut />
+                                    //     </div>
+                                    //     <div className="col-lg-6 col-md-6">
+                                    //         <ChartItrOutLate />
+                                    //     </div>
+                                    // </div>
+                    <div className="containers">
+                    <div className="row mt-4">
+                    <div className="col-12">
+                    <div className="card border-0 rounded shadow-sm border-top-success">
+                    <div className="card-header">
+                    <div className="row mt-4">
+                             <div className="col-md-6">
+                                <ChartStoreItrOut />
+                            </div>
+                             <div className="col-md-6">
+                                <ChartItrOutLate />
+                            </div>
+                    <div className="col-12 col-lg-3 mb-4"></div>
+                    </div>
+                    </div>
+                        </div>
+                            </div>
+                                </div>
                                     </div>
                                 );
             default:
                 return (
-                    <div className="row">
-                        <div className="custom-col">
-                            <ChartStoreGrpo />
-                        </div>
-                        <div className="custom-col">
-                            <ChartStoreGrpoLate />
-                        </div>
-                        <div className="custom-col">
-                            <ChartStoreItrIn />
-                        </div>
-                        <div className="custom-col">
-                            <ChartItrInLate />
-                        </div>
-                        <div className="custom-col">
-                            <ChartStoreItrOut />
-                        </div>
-                        <div className="custom-col">
-                            <ChartItrOutLate />
-                        </div>
-                        <div className="col-lg-4 col-md-4">
-                            <ChartStoreCashCarry />
-                        </div>
-                        <div className="col-lg-2 col-md-2">
-                            <ChartCashCarryLate />
-                        </div>
-                        <div className="col-lg-4 col-md-4">
-                            <ChartStoreDeliveryCus />
-                        </div>
-                        <div className="col-lg-2 col-md-2">
-                            <ChartDelivCustLate />
-                        </div>
+                    <div className="container-fluid">
+                    <div className="row chart-container">
+                      <div className="custom-col">
+                        <ChartStoreGrpo />
+                      </div>
+                      <div className="custom-col">
+                        <ChartStoreGrpoLate />
+                      </div>
+                      <div className="custom-col">
+                        <ChartStoreItrIn />
+                      </div>
+                      <div className="custom-col">
+                        <ChartItrInLate />
+                      </div>
+                      <div className="custom-col">
+                        <ChartStoreItrOut />
+                      </div>
+                      <div className="custom-col">
+                        <ChartItrOutLate />
+                      </div>
+                      <div className="col-lg-4 col-md-4 box">
+                     <ChartStoreCashCarry />
                     </div>
-                );
+                    <div className="col-lg-2 col-md-2 box">
+                    <ChartCashCarryLate />
+                     </div>
+                    <div className="col-lg-4 col-md-4 box">
+                <ChartStoreDeliveryCus />
+                </div>
+                <div className="col-lg-2 col-md-2 box">
+                 <ChartDelivCustLate />
+                 </div>
+                    </div>
+                    </div>
+                  );
+                  
         }
     };
     

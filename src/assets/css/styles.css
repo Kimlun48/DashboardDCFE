@@ -137,7 +137,7 @@ body {
 
 .list-group-item {
 color: white; /* Warna teks putih untuk item */
-background-color: transparent; /* Latar belakang transparan */
+ background-color: rgba(114, 107, 107, 0.3);
 }
 
 .dropdown-content {
@@ -592,7 +592,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 .chart-container-chart {
   position: relative;
   width: 100%;
-  height: 260px;
+  height: 350px;
   background-color: #01062c !important;
   padding: 20px;
   border-radius: 10px;
@@ -1572,10 +1572,67 @@ body {
   color: white;
 }
 
-.custom-col {
-  flex: 0 0 15.5%; /* 12.5% for 8 columns */
-  max-width: 15.5%;
+
+
+.custom-col-1 {
+  flex: 0 0 35%; /* 12.5% for 8 columns */
+  max-width: 35%;
 }
+
+
+
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  
+  
+}
+
+.custom-col {
+  flex: 0 0 16%; /* Lebar kolom 16% */
+  max-width: 16%;
+  border: 1px solid #ccc; /* Membuat kotak dengan garis border */
+  padding: 10px; /* Ruang di dalam kotak */
+  border-radius: 8px; /* Membuat sudut kotak agak melengkung */
+  
+  margin-bottom: 20px; /* Memberi jarak vertikal antar baris */
+  margin-left: 10px;
+  margin-top: 20px;
+  background-color: rgba(114, 107, 107, 0.3);
+}
+
+.box {
+  border: 1px solid #ccc; /* Membuat kotak dengan garis border */
+  padding: 10px; /* Ruang di dalam kotak */
+  border-radius: 8px; /* Membuat sudut kotak agak melengkung */
+  
+  margin-bottom: 20px; /* Memberi jarak antar baris */
+  
+ 
+ 
+  background-color: rgba(114, 107, 107, 0.3);
+}
+
+.container-fluid {
+  max-width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media (max-width: 768px) {
+  .custom-col {
+    flex: 0 0 48%; /* Dua kolom per baris pada layar kecil */
+    max-width: 48%;
+  }
+
+  .col-lg-4, .col-md-4, .col-lg-2, .col-md-2 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+
+
 
 @media (max-width: 768px) {
   .custom-col {
