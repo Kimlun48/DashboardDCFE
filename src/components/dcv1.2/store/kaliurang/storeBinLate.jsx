@@ -167,6 +167,7 @@ const ChartStoreGrpoLate = () => {
                     }
                     return { name, value: parseInt(item.ONHAND, 10) };
                 });
+               // console.log(transformedData);
 
                 // Cek jika semua ONHAND adalah 0
                 const allZero = transformedData.every(item => item.value === 0);
@@ -239,7 +240,7 @@ const ChartStoreGrpoLate = () => {
                                     cy="50%"
                                     outerRadius={90}
                                     fill="#8884d8"
-                                   //label
+                                    label={({ value }) => `${value !== undefined && !isNaN(value) ? value : 0}`} 
                                     stroke="none"
                                     innerRadius={60}
                                      onClick={(data, index) => handleClick(data)}
@@ -250,7 +251,11 @@ const ChartStoreGrpoLate = () => {
                                     {data.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
-                                     <Label value={`${data.find(item => item.name === 'Late')?.value || 0} Late`} position="center" />
+                                   <Label 
+                                 value={data.find(item => item.value > 0) ? `${data.find(item => item.value > 0).value} Late` : "No Late Data"} 
+                                 position="center" 
+                                />
+
                                 </Pie>
                                 <Tooltip
                                     contentStyle={{

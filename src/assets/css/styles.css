@@ -1575,8 +1575,8 @@ body {
 
 
 .custom-col-1 {
-  flex: 0 0 35%; /* 12.5% for 8 columns */
-  max-width: 35%;
+  flex: 0 0 12.5%; /* 12.5% for 8 columns */
+  max-width: 12.5%;
 }
 
 
@@ -1601,22 +1601,14 @@ body {
   background-color: rgba(114, 107, 107, 0.3);
 }
 
-.box {
-  border: 1px solid #ccc; /* Membuat kotak dengan garis border */
-  padding: 10px; /* Ruang di dalam kotak */
-  border-radius: 8px; /* Membuat sudut kotak agak melengkung */
-  
-  margin-bottom: 20px; /* Memberi jarak antar baris */
-  
- 
- 
-  background-color: rgba(114, 107, 107, 0.3);
-}
 
-.container-fluid {
-  max-width: 100%;
-  padding-left: 15px;
-  padding-right: 15px;
+
+.containers-grpo ,.containers-itrin, .containers-itrout, .containers-cashcarry, .containers-delivcust {
+ 
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  
+
 }
 
 @media (max-width: 768px) {
