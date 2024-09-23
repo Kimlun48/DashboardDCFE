@@ -85,7 +85,7 @@ const ChartCashCarryLate = () => {
                                     cy="50%"
                                     outerRadius={90}
                                     fill="#8884d8"
-                                    label
+                                    label={({ name, value }) => `${name}: ${value !== undefined && !isNaN(value) ? value : 0}`} 
                                     stroke="none"
                                     innerRadius={60}
                                     onClick={(data, index) => handleClick(data)}

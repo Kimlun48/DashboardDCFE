@@ -43,6 +43,12 @@ const ChartStoreItrIn = () => {
         return () => clearInterval(interval);
     }, []);
 
+    const staticData = [
+        { name: 'Late', value: 1 },
+        { name: 'On Schedule', value: 2 },
+        
+    ];
+
     return (
         <React.Fragment>
             <div className="col-12 mb-2">
