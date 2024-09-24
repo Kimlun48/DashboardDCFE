@@ -1045,7 +1045,7 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 .legend-store {
   display: flex;
-  justify-content: center;
+  justify-content:left;
   gap: 1rem;
   margin-top: 1px;
   font-size: 10px;
