@@ -155,7 +155,7 @@ const ChartStoreGrpo = () => {
                         onClick={() => window.open('/kaliurang/binoutreportstore', '_blank')}
                     >
                     </div> 
-                    OUT Store
+                    Out Store
                 </div>
 
                 <div className="legend-item">
