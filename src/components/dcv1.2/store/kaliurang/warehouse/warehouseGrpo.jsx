@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, LabelList } from 'recharts';
-import Api from "../../../../api";
+import Api from "../../../../../api";
 
 
-const ChartStoreGrpo = () => {
+const ChartWarehouseGrpo = () => {
     const [onhandin, setOnhandin] = useState(0);
     const [onhandout, setOnhandout] = useState(0);
     const [onhandtransit, setOnhandtransit] = useState(0);
@@ -14,7 +14,7 @@ const ChartStoreGrpo = () => {
 
     const fetchData = async () => {
         try {
-            const response = await Api.get('api/grpokaliurangheaderstatisticstore');
+            const response = await Api.get('api/grpokaliurangheaderstatisticwarehouse');
             const data = response.data;
            
             setOnhandin(data.ONHANDIN || 0);
@@ -37,17 +37,17 @@ const ChartStoreGrpo = () => {
 
     // Ensure data is 0 if not provided
     const data = [
-        { name: 'Bin IN Store', value: onhandin || 0 },
-        { name: 'Bin OUT Store', value: onhandout || 0 },
-        { name: 'Bin Transit Store', value: onhandtransit || 0 },
+        { name: 'Bin IN WH', value: onhandin || 0 },
+        { name: 'Bin OUT WH', value: onhandout || 0 },
+        { name: 'Bin Transit WH', value: onhandtransit || 0 },
     ];
 
     const handleClick = (entry) => {
-        if (entry.name === 'Bin IN Store') {
+        if (entry.name === 'Bin IN WH') {
             window.open('/kaliurang/bininreportstore', '_blank');
-        } else if (entry.name === 'Bin OUT Store') {
+        } else if (entry.name === 'Bin OUT WH') {
             window.open('/kaliurang/binoutreportstore', '_blank');
-        } else if (entry.name === 'Bin Transit Store') {
+        } else if (entry.name === 'Bin Transit WH') {
             window.open('/kaliurang/bintransitreportstore', '_blank');
         }
     };
@@ -71,15 +71,15 @@ const ChartStoreGrpo = () => {
                         <ResponsiveContainer width="100%" height={250}>
                             <BarChart layout="vertical" data={data} margin={{ top: 5, right: 10, left: 5, bottom: 5 }}>
                                 <defs>
-                                    <linearGradient id="colorBinINStore" x1="0" y1="0" x2="0" y2="1">
+                                    <linearGradient id="colorBinINWH" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stopColor="#01FEFF" stopOpacity={1}/>
                                         <stop offset="100%" stopColor="#01FEFF" stopOpacity={0.5}/>
                                     </linearGradient>
-                                    <linearGradient id="colorBinOUTStore" x1="0" y1="0" x2="0" y2="1">
+                                    <linearGradient id="colorBinOUTWH" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stopColor="#CD0099" stopOpacity={1}/>
                                         <stop offset="100%" stopColor="#CD0099" stopOpacity={0.5}/>
                                     </linearGradient>
-                                    <linearGradient id="colorBinTransitStore" x1="0" y1="0" x2="0" y2="1">
+                                    <linearGradient id="colorBinTransitWH" x1="0" y1="0" x2="0" y2="1">
                                         <stop offset="0%" stopColor="#FF6608" stopOpacity={1}/>
                                         <stop offset="100%" stopColor="#FF6608" stopOpacity={0.5}/>
                                     </linearGradient>
@@ -117,14 +117,14 @@ const ChartStoreGrpo = () => {
                                     {data.map((entry, index) => {
                                         let fillColor;
                                         switch (entry.name) {
-                                            case 'Bin IN Store':
-                                                fillColor = 'url(#colorBinINStore)';
+                                            case 'Bin IN WH':
+                                                fillColor = 'url(#colorBinINWH)';
                                                 break;
-                                            case 'Bin OUT Store': 
-                                                fillColor = 'url(#colorBinOUTStore)';
+                                            case 'Bin OUT WH': 
+                                                fillColor = 'url(#colorBinOUTWH)';
                                                 break;
-                                            case 'Bin Transit Store':
-                                                fillColor = 'url(#colorBinTransitStore)';
+                                            case 'Bin Transit WH':
+                                                fillColor = 'url(#colorBinTransitWH)';
                                                 break;
                                             default:
                                                 fillColor = '#8884d8'; // Default color if needed
@@ -145,7 +145,7 @@ const ChartStoreGrpo = () => {
                         onClick={() => window.open('/kaliurang/bininreportstore', '_blank')}
                     >
                     </div> 
-                    IN Store
+                    IN WareHouse
                 </div>
 
                 <div className="legend-item">
@@ -155,7 +155,7 @@ const ChartStoreGrpo = () => {
                         onClick={() => window.open('/kaliurang/binoutreportstore', '_blank')}
                     >
                     </div> 
-                    OUT Store
+                    OUT WareHouse
                 </div>
 
                 <div className="legend-item">
@@ -165,7 +165,7 @@ const ChartStoreGrpo = () => {
                         onClick={() => window.open('/kaliurang/bintransitreportstore', '_blank')}
                     >
                     </div> 
-                    Transit Store
+                    Transit WareHouse
                 </div>
             </div>
 
@@ -173,4 +173,4 @@ const ChartStoreGrpo = () => {
     );
 };
 
-export default ChartStoreGrpo;
+export default ChartWarehouseGrpo;

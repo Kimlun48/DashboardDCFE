@@ -64,6 +64,8 @@ import KaliurangItrInOnScheduleDetail from '../pages/DCv1.2/Admin/Reports/store/
 import KaliurangItrOutLateDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailItrOutLate.jsx';
 import KaliurangItrOutOnScheduleDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailItrOutOnSchedule.jsx';
 
+import ChartWareHouseKaliurang from '../pages/DCv1.2/Store/Kaliurang/ChartWareHouse.jsx';
+
 //user
 import User from '../pages/DCv1.2/Admin/User/User.jsx';
 
@@ -109,8 +111,7 @@ function RoutesIndex() {
              <Route path="/dashboardstore" element={<DashboardStoreIndex />} />
 
 
-             {/* route "/kaliurang/warehouse" */}
-             <Route path="/kaliurang/warehouse" element={<ChartKaliurang />} />
+             
               {/* route "/kaliurang/bininreport" */}
               <Route path="/kaliurang/bininreport" element={<KaliurangBinINReport />} />
               {/* route "/kaliurang/binoutreport" */}
@@ -146,14 +147,23 @@ function RoutesIndex() {
 
               {/* route "/kaliurang/store" */}
               <Route path="/kaliurang/store" element={<ChartStoreKaliurang />} />
+
               {/* route "/kaliurang/bininreportstore" */}
               <Route path="/kaliurang/bininreportstore" element={<KaliurangDetailBinINStore />} />
+              
               {/* route "/kaliurang/binoutreportstore" */}
               <Route path="/kaliurang/binoutreportstore" element={<KaliurangDetailBinOutStore />} />
               {/* route "/kaliurang/binreportstore" */}
               <Route path="/kaliurang/bintransitreportstore" element={<KaliurangDetailBinTransitStore />} />
               {/* route "/kaliurang/pndstore" */}
               <Route path="/kaliurang/pndstore" element={<StorePndKaliurang />} />
+
+
+
+              {/* route "/kaliurang/warehouse" */}
+              <Route path="/kaliurang/warehouse" element={<ChartWareHouseKaliurang />} />
+              {/* route "/kaliurang/inoutwarehouse" */}
+             <Route path="/kaliurang/inoutwarehouse" element={<ChartKaliurang />} />
 
                
 

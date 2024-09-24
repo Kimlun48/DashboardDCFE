@@ -1473,8 +1473,45 @@ body {
 }
 
 .navbar, .dropdown-menu {
-  background-color: #000638 !important;
+  /* Background gradient with transparency */
+  background: linear-gradient(135deg, rgba(1, 12, 61, 0.8), rgba(1, 12, 61, 0.6)) !important;
+  
+  /* Apply a blur effect */
+  backdrop-filter: blur(10px);
+  
+  /* Add a border with subtle transparency */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  /* Add rounded corners for a softer look */
+  /* border-radius: 10px; */
+
+  /* Apply a subtle box-shadow for depth */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  /* Smooth transition for hover effects */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+.navbar:hover, .dropdown-menu:hover {
+  /* Slightly lighten the background on hover */
+  background: linear-gradient(135deg, rgba(1, 12, 61, 0.9), rgba(1, 12, 61, 0.7)) !important;
+  
+  /* Increase the box-shadow for a pop-out effect */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: Style the dropdown items */
+.dropdown-item {
+  color: white !important;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 5px;
+}
+
 
 .nav-link, .dropdown-item {
   color: white !important;

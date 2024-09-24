@@ -278,14 +278,7 @@ function ChartStoreKaliurang() {
         switch (filter) {
             case "grpo":
                                 return (
-                                    // <div className="row">
-                                    //     <div className="col-lg-6 col-md-6">
-                                    //         <ChartStoreGrpo />
-                                    //     </div>
-                                    //     <div className="col-lg-6 col-md-6">
-                                    //         <ChartStoreGrpoLate />
-                                    //     </div>
-                                    // </div>
+
 
                     <div className="containers-grpo">
                     <div className="row mt-4">
@@ -310,14 +303,7 @@ function ChartStoreKaliurang() {
                                 
                             case "cashcarry":
                                 return (
-                                    // <div className="row">
-                                    //     <div className="col-lg-6 col-md-6">
-                                    //         <ChartStoreCashCarry />
-                                    //     </div>
-                                    //     <div className="col-lg-6 col-md-6">
-                                    //         <ChartCashCarryLate />
-                                    //     </div>
-                                    // </div>
+
                     <div className="containers-cashcarry">
                     <div className="row mt-4">
                     <div className="col-12">
@@ -340,14 +326,7 @@ function ChartStoreKaliurang() {
                                 );
                             case "delivery":
                                 return (
-                                    // <div className="row">
-                                    //     <div className="col-lg-6 col-md-6">
-                                    //         <ChartStoreDeliveryCus />
-                                    //     </div>
-                                    //     <div className="col-lg-6 col-md-6">
-                                    //         <ChartDelivCustLate />
-                                    //     </div>
-                                    // </div>
+
                     <div className="containers-delivcust">
                     <div className="row mt-4">
                     <div className="col-12">
@@ -370,14 +349,7 @@ function ChartStoreKaliurang() {
                                 );
                             case "itrin":
                                 return (
-                                    // <div className="row">
-                                    //     <div className="col-lg-6 col-md-6">
-                                    //         <ChartStoreItrIn />
-                                    //     </div>
-                                    //     <div className="col-lg-6 col-md-6">
-                                    //         <ChartItrInLate />
-                                    //     </div>
-                                    // </div>
+
                     <div className="containers-itrin">
                     <div className="row mt-4">
                     <div className="col-12">
@@ -400,14 +372,6 @@ function ChartStoreKaliurang() {
                                 );
                             case "itrout":
                                 return (
-                                    // <div className="row">
-                                    //     <div className="col-lg-6 col-md-6">
-                                    //         <ChartStoreItrOut />
-                                    //     </div>
-                                    //     <div className="col-lg-6 col-md-6">
-                                    //         <ChartItrOutLate />
-                                    //     </div>
-                                    // </div>
                     <div className="containers-itrout">
                     <div className="row mt-4">
                     <div className="col-12">
@@ -430,45 +394,6 @@ function ChartStoreKaliurang() {
                                 );
             default:
                 return (
-                //     <div className="container">
-                //     <div className="row">
-                        
-                //       <div className="col-md-2">
-                //         <ChartStoreGrpo />
-                //       </div>
-                //       <div className="col-md-2">
-                //         <ChartStoreGrpoLate />
-                //       </div>
-
-
-                //       <div className="col-md-2">
-                //         <ChartStoreItrIn />
-                //       </div>
-                //       <div className="col-md-2">
-                //         <ChartItrInLate />
-                //       </div>
-                      
-                //       <div className="col-md-2">
-                //         <ChartStoreItrOut />
-                //       </div>
-                //       <div className="col-md-2">
-                //         <ChartItrOutLate />
-                //       </div>
-                //       <div className="col-lg-4 col-md-4 box">
-                //      <ChartStoreCashCarry />
-                //     </div>
-                //     <div className="col-lg-2 col-md-2 box">
-                //     <ChartCashCarryLate />
-                //      </div>
-                //     <div className="col-lg-4 col-md-4 box">
-                // <ChartStoreDeliveryCus />
-                // </div>
-                // <div className="col-lg-2 col-md-2 box">
-                //  <ChartDelivCustLate />
-                //  </div>
-                //     </div>
-                //     </div>
-
                 <div className="container-store">
                 <div className="row mt-4">
                   {/* Container GRPO */}
@@ -488,7 +413,7 @@ function ChartStoreKaliurang() {
                       </div>
                     </div>
                   </div>
-              
+                
                   {/* Container Itrin */}
                   <div className="col-md-4 col-sm-12 mb-4">
                     <div className="containers-itrin">

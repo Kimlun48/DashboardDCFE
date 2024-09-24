@@ -1,32 +1,27 @@
-
-import React, { useState, useEffect } from "react";
-import Api from "../../../../../../api";
+import React, {useState, useEffect} from "react";
+import Api from "../../../../../../../api";
 import DataTable from "react-data-table-component";
-import useFormatDate from "../../../../../../components/utilites/useFormatDate";
+import useFormatDate from "../../../../../../../components/utilites/useFormatDate";
 
-
-function KaliurangBinOutLateDetail() {
-    document.title = "Report-DetailKaliurangBinOutLate";
+function KaliurangDetailBinInWarehouse() {
+    document.title = "Report-DetailKaliurangBinINStore";
 
     const [detailbinin, setDetailBinIn] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [search, setSearch] = useState('');
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const { formatDate } = useFormatDate();
 
     const fetchData = async () => {
         try {
-            const response = await Api.get('api/grpokaliurangstatisticbinoutlatedetail');
-            const data = response.data.data; 
+            const response = await Api.get('api/grpokaliurangdetailinstore');
+            const data = response.data; 
             setDetailBinIn(data);
             setFilteredData(data);
             console.log('Data received from API:', data);
         } catch (error) {
            
             console.error('Error fetching data:', error);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -42,7 +37,7 @@ function KaliurangBinOutLateDetail() {
                 item.ITEMCODE.toLowerCase().includes(lowercasedSearch) ||
                 item.ITEMNAME.toLowerCase().includes(lowercasedSearch) ||
                 item.CREATEDBY.toLowerCase().includes(lowercasedSearch) ||
-                item.QTY.toLowerCase().includes(lowercasedSearch)
+                item.QTY.toString().toLowerCase().includes(lowercasedSearch)
             );
             setFilteredData(filtered);
         }
@@ -86,7 +81,7 @@ function KaliurangBinOutLateDetail() {
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-header d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span className="font-weight-bold">Detail Bin Out Late </span>
+                                    <span className="font-weight-bold">Detail Bin IN Store</span>
                                 </div>
                             </div>
                             <div className="card-body">
@@ -124,8 +119,5 @@ function KaliurangBinOutLateDetail() {
         </React.Fragment>
     );
 }
-
-export default KaliurangBinOutLateDetail;
-
-
+export default KaliurangDetailBinInWarehouse
 
