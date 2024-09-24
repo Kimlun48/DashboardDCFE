@@ -300,7 +300,7 @@ import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell, Label } from 'recharts';
 import Api from "../../../../api";
 
-const ChartItrInLate = () => {
+const ChartItrOutLate = () => {
     const [data, setData] = useState([]);
 
     const fetchData = async () => {
@@ -417,4 +417,4 @@ const ChartItrInLate = () => {
     );
 };
 
-export default ChartItrInLate;
+export default ChartItrOutLate;
