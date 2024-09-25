@@ -1,27 +1,32 @@
-import React, {useState, useEffect} from "react";
+
+import React, { useState, useEffect } from "react";
 import Api from "../../../../../../../api";
 import DataTable from "react-data-table-component";
 import useFormatDate from "../../../../../../../components/utilites/useFormatDate";
 
-function KaliurangDetailBinInWarehouse() {
-    document.title = "Report-DetailKaliurangBinINWarehouse";
+
+function KaliurangBinInLateDetailWarehouse() {
+    document.title = "Report-DetailKaliurangBinINLateWarehouse";
 
     const [detailbinin, setDetailBinIn] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [search, setSearch] = useState('');
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const { formatDate } = useFormatDate();
 
     const fetchData = async () => {
         try {
-            const response = await Api.get('api/grpowarehousekaliurangdetailinswarehouse');
-            const data = response.data; 
+            const response = await Api.get('api/grpowarehousekaliurangstatisticbininlatedetail');
+            const data = response.data.data; 
             setDetailBinIn(data);
             setFilteredData(data);
             console.log('Data received from API:', data);
         } catch (error) {
            
             console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -37,7 +42,7 @@ function KaliurangDetailBinInWarehouse() {
                 item.ITEMCODE.toLowerCase().includes(lowercasedSearch) ||
                 item.ITEMNAME.toLowerCase().includes(lowercasedSearch) ||
                 item.CREATEDBY.toLowerCase().includes(lowercasedSearch) ||
-                item.QTY.toString().toLowerCase().includes(lowercasedSearch)
+                item.QTY.toLowerCase().includes(lowercasedSearch)
             );
             setFilteredData(filtered);
         }
@@ -81,7 +86,7 @@ function KaliurangDetailBinInWarehouse() {
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-header d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span className="font-weight-bold">Detail Bin IN Warehouse</span>
+                                    <span className="font-weight-bold">Detail Bin IN Late Warehouse </span>
                                 </div>
                             </div>
                             <div className="card-body">
@@ -119,5 +124,6 @@ function KaliurangDetailBinInWarehouse() {
         </React.Fragment>
     );
 }
-export default KaliurangDetailBinInWarehouse
+
+export default KaliurangBinInLateDetailWarehouse;
 

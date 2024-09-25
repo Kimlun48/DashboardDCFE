@@ -10,7 +10,7 @@ const ChartWarehouseGrpo = () => {
     const [onhandtransit, setOnhandtransit] = useState(0);
     
     const navigate = useNavigate();
-    const time = 2 * 60 * 1000; // 2 minutes
+    const time = 2 * 60 * 1000; // 2 minutes  
 
     const fetchData = async () => {
         try {
@@ -44,11 +44,11 @@ const ChartWarehouseGrpo = () => {
 
     const handleClick = (entry) => {
         if (entry.name === 'Bin IN WH') {
-            window.open('/kaliurang/bininreportstore', '_blank');
+            window.open('/kaliurang/bininreportwarehouse', '_blank');
         } else if (entry.name === 'Bin OUT WH') {
-            window.open('/kaliurang/binoutreportstore', '_blank');
+            window.open('/kaliurang/binoutreportwarehouse', '_blank');
         } else if (entry.name === 'Bin Transit WH') {
-            window.open('/kaliurang/bintransitreportstore', '_blank');
+            window.open('/kaliurang/bintransitreportwarehouse', '_blank');
         }
     };
 
@@ -142,7 +142,7 @@ const ChartWarehouseGrpo = () => {
                     <div 
                         className="square-icon" 
                         style={{ backgroundColor: '#01FEFF', cursor: 'pointer' }} 
-                        onClick={() => window.open('/kaliurang/bininreportstore', '_blank')}
+                        onClick={() => window.open('/kaliurang/bininreportwarehouse', '_blank')}
                     >
                     </div> 
                     IN WareHouse
@@ -152,7 +152,7 @@ const ChartWarehouseGrpo = () => {
                     <div 
                         className="square-icon" 
                         style={{ backgroundColor: '#CD0099', cursor: 'pointer' }} 
-                        onClick={() => window.open('/kaliurang/binoutreportstore', '_blank')}
+                        onClick={() => window.open('/kaliurang/binoutreportwarehouse', '_blank')}
                     >
                     </div> 
                     OUT WareHouse
@@ -162,7 +162,7 @@ const ChartWarehouseGrpo = () => {
                     <div 
                         className="square-icon" 
                         style={{ backgroundColor: '#FF6608', cursor: 'pointer' }} 
-                        onClick={() => window.open('/kaliurang/bintransitreportstore', '_blank')}
+                        onClick={() => window.open('/kaliurang/bintransitreportwarehouse', '_blank')}
                     >
                     </div> 
                     Transit WareHouse

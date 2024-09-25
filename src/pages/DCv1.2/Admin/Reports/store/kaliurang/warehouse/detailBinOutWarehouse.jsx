@@ -3,8 +3,8 @@ import Api from "../../../../../../../api";
 import DataTable from "react-data-table-component";
 import useFormatDate from "../../../../../../../components/utilites/useFormatDate";
 
-function KaliurangDetailBinInWarehouse() {
-    document.title = "Report-DetailKaliurangBinINWarehouse";
+function KaliurangDetailBinOutWarehouse() {
+    document.title = "Report-DetailKaliurangBinOutWarehouse";
 
     const [detailbinin, setDetailBinIn] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -14,7 +14,7 @@ function KaliurangDetailBinInWarehouse() {
 
     const fetchData = async () => {
         try {
-            const response = await Api.get('api/grpowarehousekaliurangdetailinswarehouse');
+            const response = await Api.get('api/grpowarehousekaliurangdetailoutwarehouse');
             const data = response.data; 
             setDetailBinIn(data);
             setFilteredData(data);
@@ -81,7 +81,7 @@ function KaliurangDetailBinInWarehouse() {
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-header d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span className="font-weight-bold">Detail Bin IN Warehouse</span>
+                                    <span className="font-weight-bold">Detail Bin Out Warehouse</span>
                                 </div>
                             </div>
                             <div className="card-body">
@@ -119,5 +119,5 @@ function KaliurangDetailBinInWarehouse() {
         </React.Fragment>
     );
 }
-export default KaliurangDetailBinInWarehouse
+export default KaliurangDetailBinOutWarehouse
 

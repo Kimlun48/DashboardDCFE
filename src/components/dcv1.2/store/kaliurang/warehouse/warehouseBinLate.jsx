@@ -69,7 +69,7 @@ const ChartWareHouseGrpoLate = () => {
         const urlMap = {
             // 'Bin IN Store Late': '/kaliurang/bininlatedetail',
             // 'Bin OUT Store Late': '/kaliurang/binoutlatedetail',
-            'Bin Transit WareHouse Late': '/kaliurang/bintransitlatedetail',
+            'Bin Transit WareHouse Late': '/kaliurang/detailbininlatewarehouse',
         };
     
         const url = urlMap[entry.name];
