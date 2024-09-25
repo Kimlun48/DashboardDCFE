@@ -9,7 +9,7 @@ const ChartWareHouseCashCarry = () => {
         try {
             const response = await Api.get("/api/kaliurangcashcarrywarehousestatistic");
             if (response.status === 200) {
-                // Transformasi data
+                // Transformasi data 
                 const transformedData = response.data.data.map(item => {
                     let name;
                     switch (item.TYPE) {

@@ -65,6 +65,10 @@ import KaliurangItrOutLateDetail from '../pages/DCv1.2/Admin/Reports/store/kaliu
 import KaliurangItrOutOnScheduleDetail from '../pages/DCv1.2/Admin/Reports/store/kaliurang/DetailItrOutOnSchedule.jsx';
 
 import ChartWareHouseKaliurang from '../pages/DCv1.2/Store/Kaliurang/ChartWareHouse.jsx';
+import KaliurangDetailBinInWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailBinInWarehouse.jsx';
+import KaliurangDetailBinOutWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailBinOutWarehouse.jsx';
+import KaliurangDetailBinTransitWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailBinTransitWarehouse.jsx';
+import KaliurangBinInLateDetailWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailBinInLateWarehouse.jsx';
 
 //user
 import User from '../pages/DCv1.2/Admin/User/User.jsx';
@@ -157,13 +161,19 @@ function RoutesIndex() {
               <Route path="/kaliurang/bintransitreportstore" element={<KaliurangDetailBinTransitStore />} />
               {/* route "/kaliurang/pndstore" */}
               <Route path="/kaliurang/pndstore" element={<StorePndKaliurang />} />
-
-
-
               {/* route "/kaliurang/warehouse" */}
               <Route path="/kaliurang/warehouse" element={<ChartWareHouseKaliurang />} />
               {/* route "/kaliurang/inoutwarehouse" */}
              <Route path="/kaliurang/inoutwarehouse" element={<ChartKaliurang />} />
+             {/* route "/kaliurang/bininreportwarehouse" */}
+             <Route path="/kaliurang/bininreportwarehouse" element={<KaliurangDetailBinInWarehouse />} />
+             {/* route "/kaliurang/binoutreportwarehouse" */}
+             <Route path="/kaliurang/binoutreportwarehouse" element={<KaliurangDetailBinOutWarehouse />} />
+             {/* route "/kaliurang/bintransitreportwarehouse" */}
+             <Route path="/kaliurang/bintransitreportwarehouse" element={<KaliurangDetailBinTransitWarehouse />} />
+             {/* route "/kaliurang/detailbininlatewarehouse" */}
+             <Route path="/kaliurang/detailbininlatewarehouse" element={<KaliurangBinInLateDetailWarehouse />} />
+             
 
                
 
