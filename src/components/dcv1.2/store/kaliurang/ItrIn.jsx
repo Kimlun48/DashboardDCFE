@@ -43,6 +43,18 @@ const ChartStoreItrIn = () => {
         return () => clearInterval(interval);
     }, []);
 
+    const handleClick = (entry) => {
+        if (entry.name === 'Order Received') {
+            window.open('/kaliurang/itrinorderreceiveddetail', '_blank');
+        } else if (entry.name === 'Being Process') {
+            window.open('/kaliurang/itrinbeingprocessdetail', '_blank');
+        } else if (entry.name === 'Ready To PickUp') {
+            window.open('/kaliurang/itrinreadypickupdetail', '_blank');
+        } else if (entry.name === 'ITR Transit') {
+            window.open('/kaliurang/itrintransitdetail', '_blank');
+        }
+    };
+
     const staticData = [
         { name: 'Late', value: 1 },
         { name: 'On Schedule', value: 2 },
@@ -101,7 +113,7 @@ const ChartStoreItrIn = () => {
                                         padding: '8px'
                                     }}
                                 />
-                                <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={50}>
+                                <Bar dataKey="value" radius={[0, 10, 10, 0]} onClick={handleClick} className="chart-bar" barSize={50}>
                                     <LabelList dataKey="value" position="right" style={{ fontSize: 10, fill: '#fff' }} />
                                     {data.map((entry, index) => {
                                         let fillColor;
@@ -132,7 +144,7 @@ const ChartStoreItrIn = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#01FEFF', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/itrinorderreceiveddetail', '_blank')}
             >
             </div> 
             Order Received
@@ -142,7 +154,7 @@ const ChartStoreItrIn = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#CD0099', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/itrinbeingprocessdetail', '_blank')}
             >
             </div> 
             Being Process
@@ -152,7 +164,7 @@ const ChartStoreItrIn = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#FF6608', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/itrinreadypickupdetail', '_blank')}
             >
             </div> 
             Ready PickUp
@@ -162,7 +174,7 @@ const ChartStoreItrIn = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#00CC64', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/itrintransitdetail', '_blank')}
             >
             </div> 
             ITR Transit

@@ -1480,7 +1480,7 @@ body {
   backdrop-filter: blur(10px);
   
   /* Add a border with subtle transparency */
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  /* border: 1px solid rgba(255, 255, 255, 0.3); */
 
   /* Add rounded corners for a softer look */
   /* border-radius: 10px; */

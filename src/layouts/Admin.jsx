@@ -10,7 +10,7 @@ export default function AdminLayout({ children }) {
         <div id="page-content-wrapper">
           <Navbar expand="lg" style={{ backgroundColor: '#000638' }} className="fixed-top shadow-sm">
             <Container fluid style={{ paddingLeft: '20px', paddingRight: '20px' }}>
-              <Navbar.Toggle aria-controls="navbarSupportedContent" />
+              <Navbar.Toggle aria-controls="navbarSupportedContents" />
               <Navbar.Collapse id="navbarSupportedContent">
                 <Nav className="me-auto mb-2 mb-lg-0">
                   <Nav.Link as={Link} to="/" className="text-white">

@@ -290,6 +290,10 @@ function Sidebar() {
                                             <input className="form-check-input" type="radio" name="outboundOptions" id="salesorder" checked={pathname.includes("salesorder")} onChange={() => handleRadioChange("/admin/outbound/salesorder", 'subReports3')} />
                                             <label className="form-check-label" htmlFor="salesorder">Sales Order</label>
                                         </div>
+                                        <div className="form-check custom-radio mb-2" key="notintegrated">
+                                            <input className="form-check-input" type="radio" name="outboundOptions" id="notintegrated" checked={pathname.includes("notintegrated")} onChange={() => handleRadioChange("/admin/outbound/notintegrated", 'subReports3')} />
+                                            <label className="form-check-label" htmlFor="notintegrated">Not Integrated</label>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
