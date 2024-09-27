@@ -37,6 +37,7 @@ import ArReserveInReport from '../pages/DCv1.2/Admin/Reports/outbound/ArReserveI
 import InventoryOutReport from '../pages/DCv1.2/Admin/Reports/outbound/InventoryTroReport.jsx';
 import SalesOrderReport from '../pages/DCv1.2/Admin/Reports/outbound/SalesOrderReport.jsx';
 import QrCodeScanner from '../pages/DCv1.2/Inbound/QrCodeScanner.jsx';
+import NotIntegratedReport from '../pages/DCv1.2/Admin/Reports/outbound/notIntegratedReport.jsx';
 
 //admin
 import Login from '../pages/DCv1.2/Admin/Auth/Login.jsx';
@@ -70,6 +71,22 @@ import KaliurangDetailBinOutWarehouse from '../pages/DCv1.2/Admin/Reports/store/
 import KaliurangDetailBinTransitWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailBinTransitWarehouse.jsx';
 import KaliurangBinInLateDetailWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailBinInLateWarehouse.jsx';
 
+import KaliurangDetailItrInOrderReceived from '../pages/DCv1.2/Admin/Reports/store/kaliurang/storedetail/detailItrInOrderReceived.jsx';
+import KaliurangDetailItrInBeingProcess from '../pages/DCv1.2/Admin/Reports/store/kaliurang/storedetail/detailItrInBeingProcess.jsx';
+import KaliurangDetailItrInReadyPickup from '../pages/DCv1.2/Admin/Reports/store/kaliurang/storedetail/detailItrInReadyPickup.jsx';
+
+import KaliurangDetailItrOutOrderReceived from '../pages/DCv1.2/Admin/Reports/store/kaliurang/storedetail/detailItrOutOrderReceived.jsx';
+import KaliurangDetailItrOutBeingProcess from '../pages/DCv1.2/Admin/Reports/store/kaliurang/storedetail/detailItrOutBeingProcess.jsx';
+import KaliurangDetailItrOutReadyPickup from '../pages/DCv1.2/Admin/Reports/store/kaliurang/storedetail/detailItrOutreadyPickup.jsx';
+import KaliurangDetailItrInTransit from '../pages/DCv1.2/Admin/Reports/store/kaliurang/storedetail/detailItrInTransit.jsx';
+
+import KaliurangDetailCashCarryOrderReceived from '../pages/DCv1.2/Admin/Reports/store/kaliurang/storedetail/detailCashCarryOrderReceived.jsx';
+import KaliurangDetailCashCarryBeingProcess from '../pages/DCv1.2/Admin/Reports/store/kaliurang/storedetail/detailCashCarryBeingProcess.jsx';
+import KaliurangDetailCashCarryReadyPickup from '../pages/DCv1.2/Admin/Reports/store/kaliurang/storedetail/detailCashCarryReadyPickup.jsx';
+
+import KaliurangDetailDelivCustOrderReceived from '../pages/DCv1.2/Admin/Reports/store/kaliurang/storedetail/detailDelivCustOrderReceived.jsx';
+import KaliurangDetailDelivCustBeingProcess from '../pages/DCv1.2/Admin/Reports/store/kaliurang/storedetail/detailDelivCustBeingProcess.jsx';
+import KaliurangDetailDelivCustReadyPickup from '../pages/DCv1.2/Admin/Reports/store/kaliurang/storedetail/detailDelivCustReadyPickup.jsx';
 //user
 import User from '../pages/DCv1.2/Admin/User/User.jsx';
 
@@ -128,22 +145,56 @@ function RoutesIndex() {
               <Route path="/kaliurang/binoutlatedetail" element={<KaliurangBinOutLateDetail />} />
               {/* route "/kaliurang/bintransitlatedetail" */}
               <Route path="/kaliurang/bintransitlatedetail" element={<KaliurangBinInTransitDetail />} />
-              {/* route "/kaliurang/cashcarrylatedetail" */}
-              <Route path="/kaliurang/cashcarrylatedetail" element={<KaliurangCashCarryLateDetail />} />
-              {/* route "/kaliurang/cashcarryonscheduledetail" */}
-              <Route path="/kaliurang/cashcarryonscheduledetail" element={<KaliurangCashCarryOnScheduleDetail />} />
+              
               {/* route "/kaliurang/deliverycustomerlatedetail" */}
               <Route path="/kaliurang/deliverycustomerlatedetail" element={<KaliurangDelivCustLateDetail />} />
               {/* route "/kaliurang/deliverycustomeronscheduledetail" */}
               <Route path="/kaliurang/deliverycustomeronscheduledetail" element={<KaliurangDelivCustOnScheduleDetail />} />
+
               {/* route "/kaliurang/itrinlatedetail" */}
               <Route path="/kaliurang/itrinlatedetail" element={<KaliurangItrInLateDetail />} />
               {/* route "/kaliurang/itrinonscheduledetail" */}
               <Route path="/kaliurang/itrinonscheduledetail" element={<KaliurangItrInOnScheduleDetail />} />
+              {/* route "/kaliurang/itrinorderreceiveddetail" */}
+              <Route path="/kaliurang/itrinorderreceiveddetail" element={<KaliurangDetailItrInOrderReceived />} />
+              {/* route "/kaliurang/itrinbeingprocessdetail" */}
+              <Route path="/kaliurang/itrinbeingprocessdetail" element={<KaliurangDetailItrInBeingProcess />} />
+              {/* route "/kaliurang/itrinreadypickupdetail" */}
+              <Route path="/kaliurang/itrinreadypickupdetail" element={<KaliurangDetailItrInReadyPickup />} />
+               {/* route "/kaliurang/itrintransitdetail" */}
+               <Route path="/kaliurang/itrintransitdetail" element={<KaliurangDetailItrInTransit />} />
+              
               {/* route "/kaliurang/itroutlatedetail" */}
               <Route path="/kaliurang/itroutlatedetail" element={<KaliurangItrOutLateDetail />} />
               {/* route "/kaliurang/itroutonscheduledetail" */}
               <Route path="/kaliurang/itroutonscheduledetail" element={<KaliurangItrOutOnScheduleDetail />} />
+              {/* route "/kaliurang/itroutorderreceiveddetail" */}
+              <Route path="/kaliurang/itroutorderreceiveddetail" element={<KaliurangDetailItrOutOrderReceived />} />
+              {/* route "/kaliurang/itroutbeingprocessdetail" */}
+              <Route path="/kaliurang/itroutbeingprocessdetail" element={<KaliurangDetailItrOutBeingProcess />} />
+              {/* route "/kaliurang/itroutreadypickupdetail" */}
+              <Route path="/kaliurang/itroutreadypickupdetail" element={<KaliurangDetailItrOutReadyPickup />} />
+              {/* route "/kaliurang/itroutbeingprocessdetail" */}
+              <Route path="/kaliurang/itroutbeingprocessdetail" element={<KaliurangDetailItrOutReadyPickup />} />
+
+              {/* route "/kaliurang/cashcarrylatedetail" */}
+              <Route path="/kaliurang/cashcarrylatedetail" element={<KaliurangCashCarryLateDetail />} />
+              {/* route "/kaliurang/cashcarryonscheduledetail" */}
+              <Route path="/kaliurang/cashcarryonscheduledetail" element={<KaliurangCashCarryOnScheduleDetail />} />
+              {/* route "/kaliurang/cashcarryorderreceiveddetail" */}
+              <Route path="/kaliurang/cashcarryorderreceiveddetail" element={<KaliurangDetailCashCarryOrderReceived />} />
+              {/* route "/kaliurang/cashcarrybeingprocessdetail" */}
+              <Route path="/kaliurang/cashcarrybeingprocessdetail" element={<KaliurangDetailCashCarryBeingProcess />} />
+              {/* route "/kaliurang/cashcarryreadypickupdetail" */}
+              <Route path="/kaliurang/cashcarryreadypickupdetail" element={<KaliurangDetailCashCarryReadyPickup />} />
+              {/* route "/kaliurang/delivcustorderreceiveddetail" */}
+              <Route path="/kaliurang/delivcustorderreceiveddetail" element={<KaliurangDetailDelivCustOrderReceived />} />
+              {/* route "/kaliurang/delivcustbeingprocessdetail" */}
+              <Route path="/kaliurang/delivcustbeingprocessdetail" element={<KaliurangDetailDelivCustBeingProcess />} />
+              {/* route "/kaliurang/delivcustreadypickupdetail" */}
+              <Route path="/kaliurang/delivcustreadypickupdetail" element={<KaliurangDetailDelivCustReadyPickup />} />
+              
+
 
 
 
@@ -173,6 +224,7 @@ function RoutesIndex() {
              <Route path="/kaliurang/bintransitreportwarehouse" element={<KaliurangDetailBinTransitWarehouse />} />
              {/* route "/kaliurang/detailbininlatewarehouse" */}
              <Route path="/kaliurang/detailbininlatewarehouse" element={<KaliurangBinInLateDetailWarehouse />} />
+             
              
 
                
@@ -324,6 +376,16 @@ function RoutesIndex() {
             </PrivateRoutes>
             }
             />    
+
+            {/*private route "/admin/outbound/notintegrated" */}
+            <Route 
+            path="/admin/outbound/notintegrated" 
+            element={
+            <PrivateRoutes>
+            <NotIntegratedReport/>
+            </PrivateRoutes>
+            }
+            />   
 
               
             {/*private route "/admin/user" */}

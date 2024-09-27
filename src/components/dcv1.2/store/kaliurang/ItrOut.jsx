@@ -43,6 +43,16 @@ const ChartStoreItrOut = () => {
         return () => clearInterval(interval);
     }, []);
 
+    const handleClick = (entry) => {
+        if (entry.name === 'Order Received') {
+            window.open('/kaliurang/itroutorderreceiveddetail', '_blank');
+        } else if (entry.name === 'Being Process') {
+            window.open('/kaliurang/itroutbeingprocessdetail', '_blank');
+        } else if (entry.name === 'Ready To PickUp') {
+            window.open('/kaliurang/itroutreadypickupdetail', '_blank');
+        } 
+    };
+
     return (
         <React.Fragment>
             <div className="col-12 mb-2">
@@ -95,7 +105,7 @@ const ChartStoreItrOut = () => {
                                         padding: '8px'
                                     }}
                                 />
-                                <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={50}>
+                                <Bar dataKey="value" radius={[0, 10, 10, 0]} onClick={handleClick} className="chart-bar" barSize={50}>
                                     <LabelList dataKey="value" position="right" style={{ fontSize: 10, fill: '#fff' }} />
                                     {data.map((entry, index) => {
                                         let fillColor;
@@ -126,7 +136,7 @@ const ChartStoreItrOut = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#01FEFF', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/itroutorderreceiveddetail', '_blank')}
             >
             </div> 
             Order Received
@@ -136,7 +146,7 @@ const ChartStoreItrOut = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#CD0099', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/itroutbeingprocessdetail', '_blank')}
             >
             </div> 
             Being Process
@@ -146,7 +156,7 @@ const ChartStoreItrOut = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#FF6608', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/itroutreadypickupdetail', '_blank')}
             >
             </div> 
             Ready PickUp

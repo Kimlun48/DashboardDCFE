@@ -40,6 +40,16 @@ const ChartStoreDeliveryCus = () => {
         return () => clearInterval(interval);
     }, []);
 
+    const handleClick = (entry) => {
+        if (entry.name === 'Order Received') {
+            window.open('/kaliurang/delivcustorderreceiveddetail', '_blank');
+        } else if (entry.name === 'Being Process') {
+            window.open('/kaliurang/delivcustbeingprocessdetail', '_blank');
+        } else if (entry.name === 'Ready To PickUp') {
+            window.open('/kaliurang/delivcustreadypickupdetail', '_blank');
+        } 
+    };
+
     return (
         <React.Fragment>
             <div className="col-12 mb-2">
@@ -50,7 +60,7 @@ const ChartStoreDeliveryCus = () => {
                 </div>
             </div>
            
-                        <ResponsiveContainer width="100%" height={250}>
+                        <ResponsiveContainer width="100%"height={250}>
                             <BarChart layout="vertical" data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
                                 <defs>
                                     <linearGradient id="colorORDER_RECEIVED" x1="0" y1="0" x2="0" y2="1">
@@ -88,7 +98,7 @@ const ChartStoreDeliveryCus = () => {
                                         padding: '8px'
                                     }}
                                 />
-                                <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={50}>
+                                <Bar dataKey="value" radius={[0, 10, 10, 0]}  onClick={handleClick} className="chart-bar"  barSize={50}>
                                     <LabelList dataKey="value" position="right" style={{ fontSize: 10, fill: '#fff' }} />
                                     {data.map((entry, index) => {
                                         let fillColor;
@@ -116,7 +126,7 @@ const ChartStoreDeliveryCus = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#01FEFF', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/delivcustorderreceiveddetail', '_blank')}
             >
             </div> 
             Order Received
@@ -126,7 +136,7 @@ const ChartStoreDeliveryCus = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#CD0099', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/delivcustbeingprocessdetail', '_blank')}
             >
             </div> 
             Being Process
@@ -136,7 +146,7 @@ const ChartStoreDeliveryCus = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#FF6608', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/delivcustreadypickupdetail', '_blank')}
             >
             </div> 
             Ready To PickUp
