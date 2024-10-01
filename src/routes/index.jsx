@@ -94,6 +94,11 @@ import KaliurangDetailItrInReadyPickupWarehouse from '../pages/DCv1.2/Admin/Repo
 import KaliurangDetailItrInTransitWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailItrInTransitWarehouse.jsx';
 import KaliurangItrInLateDetailWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailItrInLateWarehouse.jsx';
 import KaliurangItrInOnScheduleDetailWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailItrInOnScheduleWarehouse.jsx';
+
+import KaliurangDetailItrOutOrderReceivedWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailItrOutOrderReceivedWarehouse.jsx';
+import KaliurangDetailItrOutBeingProcessWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailItrOutBeingProcessWarehouse.jsx';
+import KaliurangDetailItrOutReadyPickupWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailItrOutReadyPickupWarehouse.jsx';
+
 //user
 import User from '../pages/DCv1.2/Admin/User/User.jsx';
 
@@ -243,6 +248,13 @@ function RoutesIndex() {
              <Route path="/kaliurang/detailitrinlatewarehouse" element={<KaliurangItrInLateDetailWarehouse />} />
              {/* route "/kaliurang/detailitrinonschedulewarehouse" */}
              <Route path="/kaliurang/detailitrinonschedulewarehouse" element={<KaliurangItrInOnScheduleDetailWarehouse />} />
+
+             {/* route "/kaliurang/detailitroutorderreceivedwarehouse" */}
+             <Route path="/kaliurang/detailitroutorderreceivedwarehouse" element={<KaliurangDetailItrOutOrderReceivedWarehouse />} />
+              {/* route "/kaliurang/detailitroutbeingprocesswarehouse" */}
+              <Route path="/kaliurang/detailitroutbeingprocesswarehouse" element={<KaliurangDetailItrOutBeingProcessWarehouse />} />
+               {/* route "/kaliurang/detailitroutreadypickupwarehouse" */}
+             <Route path="/kaliurang/detailitroutreadypickupwarehouse" element={<KaliurangDetailItrOutReadyPickupWarehouse />} />
              
              
 
