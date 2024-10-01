@@ -442,7 +442,7 @@ import moment from 'moment';
 import toast from 'react-hot-toast';
 import useFormatDate from '../../../utilites/useFormatDate';
 import DataTable from 'react-data-table-component';
-import { Modal, Button, Table } from 'react-bootstrap';
+import { Modal, Button, Table, Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function GenerateScheduleForm() {
@@ -456,9 +456,7 @@ function GenerateScheduleForm() {
   const [masterHour, setMasterHour] = useState([]);
   const [requestTransaksi, setRequestTransaksi] = useState([]);
   const [showModal, setShowModal] = useState(false);
-
-  
-
+  const [loading, setLoading] = useState(false);
 
   const fetchDataHour = async () => {
     try {
@@ -504,14 +502,14 @@ function GenerateScheduleForm() {
 
 
   const columns = [
-    { name: 'Id', selector: row => row.id, sortable: true},
+    { name: 'Id', selector: row => row.id, sortable: true, width: '150px'},
     { name: 'Date', selector: row => row.hari ? formatDate(row.hari) : 'No Data', sortable: true,  width: '150px' },
     { name: 'Start', selector: row => row.mulai, sortable: true, width: '100px' },
     { name: 'Finish', selector: row => row.akhir, sortable: true, width: '100px' },
     { name: 'Activity', selector: row => row.jenis_aktivitas, sortable: true, width: '150px' },
     // { name: 'Slot', selector: row => row.slot, sortable: true, width: '100px' },
     { name: 'Av Slot', selector: row => row.available_slot, sortable: true, width: '150px' },
-    { name: 'Status', selector: row => row.status ?? 'No Data', sortable: true, width: '150px' },
+    { name: 'Status', selector: row => row.status ?? 'No Data', sortable: true },
   //   {
   //     name: 'Actions',
   //     cell: row => (
@@ -549,6 +547,7 @@ function GenerateScheduleForm() {
 };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const data = {
       slot: slot,
       jenis_jam: jenisJam,
@@ -580,6 +579,8 @@ function GenerateScheduleForm() {
         },
         icon: '❌',
       });
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -707,8 +708,17 @@ const handleSave = async (id_req, index) => {
               />
             </div>
           </div>
-          <button type="submit" className="submit-button">
-            Generate
+          <button type="submit" className="submit-button" disabled={loading}>
+            {loading ? (
+              <>
+               <div className="spinner-container">
+              <div className="spinner-custom"></div>
+            </div>
+                Generating...
+              </>
+            ) : (
+              'Generate'
+            )}
           </button>
         </form>
       </div>
