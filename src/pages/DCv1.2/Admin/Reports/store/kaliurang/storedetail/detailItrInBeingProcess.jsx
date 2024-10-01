@@ -99,7 +99,7 @@ function KaliurangDetailItrInBeingProcess ()
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-header d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span className="font-weight-bold">Detail ITR In Being Process</span>
+                                    <span className="font-weight-bold">Store - Detail ITR In Being Process</span>
                                 </div>
                             </div>
                             <div className="card-body">

@@ -81,7 +81,7 @@ function KaliurangBinOUTReport() {
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-header d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span className="font-weight-bold">Detail Bin Out</span>
+                                    <span className="font-weight-bold">Store - Detail Bin Out</span>
                                 </div>
                             </div>
                             <div className="card-body">

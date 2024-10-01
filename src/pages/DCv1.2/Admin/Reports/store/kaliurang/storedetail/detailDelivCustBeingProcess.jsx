@@ -100,7 +100,7 @@ function KaliurangDetailDelivCustBeingProcess ()
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-header d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span className="font-weight-bold">Detail Delivery Customer Being Process</span>
+                                    <span className="font-weight-bold">Store - Detail Delivery Customer Being Process</span>
                                 </div>
                             </div>
                             <div className="card-body">

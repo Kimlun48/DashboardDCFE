@@ -167,9 +167,9 @@ const ChartStoreGrpoLate = () => {
                     }
                     return { name, value: parseInt(item.ONHAND, 10) };
                 });
-               // console.log(transformedData);
+              
 
-                // Cek jika semua ONHAND adalah 0
+                
                 const allZero = transformedData.every(item => item.value === 0);
                 if (allZero) {
                     setData([
@@ -192,19 +192,9 @@ const ChartStoreGrpoLate = () => {
         return () => clearInterval(interval);
     }, []);
 
-    const COLORS = ['#01FEFF', '#CD0099', '#FF6608'];
+  //  const COLORS = ['#01FEFF', '#CD0099', '#FF6608'];
 
-    // const handleClick = (entry) => {
-    //     if (entry.name === 'Bin IN Store Late') {
-    //         window.open('/kaliurang/bininlatedetail', '_blank');
-    //     } else if (entry.name === 'Bin OUT Store Late') {
-    //         // navigate('/putawaystorageunlate');
-    //         window.open('/kaliurang/binoutlatedetail', '_blank');
-    //     } else if (entry.name === 'Bin Transit Store Late') {
-    //         // navigate('/putawaystorageunlate');
-    //         window.open('/kaliurang/bintransitlatedetail', '_blank');
-    //     }
-    // };
+    const totalValue = data.reduce((sum, entry) => sum + entry.value, 0);
 
     const handleClick = (entry) => {
         const urlMap = {
@@ -230,45 +220,76 @@ const ChartStoreGrpoLate = () => {
             </div>
            
                    
-                        <ResponsiveContainer width="100%" height={250}>
-                            <PieChart>
-                                <Pie
-                                    data={data}
-                                    dataKey="value"
-                                    nameKey="name"
-                                    cx="50%"
-                                    cy="50%"
-                                    outerRadius={90}
-                                    fill="#8884d8"
-                                    label={({ value }) => `${value !== undefined && !isNaN(value) ? value : 0}`} 
-                                    stroke="none"
-                                    innerRadius={60}
-                                     onClick={(data, index) => handleClick(data)}
-                                    className="pointer-cursor"
-                                    paddingAngle={1}
+            <ResponsiveContainer width="100%" height={250}>
+  <PieChart>
+    <defs>
+      <linearGradient id="Bin_IN_Store_Late" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stopColor="#01FEFF" stopOpacity={1}/>
+      <stop offset="100%" stopColor="#01FEFF" stopOpacity={0.5}/>
+      </linearGradient>
+      <linearGradient id="Bin_OUT_Store_Late" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="10%" stopColor="#CD0099" stopOpacity={1}/>
+        <stop offset="100%" stopColor="#CD0099" stopOpacity={0.5}/>
+      </linearGradient>
+      <linearGradient id="Bin_Transit_Store_Late" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="10%" stopColor="#FF6608" stopOpacity={1}/>
+        <stop offset="100%" stopColor="#FF6608" stopOpacity={0.5}/>
+      </linearGradient>
+    </defs>
+    <Pie
+      data={data}
+      dataKey="value"
+      nameKey="name"
+      cx="50%"
+      cy="50%"
+      outerRadius={90}
+      innerRadius={60}
+      fill="#8884d8"
+      label={({ value }) => `${value !== undefined && !isNaN(value) ? value : 0}`}
+      stroke="none"
+      onClick={(data, index) => handleClick(data)}
+      className="pointer-cursor"
+      paddingAngle={1}
+    >
+      {data.map((entry, index) => {
+        // Assign the corresponding gradient based on index
+        let gradientId;
+        switch (index) {
+          case 0:
+            gradientId = "Bin_IN_Store_Late";
+            break;
+          case 1:
+            gradientId = "Bin_OUT_Store_Late";
+            break;
+          case 2:
+            gradientId = "Bin_Transit_Store_Late";
+            break;
+          default:
+            gradientId = "Bin_IN_Store_Late"; // Fallback color
+        }
+        return <Cell key={`cell-${index}`} fill={`url(#${gradientId})`} />;
+      })}
+      <Label
+        value={
+          totalValue > 0 ? `${totalValue} Late` : "No Late Data"
+        }
+        position="center"
+        style={{  fill:'whitesmoke', }}
+      />
+    </Pie>
+    <Tooltip
+      contentStyle={{
+        fontSize: 10,
+        backgroundColor: '#fff',
+        color: '#444',
+        border: 'none',
+        borderRadius: '5px',
+        padding: '8px',
+      }}
+    />
+  </PieChart>
+</ResponsiveContainer>
 
-                                >
-                                    {data.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                    ))}
-                                   <Label 
-                                 value={data.find(item => item.value > 0) ? `${data.find(item => item.value > 0).value} Late` : "No Late Data"} 
-                                 position="center" 
-                                />
-
-                                </Pie>
-                                <Tooltip
-                                    contentStyle={{
-                                        fontSize: 10,
-                                        backgroundColor: '#fff',
-                                        color: '#444',
-                                        border: 'none',
-                                        borderRadius: '5px',
-                                        padding: '8px'
-                                    }}
-                                />
-                            </PieChart>
-                        </ResponsiveContainer>
                     
                 
            
