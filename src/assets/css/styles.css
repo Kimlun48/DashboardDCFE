@@ -430,6 +430,30 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   pointer-events: none; /* Agar ikon tidak terpengaruh oleh animasi */
 }
 
+/* Custom CSS for Spinner */
+.spinner-custom {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #3498db;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Spinner container */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 
 

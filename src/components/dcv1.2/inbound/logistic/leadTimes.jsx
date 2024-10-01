@@ -143,84 +143,91 @@ import { saveAs } from 'file-saver';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import toast from "react-hot-toast";
 import { Modal, Button, Form } from 'react-bootstrap';
-//import react-confirm-alert
 import { confirmAlert } from 'react-confirm-alert';
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
-
-//import CSS react-confirm-alert
+import { setHours, setMinutes } from "date-fns";
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
-function LeadTimes() {
+function GenerateLeadTimes() {
     const [leadtime, setLeadTimes] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [search, setSearch] = useState('');
     const { formatDate } = useFormatDate();
     const [showModal, setShowModal] = useState(false);
-    const [modalType, setModalType] = useState('add'); // 'add' or 'edit'
-    const [currentData, setCurrentData] = useState({ id: '', mulai: null, akhir: null, jenis_aktivitas: '', status: '', slot: '', jenis_jam: '' });
+    const [modalType, setModalType] = useState('generate'); 
+    const [userBranch, setUserBranch] = useState([]);
+    const [currentData, setCurrentData] = useState({ id: '', mulai: null, akhir: null, jenis_aktivitas: '', status: '', slot: '', jenis_jam: '', branch: '', });
+
+    const fetchUserBranch = async () => {
+        try {
+            const response = await Api.get('api/userbranch')
+            setUserBranch(response.data.data)
+            console.log('API Response user branch:', response.data)
+        } catch (error) {
+            console.error('Error fetching user branch:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchUserBranch();
+      }, []);
 
     const fetchData = async () => {
+        try {
+            const response = await Api.get('api/masterhour')
+            setLeadTimes(response.data.data)
+            setFilteredData(response.data.data)
+            console.log('API Response leadhours:', response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
 
-                try {
-                    const response = await Api.get('api/masterhour')
-                    setLeadTimes(response.data.data)
-                    setFilteredData(response.data.data)
-                    console.log('API Response leadhours:', response.data);
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                }
-            }
-        
-            useEffect (() => {
-                fetchData();
-              
-            }, []);
-        
-            useEffect(() => {
-                const lowercasedSearch = search.toLowerCase();
-                const filtered = leadtime.filter(item =>
-                    item.status.toLowerCase().includes(lowercasedSearch) || 
-                    item.jenis_jam.toLowerCase().includes(lowercasedSearch) 
-                );
-                setFilteredData(filtered);
-            }, [search, leadtime]);
-        
-            const exportToExcel = () => {
-                const worksheet = XLSX.utils.json_to_sheet(filteredData);
-                const workbook = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(workbook, worksheet, "LeadTimes");
-                const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-                const data = new Blob([excelBuffer], { type: 'application/octet-stream' });
-                saveAs(data, 'LeadTimes report.xlsx');
-            };
+    useEffect(() => {
+        fetchData();
+    }, []);
 
-    const handleAdd = () => {
-        setCurrentData({ id: '', mulai: '', akhir: '', jenis_aktivitas: '', status: '', slot: '', jenis_jam: '' });
-        setModalType('add');
+    useEffect(() => {
+        const lowercasedSearch = search.toLowerCase();
+        const filtered = leadtime.filter(item =>
+            item.status.toLowerCase().includes(lowercasedSearch) || 
+            item.jenis_jam.toLowerCase().includes(lowercasedSearch) ||
+            item.branch.toLowerCase().includes(lowercasedSearch) 
+        );
+        setFilteredData(filtered);
+    }, [search, leadtime]);
+
+    const exportToExcel = () => {
+        const worksheet = XLSX.utils.json_to_sheet(filteredData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "GenerateLeadTimes");
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const data = new Blob([excelBuffer], { type: 'application/octet-stream' });
+        saveAs(data, 'GenerateLeadTimes report.xlsx');
+    };
+
+    const handleGenerate = () => {
+        setCurrentData({ id: '', mulai: '', akhir: '', jenis_aktivitas: '', jenis_jam: '', branch: '' });
+        setModalType('generate');
         setShowModal(true);
     };
 
     const handleEdit = (row) => {
-        setCurrentData({ id: row.id, mulai: row.mulai, akhir: row.akhir, jenis_aktivitas: row.jenis_aktivitas, status: row.status, slot: row.slot, jenis_jam:row.jenis_jam});
+        setCurrentData({ id: row.id, mulai: row.mulai, akhir: row.akhir, jenis_aktivitas: row.jenis_aktivitas, jenis_jam:row.jenis_jam, branch:row.branch});
         setModalType('edit');
         setShowModal(true);
     };
 
     const handleDelete = async (id) => {
-       
         confirmAlert({
             title: 'Are You Sure ?',
             message: 'want to delete this data ?',
             buttons: [{
                     label: 'YES',
                     onClick: async () => {
-                        await Api.delete(`api/masterhour/${id}`, {
-                              
-                            })
+                        await Api.delete(`api/masterhour/${id}`)
                             .then(() => {
-
-                                //show toast
                                 toast.success("Data Deleted Successfully!", {
                                     duration: 4000,
                                     position: "top-right",
@@ -230,8 +237,6 @@ function LeadTimes() {
                                         color: '#fff',
                                     },
                                 });
-
-                                //call function "fetchData"
                                 fetchData();
                             })
                     }
@@ -246,9 +251,9 @@ function LeadTimes() {
 
     const handleSave = async () => {
         try {
-            if (modalType === 'add') {
+            if (modalType === 'generate') {
                 await Api.post('api/masterhour', currentData);
-                toast.success("Add Data Successfully!", {
+                toast.success("Generate Data Successfully!", {
                     duration: 4000,
                     position: "top-right",
                     style: {
@@ -286,21 +291,21 @@ function LeadTimes() {
     };
 
     const columns = [
-        
         { name: 'Start', selector: row => row.mulai, sortable: true },
         { name: 'Finish', selector: row => row.akhir, sortable: true },
-        { name: 'Activity', selector: row => row.jenis_aktivitas, sortable: true},
-        { name: 'Slot', selector: row => row.slot, sortable: true, width: '100px' },
-        { name: 'Times', selector: row => row.jenis_jam, sortable: true },
-        { name: 'Status', selector: row => row.status ?? 'No Data', sortable: true },  
+        { name: 'Activity', selector: row => row.jenis_aktivitas, sortable: true, width: '150px'},
+        //{ name: 'Slot', selector: row => row.slot, sortable: true, width: '100px' },
+        { name: 'Times', selector: row => row.jenis_jam, sortable: true, width: '150px' },
+        // { name: 'Status', selector: row => row.status ?? 'No Data', sortable: true },  
+        { name: 'Branch', selector: row => row.branch ?? 'No Data', sortable: true, width: '300px' },
         {
             name: 'Actions',
             cell: row => (
                 <>
                     <button className="btn btn-primary btn-sm" onClick={() => handleEdit(row)}>Edit</button>
-                    <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(row.id)}>Delete</button>
+                    {/* <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(row.id)}>Delete</button> */}
                 </>
-            ),width: '150px'
+            ),width: '250px'
         }
     ];
 
@@ -344,7 +349,7 @@ function LeadTimes() {
                                         To Excel
                                     </div>
                                 </div>
-                                <button className="btn btn-primary mb-3" onClick={handleAdd}>Add Lead Times</button>
+                                <button className="btn btn-primary mb-3" onClick={handleGenerate}>Generate Lead Times</button>
                                 <input
                                     type="text"
                                     placeholder="Search"
@@ -373,104 +378,97 @@ function LeadTimes() {
             </div>
 
             <Modal show={showModal} onHide={() => setShowModal(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{modalType === 'add' ? 'Add Lead Times' : 'Edit Lead Times'}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        {/* <Form.Group controlId="mulai">
-                            <Form.Label>Start</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter Start"
-                                value={currentData.mulai}
-                                onChange={e => setCurrentData({ ...currentData, mulai: e.target.value })}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="akhir" className="mt-3">
-                            <Form.Label>Finish</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter Finish"
-                                value={currentData.akhir}
-                                onChange={e => setCurrentData({ ...currentData, akhir: e.target.value })}
-                            />
-                        </Form.Group> */}
-                        <Form.Group controlId="mulai">
-                            <Form.Label>Start</Form.Label>
-                            <DatePicker
-                                selected={currentData.mulai}
-                                onChange={(date) => setCurrentData({ ...currentData, mulai: date })}
-                                showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={30}
-                                timeCaption="Time"
-                                dateFormat="yyyy-MM-dd HH:mm"
-                                className="form-control"
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="akhir" className="mt-3">
-                            <Form.Label>Finish</Form.Label>
-                            <DatePicker
-                                selected={currentData.akhir}
-                                onChange={(date) => setCurrentData({ ...currentData, akhir: date })}
-                                showTimeSelect
-                                timeFormat="HH:mm"
-                                timeIntervals={30}
-                                timeCaption="Time"
-                                dateFormat="yyyy-MM-dd HH:mm"
-                                className="form-control"
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="jenis_aktivitas">
-                            <Form.Label>Aktivity</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter Aktivity "
-                                value={currentData.jenis_aktivitas}
-                                onChange={e => setCurrentData({ ...currentData, jenis_aktivitas: e.target.value })}
-                            />
-                        </Form.Group>
-                        
-                        <Form.Group controlId="slot">
-                            <Form.Label>Slot</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter Slot"
-                                value={currentData.slot}
-                                onChange={e => setCurrentData({ ...currentData, slot: e.target.value })}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="jenis_jam">
-                        <Form.Label>Times</Form.Label>
-                    <Form.Select
-                        value={currentData.jenis_jam}
-                        onChange={e => setCurrentData({ ...currentData, jenis_jam: e.target.value })}
-                    >
-                     <option value="" disabled>Select Times</option>
-                     <option value="PER_1JAM">PER_1JAM</option>
-                    <option value="PER_2JAM">PER_2JAM</option>
-                    <option value="PER_3JAM">PER_3JAM</option>
-                    </Form.Select>
-                            <Form.Group controlId="status">
-                            <Form.Label>Status</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter Status"
-                                value={currentData.status}
-                                onChange={e => setCurrentData({ ...currentData, status: e.target.value })}
-                            />
-                        </Form.Group>
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowModal(false)}>Close</Button>
-                    <Button variant="primary" onClick={handleSave}>{modalType === 'add' ? 'Add' : 'Save Changes'}</Button>
-                </Modal.Footer>
-            </Modal>
+    <Modal.Header closeButton>
+        <Modal.Title>{modalType === 'generate' ? 'Generate Lead Times' : 'Edit Lead Times'}</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+        <Form>
+            {/* Slot */}
+            {/* <Form.Group controlId="slot">
+                <Form.Label>Slot</Form.Label>
+                <Form.Control
+                    type="number"
+                    value={currentData.slot}
+                    onChange={(e) => setCurrentData({ ...currentData, slot: e.target.value })}
+                    placeholder="Enter Slot"
+                />
+            </Form.Group> */}
+
+            {/* Jenis Aktivitas */}
+            <Form.Group controlId="jenis_aktivitas">
+                <Form.Label>Jenis Aktivitas</Form.Label>
+                <Form.Control
+                    as="select"
+                    value={currentData.jenis_aktivitas}
+                    onChange={(e) => setCurrentData({ ...currentData, jenis_aktivitas: e.target.value })}
+                >
+                    <option value="">Select Activity</option>
+                    <option value="ON LOAD">ON LOAD</option>
+                    <option value="OFF LOAD">OFF LOAD</option>
+                </Form.Control>
+            </Form.Group>
+
+            {/* Jenis Jam */}
+            <Form.Group controlId="jenis_jam">
+                <Form.Label>Jenis Jam</Form.Label>
+                <Form.Control
+                    as="select"
+                    value={currentData.jenis_jam}
+                    onChange={(e) => setCurrentData({ ...currentData, jenis_jam: e.target.value })}
+                >
+                    <option value="">Select Time Type</option>
+                    <option value="PER_60MNT">PER_60MNT</option>
+                    <option value="PER_30MNT">PER_30MNT</option>
+                    <option value="PER_15MNT">PER_15MNT</option>
+                </Form.Control>
+            </Form.Group>
+
+            {/* Status */}
+            {/* <Form.Group controlId="status">
+                <Form.Label>Status</Form.Label>
+                <Form.Control
+                    as="select"
+                    value={currentData.status}
+                    onChange={(e) => setCurrentData({ ...currentData, status: e.target.value })}
+                >
+                    <option value="">Select Status</option>
+                    <option value="AKTIF">AKTIF</option>
+                    <option value="NON AKTIF">NON AKTIF</option>
+                </Form.Control>
+            </Form.Group> */}
+
+            {/* Branch */}
+    <Form.Group controlId="branch">
+    <Form.Label>Branch</Form.Label>
+    <Form.Control
+        as="select"
+        value={currentData.branch}
+        onChange={(e) => setCurrentData({ ...currentData, branch: e.target.value })}
+        >
+        <option value="">Select Branch</option>
+        {userBranch.map((branch, index) => (
+            <option key={index} value={branch.name_branch}>
+                {branch.name_branch}
+            </option>
+        ))}
+        </Form.Control>
+        </Form.Group>
+
+        </Form>
+    </Modal.Body>
+    <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Cancel
+        </Button>
+        <Button variant="primary" onClick={handleSave}>
+            Save
+        </Button>
+    </Modal.Footer>
+</Modal>
+
         </React.Fragment>
     );
 }
 
-export default LeadTimes;
+export default GenerateLeadTimes;
+

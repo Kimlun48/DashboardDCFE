@@ -16,6 +16,8 @@ function ListUser() {
         id: null,
         name: '',
         email: '',
+        id_branch:'',
+        name_branch:'',
         password: '',
         password_confirmation: '',
         role: ''
@@ -63,6 +65,8 @@ function ListUser() {
                 await Api.post('api/createuser', {
                     name: currentData.name,
                     email: currentData.email,
+                    id_branch: currentData.id_branch,
+                    name_branch: currentData.name_branch,
                     password: currentData.password,
                     password_confirmation: currentData.password_confirmation,
                     role: currentData.role
@@ -72,6 +76,8 @@ function ListUser() {
                 await Api.put(`api/updateuser/${currentData.id}`, {
                     name: currentData.name,
                     email: currentData.email,
+                    id_branch: currentData.id_branch,
+                    name_branch: currentData.name_branch,
                     password: currentData.password,
                     password_confirmation: currentData.password_confirmation,
                     role: currentData.role
@@ -100,6 +106,8 @@ function ListUser() {
             id: user.id,
             name: user.name,
             email: user.email,
+            id_branch: user.id_branch,
+            name_branch: user.name_branch,
             password: '',
             password_confirmation: '',
             role: getRoles(user.roles) // Assuming you handle roles in the backend
@@ -134,6 +142,8 @@ function ListUser() {
             id: null,
             name: '',
             email: '',
+            id_branch:'',
+            name_branch:'',
             password: '',
             password_confirmation: '',
             role: ''
@@ -152,6 +162,7 @@ function ListUser() {
         
             { name: 'Name', selector: row => row.name, sortable: true },
             { name: 'Email', selector: row => row.email, sortable: true },
+            { name: 'Branch', selector: row => row.name_branch, sortable: true, width: '250px'},
             { 
                 name: 'Role', 
                 selector: row => getRoles(row.roles), 
@@ -255,6 +266,28 @@ function ListUser() {
                                     value={currentData.email}
                                     onChange={handleInputChange}
                                     placeholder="Enter user email" 
+                                    required
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Id Branch</Form.Label>
+                                <Form.Control 
+                                    type="text" 
+                                    name="id_branch"
+                                    value={currentData.id_branch}
+                                    onChange={handleInputChange}
+                                    placeholder="Enter ID Branch" 
+                                    required
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Name Branch</Form.Label>
+                                <Form.Control 
+                                    type="text" 
+                                    name="name_branch"
+                                    value={currentData.name_branch}
+                                    onChange={handleInputChange}
+                                    placeholder="Enter Name Branch" 
                                     required
                                 />
                             </Form.Group>
