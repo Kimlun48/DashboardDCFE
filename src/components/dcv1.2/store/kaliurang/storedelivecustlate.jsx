@@ -78,6 +78,16 @@ const ChartDelivCustLate = () => {
            
             <ResponsiveContainer width="100%" height={250}>
                             <PieChart>
+                            <defs>
+                            <linearGradient id="colorLate" x1="0" y1="0" x2="0" y2="1">
+                             <stop offset="0%" stopColor="#CC2D24" stopOpacity={1}/>
+                            <stop offset="100%" stopColor="#CC2D24" stopOpacity={0.5}/>
+                             </linearGradient>
+                             <linearGradient id="colorOnScahedule" x1="0" y1="0" x2="0" y2="1">
+                             <stop offset="10%" stopColor="#2D67AA" stopOpacity={1}/>
+                             <stop offset="100%" stopColor="#2D67AA" stopOpacity={0.5}/>
+                             </linearGradient>
+                             </defs>
                                 <Pie
                                     data={data}
                                     dataKey="value"
@@ -94,10 +104,19 @@ const ChartDelivCustLate = () => {
                                     paddingAngle={1}
 
                                 >
-                                    {data.map((entry, index) => (
+                                    {/* {data.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                    ))}
-                                    <Label value={`${data.find(item => item.name === 'Late')?.value || 0} Late`} position="center" />
+                                    ))} */}
+                                    {data.map((entry, index) => (
+                                    <Cell
+                                        key={`cell-${index}`}
+                                        fill={entry.name === 'Late' ? 'url(#colorLate)' : 'url(#colorOnScahedule)'}
+                                    />
+                                ))}
+                                    <Label value={`${data.find(item => item.name === 'Late')?.value || 0} Late`} 
+                                    position="center" 
+                                    style={{  fill:'whitesmoke', }}
+                                    />
 
                                 </Pie>
                                 <Tooltip

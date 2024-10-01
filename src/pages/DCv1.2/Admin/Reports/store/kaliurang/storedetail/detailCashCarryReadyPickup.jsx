@@ -99,7 +99,7 @@ function KaliurangDetailCashCarryReadyPickup ()
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-header d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span className="font-weight-bold">Detail Cash Carry Ready Pickup</span>
+                                    <span className="font-weight-bold">Store - Detail Cash Carry Ready Pickup</span>
                                 </div>
                             </div>
                             <div className="card-body">

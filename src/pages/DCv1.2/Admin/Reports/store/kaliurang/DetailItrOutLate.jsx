@@ -100,7 +100,7 @@ function KaliurangItrOutLateDetail() {
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-header d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span className="font-weight-bold">Detail ITR Out Late </span>
+                                    <span className="font-weight-bold">Store - Detail ITR Out Late </span>
                                 </div>
                             </div>
                             <div className="card-body">
