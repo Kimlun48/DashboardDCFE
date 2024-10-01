@@ -4,9 +4,9 @@ import DataTable from "react-data-table-component";
 import useFormatDate from "../../../../../../../components/utilites/useFormatDate";
 
 
-function KaliurangDetailDelivCustOrderReceived ()
+function KaliurangDetailItrInOrderReceivedWarehouse ()
 {
-    document.title = "Report-DetailKaliurangDeliveryCustomerOrderReceived"
+    document.title = "Report-DetailKaliurangItrInOrderReceivedWarehouse"
 
     const [detailitrin, setDetailItrIn] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -17,7 +17,7 @@ function KaliurangDetailDelivCustOrderReceived ()
 
     const fetchData = async () => {
         try {
-            const response = await Api.get('api/kaliurangdelivcusstoreorderreceived');
+            const response = await Api.get('api/kaliurangitrinorderreceivedwarehouse');
             const data = response.data.data; 
             setDetailItrIn(data);
             setFilteredData(data);
@@ -38,10 +38,9 @@ function KaliurangDetailDelivCustOrderReceived ()
         if (Array.isArray(detailitrin)) { // Ensure detailbinin is an array
             const lowercasedSearch = search.toLowerCase();
             const filtered = detailitrin.filter(item =>
-                item.COMMENTS.toLowerCase().includes(lowercasedSearch) ||
+                item.CABANG_PENGIRIM.toLowerCase().includes(lowercasedSearch) ||
                 // item.NODOKUMEN.toLowerCase().includes(lowercasedSearch) ||
-                item.ITEMNAME.toLowerCase().includes(lowercasedSearch) ||
-                item.CARDNAME.toLowerCase().includes(lowercasedSearch) 
+                item.ITEMNAME.toLowerCase().includes(lowercasedSearch) 
               //  item.UOM.toLowerCase().includes(lowercasedSearch) 
                 // item.QTY.toLowerCase().includes(lowercasedSearch)
             );
@@ -50,12 +49,11 @@ function KaliurangDetailDelivCustOrderReceived ()
     }, [search, detailitrin]);
 
     const columns = [
-        { name: 'NO STRUCK', selector: row => row.NOSTRUK, sortable: true, width: '200px'  },
+     
         { name: 'NO DOCUMENT', selector: row => row.NODOKUMEN, sortable: true, width: '200px'  },
         { name: 'DOC DATE', selector: row => row.DOCDATE ? formatDate(row.DOCDATE) : 'No Data', sortable: true, width: '150px' },
         { name: 'DEADLINE', selector:row => row.DEADLINE_DATE ? formatDate(row.DEADLINE_DATE) : 'No Data', sortable: true ,width: '150px'},
-        { name: 'CARD NAME', selector: row => row.CARDNAME, sortable: true, width:'150px'},
-        { name: 'COMMENTS', selector: row => row.COMMENTS, sortable: true, width: '350px'},
+        { name: 'BRANCH SENDERS', selector: row => row.CABANG_PENGIRIM, sortable: true, width: '250px'},
         { name: 'ITEM CODE', selector: row => row.ITEMCODE, sortable: true, width: '150px'},
         { name: 'ITEM NAME', selector: row => row.ITEMNAME, sortable: true, width: '450px'},
         { name: 'QTY', selector: row => row.QTY, sortable: true},
@@ -101,7 +99,7 @@ function KaliurangDetailDelivCustOrderReceived ()
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-header d-flex justify-content-between align-items-center">
                                 <div>
-                                    <span className="font-weight-bold">Store - Detail Delivery Customer Order Received</span>
+                                    <span className="font-weight-bold">Warehouse - Detail ITR In Order Received</span>
                                 </div>
                             </div>
                             <div className="card-body">
@@ -139,4 +137,4 @@ function KaliurangDetailDelivCustOrderReceived ()
         </React.Fragment>
     );
 }
-export default KaliurangDetailDelivCustOrderReceived;
+export default KaliurangDetailItrInOrderReceivedWarehouse;

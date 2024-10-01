@@ -58,10 +58,10 @@ const ChartWarehouseItrInLate = () => {
 
     const handleClick = (entry) => {
         if (entry.name === 'Late') {
-            window.open('/kaliurang/itrinlatedetail', '_blank');
+            window.open('/kaliurang/detailitrinlatewarehouse', '_blank');
         } else if (entry.name === 'On Schedule') {
             // navigate('/putawaystorageunlate');
-            window.open('/kaliurang/itrinonscheduledetail', '_blank');
+            window.open('/kaliurang/detailitrinonschedulewarehouse', '_blank');
         }
     };
 

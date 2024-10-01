@@ -4,6 +4,7 @@ import Api from "../../../api";
 import toast from "react-hot-toast";
 import { Modal, Button, Form } from 'react-bootstrap';
 import 'react-datepicker/dist/react-datepicker.css';
+import { confirmAlert } from 'react-confirm-alert';
 
 function ListUser() {
     const [users, setUsers] = useState([]);
@@ -117,14 +118,51 @@ function ListUser() {
     };
 
     // Handle delete user
+    // const handleDelete = async (id) => {
+    //     try {
+    //         await Api.delete(`api/deleteuser/${id}`);
+    //         toast.success("User deleted successfully!");
+    //         fetchData(); // Refresh data after delete
+    //     } catch (error) {
+    //         toast.error("Failed to delete data!");
+    //     }
+    // };
+
     const handleDelete = async (id) => {
-        try {
-            await Api.delete(`api/deleteuser/${id}`);
-            toast.success("User deleted successfully!");
-            fetchData(); // Refresh data after delete
-        } catch (error) {
-            toast.error("Failed to delete data!");
-        }
+       
+        confirmAlert({
+            title: 'Are You Sure ?',
+            message: 'want to delete this data ?',
+            buttons: [{
+                    label: 'YES',
+                    onClick: async () => {
+                        await Api.delete(`api/deleteuser/${id}`, {
+                              
+                            })
+                            .then(() => {
+
+                                //show toast
+                                toast.success("Data Deleted Successfully!", {
+                                    duration: 4000,
+                                    position: "top-right",
+                                    style: {
+                                        borderRadius: '10px',
+                                        background: '#333',
+                                        color: '#fff',
+                                    },
+                                });
+
+                                //call function "fetchData"
+                                fetchData();
+                            })
+                    }
+                },
+                {
+                    label: 'NO',
+                    onClick: () => {}
+                }
+            ]
+        });
     };
 
     // Handle input change
@@ -178,6 +216,7 @@ function ListUser() {
                         <Button variant="danger" onClick={() => handleDelete(row.id)} className="ms-2">
                             Delete
                         </Button>
+                        
                     </>
                 ) 
             }
