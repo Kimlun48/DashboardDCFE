@@ -44,7 +44,7 @@ const ChartWarehouseCashCarryLate = () => {
 
     useEffect(() => {
         fetchData();
-        const interval = setInterval(fetchData, 2 * 60 * 1000); // Refresh setiap 2 menit
+        const interval = setInterval(fetchData, 5 * 60 * 1000); // Refresh setiap 2 menit
         return () => clearInterval(interval);
     }, []);
 
@@ -58,10 +58,10 @@ const ChartWarehouseCashCarryLate = () => {
 
     const handleClick = (entry) => {
         if (entry.name === 'Late') {
-            window.open('/kaliurang/cashcarrylatedetail', '_blank');
+            window.open('/kaliurang/detailcashcarrylatewarehouse', '_blank');
         } else if (entry.name === 'On Schedule') {
             // navigate('/putawaystorageunlate');
-            window.open('/kaliurang/cashcarryonscheduledetail', '_blank');
+            window.open('/kaliurang/detailcashcarryonschedulewarehouse', '_blank');
         }
     };
 

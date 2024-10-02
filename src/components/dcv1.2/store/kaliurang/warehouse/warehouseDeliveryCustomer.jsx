@@ -35,9 +35,19 @@ const ChartWarehouseDeliveryCustomer = () => {
 
     useEffect(() => {
         fetchData();
-        const interval = setInterval(fetchData, 2 * 60 * 1000); // Refresh every 2 minutes
+        const interval = setInterval(fetchData, 5 * 60 * 1000); // Refresh every 2 minutes
         return () => clearInterval(interval);
     }, []);
+
+    const handleClick = (entry) => {
+        if (entry.name === 'Order Received') {
+            window.open('/kaliurang/detaildelivcustorderreceivedwarehouse', '_blank');
+        } else if (entry.name === 'Being Process') {
+            window.open('/kaliurang/detaildelivcustbeingprocesswarehouse', '_blank');
+        } else if (entry.name === 'Ready To PickUp') {
+            window.open('/kaliurang/detaildelivcustreadypickupwarehouse', '_blank');
+        } 
+    };
 
     return (
         <React.Fragment>
@@ -87,7 +97,7 @@ const ChartWarehouseDeliveryCustomer = () => {
                                         padding: '8px'
                                     }}
                                 />
-                                <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={50}>
+                                <Bar dataKey="value" radius={[0, 10, 10, 0]} onClick={handleClick} className="chart-bar" barSize={50}>
                                     <LabelList dataKey="value" position="right" style={{ fontSize: 10, fill: '#fff' }} />
                                     {data.map((entry, index) => {
                                         let fillColor;
@@ -115,7 +125,7 @@ const ChartWarehouseDeliveryCustomer = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#01FEFF', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/detaildelivcustorderreceivedwarehouse', '_blank')}
             >
             </div> 
             Order Received
@@ -125,7 +135,7 @@ const ChartWarehouseDeliveryCustomer = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#CD0099', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/detaildelivcustbeingprocesswarehouse', '_blank')}
             >
             </div> 
             Being Process
@@ -135,7 +145,7 @@ const ChartWarehouseDeliveryCustomer = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#FF6608', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/detaildelivcustreadypickupwarehouse', '_blank')}
             >
             </div> 
             Ready To PickUp

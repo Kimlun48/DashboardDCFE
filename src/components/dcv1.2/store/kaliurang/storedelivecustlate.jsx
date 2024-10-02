@@ -46,7 +46,7 @@ const ChartDelivCustLate = () => {
 
     useEffect(() => {
         fetchData();
-        const interval = setInterval(fetchData, 2 * 60 * 1000); // Refresh setiap 2 menit
+        const interval = setInterval(fetchData, 5 * 60 * 1000); // Refresh setiap 2 menit
         return () => clearInterval(interval);
     }, []);
 
