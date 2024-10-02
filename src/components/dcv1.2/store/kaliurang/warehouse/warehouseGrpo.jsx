@@ -10,7 +10,7 @@ const ChartWarehouseGrpo = () => {
     const [onhandtransit, setOnhandtransit] = useState(0);
     
     const navigate = useNavigate();
-    const time = 2 * 60 * 1000; // 2 minutes  
+    const time = 5 * 60 * 1000; // 2 minutes  
 
     const fetchData = async () => {
         try {

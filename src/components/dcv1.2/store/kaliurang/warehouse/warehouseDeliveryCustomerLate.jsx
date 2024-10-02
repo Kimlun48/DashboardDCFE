@@ -44,7 +44,7 @@ const ChartWarehouseDeliveryCustomerLate = () => {
 
     useEffect(() => {
         fetchData();
-        const interval = setInterval(fetchData, 2 * 60 * 1000); // Refresh setiap 2 menit
+        const interval = setInterval(fetchData, 5 * 60 * 1000); // Refresh setiap 2 menit
         return () => clearInterval(interval);
     }, []);
 
@@ -57,10 +57,10 @@ const ChartWarehouseDeliveryCustomerLate = () => {
     ];
     const handleClick = (entry) => {
         if (entry.name === 'Late') {
-            window.open('/kaliurang/deliverycustomerlatedetail', '_blank');
+            window.open('/kaliurang/detaildelivcustlatewarehouse', '_blank');
         } else if (entry.name === 'On Schedule') {
             // navigate('/putawaystorageunlate');
-            window.open('/kaliurang/deliverycustomeronscheduledetail', '_blank');
+            window.open('/kaliurang/detaildelivcustonschedulewarehouse', '_blank');
         }
     };
 

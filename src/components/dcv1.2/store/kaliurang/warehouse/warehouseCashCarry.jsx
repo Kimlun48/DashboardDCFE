@@ -36,9 +36,19 @@ const ChartWareHouseCashCarry = () => {
 
     useEffect(() => {
         fetchData();
-        const interval = setInterval(fetchData, 2 * 60 * 1000); // Refresh every 2 minutes
+        const interval = setInterval(fetchData, 5 * 60 * 1000); // Refresh every 2 minutes
         return () => clearInterval(interval);
     }, []);
+
+    const handleClick = (entry) => {
+        if (entry.name === 'Order Received') {
+            window.open('/kaliurang/detailcashcarryorderreceivedwarehouse', '_blank');
+        } else if (entry.name === 'Being Process') {
+            window.open('/kaliurang/detailcashcarrybeingprocesswarehouse', '_blank');
+        } else if (entry.name === 'Ready To PickUp') {
+            window.open('/kaliurang/detailcashcarryreadypickupwarehouse', '_blank');
+        } 
+    };
 
     return (
         <React.Fragment>
@@ -88,7 +98,7 @@ const ChartWareHouseCashCarry = () => {
                                         padding: '8px'
                                     }}
                                 />
-                                <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={50}>
+                                <Bar dataKey="value" radius={[0, 10, 10, 0]} onClick={handleClick} className="chart-bar" barSize={50}>
                                     <LabelList dataKey="value" position="right" style={{ fontSize: 10, fill: '#fff' }} />
                                     {data.map((entry, index) => {
                                         let fillColor;
@@ -116,7 +126,7 @@ const ChartWareHouseCashCarry = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#01FEFF', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/detailcashcarryorderreceivedwarehouse', '_blank')}
             >
             </div> 
             Order Received
@@ -126,7 +136,7 @@ const ChartWareHouseCashCarry = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#CD0099', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/detailcashcarrybeingprocesswarehouse', '_blank')}
             >
             </div> 
             Being Process
@@ -136,7 +146,7 @@ const ChartWareHouseCashCarry = () => {
              <div 
             className="square-icon" 
             style={{ backgroundColor: '#FF6608', cursor: 'pointer' }} 
-            onClick={() => window.open('#', '_blank')}
+            onClick={() => window.open('/kaliurang/detailcashcarryreadypickupwarehouse', '_blank')}
             >
             </div> 
             Ready To PickUp

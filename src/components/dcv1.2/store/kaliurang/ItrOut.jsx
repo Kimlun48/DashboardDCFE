@@ -39,7 +39,7 @@ const ChartStoreItrOut = () => {
 
     useEffect(() => {
         fetchData();
-        const interval = setInterval(fetchData, 2 * 60 * 1000); // Refresh every 2 minutes
+        const interval = setInterval(fetchData, 60 * 60 * 1000); // Refresh every 2 minutes
         return () => clearInterval(interval);
     }, []);
 

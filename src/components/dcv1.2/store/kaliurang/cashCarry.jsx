@@ -36,7 +36,7 @@ const ChartStoreCashCarry = () => {
 
     useEffect(() => {
         fetchData();
-        const interval = setInterval(fetchData, 2 * 60 * 1000); // Refresh every 2 minutes
+        const interval = setInterval(fetchData, 5 * 60 * 1000); // Refresh every 2 minutes
         return () => clearInterval(interval);
     }, []);
 

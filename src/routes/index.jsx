@@ -98,6 +98,20 @@ import KaliurangItrInOnScheduleDetailWarehouse from '../pages/DCv1.2/Admin/Repor
 import KaliurangDetailItrOutOrderReceivedWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailItrOutOrderReceivedWarehouse.jsx';
 import KaliurangDetailItrOutBeingProcessWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailItrOutBeingProcessWarehouse.jsx';
 import KaliurangDetailItrOutReadyPickupWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailItrOutReadyPickupWarehouse.jsx';
+import KaliurangItrOutLateDetailWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailItrOutLateWarehouse.jsx';
+import KaliurangItrOutOnScheduleDetailWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailItrOutOnScheduleWarehouse.jsx';
+
+import KaliurangDetailCashCarryOrderReceivedWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailCashCarryOrderReceivedWarehouse.jsx';
+import KaliurangDetailBeingProcessWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailCashCarryBeingProcessWarehouse.jsx';
+import KaliurangDetailReadyPickupWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailCashCarryReadyPickupWarehouse.jsx';
+import KaliurangcashCarryLateDetailWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailCashCarryLateWarehouse.jsx';
+import KaliurangcashCarryOnScheduleDetailWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailCashCarryOnScheduleWarehouse.jsx';
+
+import KaliurangDetailDelivCustOrderReceivedWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailDelivCustOrderReceivedWarehouse.jsx';
+import KaliurangDetailDelivCustBeingProcessWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailDelivCustBeingProcessWarehouse.jsx';
+import KaliurangDetailDelivCustReadyPickupWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailDelivCustReadyPickupWarehouse.jsx';
+import KaliurangDetailDelivCustLateWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailDelivCustLateWarehouse.jsx';
+import KaliurangDetailDelivCustOnScheduleWarehouse from '../pages/DCv1.2/Admin/Reports/store/kaliurang/warehouse/detailDelivCustOnScheduleWarehouse.jsx';
 
 //user
 import User from '../pages/DCv1.2/Admin/User/User.jsx';
@@ -251,10 +265,39 @@ function RoutesIndex() {
 
              {/* route "/kaliurang/detailitroutorderreceivedwarehouse" */}
              <Route path="/kaliurang/detailitroutorderreceivedwarehouse" element={<KaliurangDetailItrOutOrderReceivedWarehouse />} />
-              {/* route "/kaliurang/detailitroutbeingprocesswarehouse" */}
-              <Route path="/kaliurang/detailitroutbeingprocesswarehouse" element={<KaliurangDetailItrOutBeingProcessWarehouse />} />
-               {/* route "/kaliurang/detailitroutreadypickupwarehouse" */}
+             {/* route "/kaliurang/detailitroutbeingprocesswarehouse" */}
+             <Route path="/kaliurang/detailitroutbeingprocesswarehouse" element={<KaliurangDetailItrOutBeingProcessWarehouse />} />
+             {/* route "/kaliurang/detailitroutreadypickupwarehouse" */}
              <Route path="/kaliurang/detailitroutreadypickupwarehouse" element={<KaliurangDetailItrOutReadyPickupWarehouse />} />
+             {/* route "/kaliurang/detailitroutlatewarehouse" */}
+             <Route path="/kaliurang/detailitroutlatewarehouse" element={<KaliurangItrOutLateDetailWarehouse />} />
+             {/* route "/kaliurang/detailitroutonschedulewarehouse" */}
+             <Route path="/kaliurang/detailitroutonschedulewarehouse" element={<KaliurangItrOutOnScheduleDetailWarehouse />} />
+
+             {/* route "/kaliurang/detailcashcarryorderreceivedwarehouse" */}
+             <Route path="/kaliurang/detailcashcarryorderreceivedwarehouse" element={<KaliurangDetailCashCarryOrderReceivedWarehouse />} />
+             {/* route "/kaliurang/detailcashcarrybeingprocesswarehouse" */}
+             <Route path="/kaliurang/detailcashcarrybeingprocesswarehouse" element={<KaliurangDetailBeingProcessWarehouse />} />
+             {/* route "/kaliurang/detailcashcarryreadypickupwarehouse" */}
+             <Route path="/kaliurang/detailcashcarryreadypickupwarehouse" element={<KaliurangDetailReadyPickupWarehouse />} />
+             {/* route "/kaliurang/detailcashcarrylatewarehouse" */}
+             <Route path="/kaliurang/detailcashcarrylatewarehouse" element={<KaliurangcashCarryLateDetailWarehouse />} />
+             {/* route "/kaliurang/detailcashcarryonschedulewarehouse" */}
+             <Route path="/kaliurang/detailcashcarryonschedulewarehouse" element={<KaliurangcashCarryOnScheduleDetailWarehouse />} />
+
+             {/* route "/kaliurang/detaildelivcustorderreceivedwarehouse" */}
+             <Route path="/kaliurang/detaildelivcustorderreceivedwarehouse" element={<KaliurangDetailDelivCustOrderReceivedWarehouse />} />
+             {/* route "/kaliurang/detaildelivcustbeingprocesswarehouse" */}
+             <Route path="/kaliurang/detaildelivcustbeingprocesswarehouse" element={<KaliurangDetailDelivCustBeingProcessWarehouse />} />
+             {/* route "/kaliurang/detaildelivcustreadypickupwarehouse" */}
+             <Route path="/kaliurang/detaildelivcustreadypickupwarehouse" element={<KaliurangDetailDelivCustReadyPickupWarehouse />} />
+             {/* route "/kaliurang/detaildelivcustlatewarehouse" */}
+             <Route path="/kaliurang/detaildelivcustlatewarehouse" element={<KaliurangDetailDelivCustLateWarehouse />} />
+             {/* route "/kaliurang/detaildelivcustonschedulewarehouse" */}
+             <Route path="/kaliurang/detaildelivcustonschedulewarehouse" element={<KaliurangDetailDelivCustOnScheduleWarehouse />} />
+             
+
+             
              
              
 
