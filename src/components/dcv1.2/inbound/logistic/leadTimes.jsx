@@ -157,7 +157,21 @@ function GenerateLeadTimes() {
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState('generate'); 
     const [userBranch, setUserBranch] = useState([]);
+    const [branch, setBranch] = useState([]);
     const [currentData, setCurrentData] = useState({ id: '', mulai: null, akhir: null, jenis_aktivitas: '', status: '', slot: '', jenis_jam: '', branch: '', });
+
+    const fetchDataBranch = async () => {
+        try {
+            const response = await Api.get('api/branch');
+            setBranch(response.data.data);
+        } catch (error) {
+            console.error('Error fetching branch data:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchDataBranch();
+    }, []);
 
     const fetchUserBranch = async () => {
         try {
@@ -250,6 +264,20 @@ function GenerateLeadTimes() {
     };
 
     const handleSave = async () => {
+        // Validasi untuk memastikan input tidak kosong
+        if (!currentData.jenis_aktivitas || !currentData.jenis_jam || !currentData.branch) {
+            toast.error("All fields are required!", {
+                duration: 4000,
+                position: "top-right",
+                style: {
+                    borderRadius: '10px',
+                    background: '#d9534f',
+                    color: '#fff',
+                },
+            });
+            return; // Menghentikan proses jika ada input yang kosong
+        }
+    
         try {
             if (modalType === 'generate') {
                 await Api.post('api/masterhour', currentData);
@@ -257,38 +285,39 @@ function GenerateLeadTimes() {
                     duration: 4000,
                     position: "top-right",
                     style: {
-                      borderRadius: '10px',
-                      background: '#1f59a1',
-                      color: '#fff',
+                        borderRadius: '10px',
+                        background: '#1f59a1',
+                        color: '#fff',
                     },
-                  });
+                });
             } else {
                 await Api.put(`api/masterhour/${currentData.id}`, currentData);
                 toast.success("Update Data Successfully!", {
                     duration: 4000,
                     position: "top-right",
                     style: {
-                      borderRadius: '10px',
-                      background: '#1f59a1',
-                      color: '#fff',
+                        borderRadius: '10px',
+                        background: '#1f59a1',
+                        color: '#fff',
                     },
-                  });
+                });
             }
-           
+    
             fetchData(); // Refresh data after save
             setShowModal(false);
         } catch (error) {
-             toast.error("Failed to save data!", {
-                    duration: 4000,
-                    position: "top-right",
-                    style: {
-                      borderRadius: '10px',
-                      background: '#d9534f',
-                      color: '#fff',
-                    },
-                  });
+            toast.error("Failed to save data!", {
+                duration: 4000,
+                position: "top-right",
+                style: {
+                    borderRadius: '10px',
+                    background: '#d9534f',
+                    color: '#fff',
+                },
+            });
         }
     };
+    
 
     const columns = [
         { name: 'Start', selector: row => row.mulai, sortable: true },
@@ -356,6 +385,7 @@ function GenerateLeadTimes() {
                                     className="form-control mb-3"
                                     value={search}
                                     onChange={e => setSearch(e.target.value)}
+                                
                                 />
                                 <DataTable
                                     columns={columns}
@@ -401,6 +431,7 @@ function GenerateLeadTimes() {
                     as="select"
                     value={currentData.jenis_aktivitas}
                     onChange={(e) => setCurrentData({ ...currentData, jenis_aktivitas: e.target.value })}
+                    
                 >
                     <option value="">Select Activity</option>
                     <option value="ON LOAD">ON LOAD</option>
@@ -439,20 +470,20 @@ function GenerateLeadTimes() {
 
             {/* Branch */}
     <Form.Group controlId="branch">
-    <Form.Label>Branch</Form.Label>
-    <Form.Control
+        <Form.Label>Branch</Form.Label>
+        <Form.Control
         as="select"
         value={currentData.branch}
         onChange={(e) => setCurrentData({ ...currentData, branch: e.target.value })}
         >
-        <option value="">Select Branch</option>
-        {userBranch.map((branch, index) => (
-            <option key={index} value={branch.name_branch}>
-                {branch.name_branch}
-            </option>
-        ))}
+         <option value="" disabled>Choose Nama Branch</option>
+         {branch.map(option => <option key={option.PrcCode} value={option.PrcName}>
+            {option.PrcName}
+        </option>)}
         </Form.Control>
         </Form.Group>
+
+        
 
         </Form>
     </Modal.Body>

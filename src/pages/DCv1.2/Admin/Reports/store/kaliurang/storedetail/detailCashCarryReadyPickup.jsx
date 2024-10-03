@@ -39,7 +39,9 @@ function KaliurangDetailCashCarryReadyPickup ()
             const lowercasedSearch = search.toLowerCase();
             const filtered = detailitrin.filter(item =>
                 item.NODOKUMEN.toLowerCase().includes(lowercasedSearch) ||
-                item.CARDNAME.toLowerCase().includes(lowercasedSearch) 
+                item.CARDNAME.toLowerCase().includes(lowercasedSearch) ||
+                item.NODOKUMEN.toLowerCase().includes(lowercasedSearch) ||
+                item.ITEMNAME.toLowerCase().includes(lowercasedSearch)
             );
             setFilteredData(filtered);
         }

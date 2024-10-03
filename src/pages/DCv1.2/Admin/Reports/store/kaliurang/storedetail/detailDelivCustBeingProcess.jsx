@@ -41,9 +41,9 @@ function KaliurangDetailDelivCustBeingProcess ()
                 item.COMMENTS.toLowerCase().includes(lowercasedSearch) ||
                 // item.NODOKUMEN.toLowerCase().includes(lowercasedSearch) ||
                 item.ITEMNAME.toLowerCase().includes(lowercasedSearch) ||
-                item.CARDNAME.toLowerCase().includes(lowercasedSearch) 
-              //  item.UOM.toLowerCase().includes(lowercasedSearch) 
-                // item.QTY.toLowerCase().includes(lowercasedSearch)
+                item.UOM.toLowerCase().includes(lowercasedSearch) ||
+                item.CARDNAME.toLowerCase().includes(lowercasedSearch) ||
+                item.COMMENTS.toLowerCase().includes(lowercasedSearch) 
             );
             setFilteredData(filtered);
         }
