@@ -20,7 +20,7 @@ function Transports() {
     const { formatDate } = useFormatDate();
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState('add'); // 'add' or 'edit'
-    const [currentData, setCurrentData] = useState({ id_kendaraan: '', Jenis_Kendaraan: '', slot_Kendaraan: '' });
+    const [currentData, setCurrentData] = useState({ id_kendaraan: '', Jenis_Kendaraan: '', slot_Kendaraan: '', tipe_pallet: '' });
 
     const fetchData = async () => {
         try {
@@ -54,13 +54,16 @@ function Transports() {
     };
 
     const handleAdd = () => {
-        setCurrentData({ id_kendaraan: '', Jenis_Kendaraan: '', slot_Kendaraan: '' });
+        setCurrentData({ id_kendaraan: '', Jenis_Kendaraan: '', slot_Kendaraan: '', tipe_pallet: ''});
         setModalType('add');
         setShowModal(true);
     };
 
     const handleEdit = (row) => {
-        setCurrentData({ id_kendaraan: row.id_kendaraan, Jenis_Kendaraan: row.Jenis_Kendaraan, slot_Kendaraan: row.slot_Kendaraan });
+        setCurrentData({ id_kendaraan: row.id_kendaraan, 
+                        Jenis_Kendaraan: row.Jenis_Kendaraan, 
+                        slot_Kendaraan: row.slot_Kendaraan,
+                        tipe_pallet: row.tipe_pallet });
         setModalType('edit');
         setShowModal(true);
     };
@@ -146,6 +149,7 @@ function Transports() {
     const columns = [
         { name: 'Type', selector: row => row.Jenis_Kendaraan ?? 'No Data', sortable: true },
         { name: 'Slot', selector: row => row.slot_Kendaraan ?? 'No Data', sortable: true },
+        { name: 'Type Pallet', selector: row => row.tipe_pallet ?? 'No Data', sortable: true },
         {
             name: 'Actions',
             cell: row => (
@@ -246,9 +250,29 @@ function Transports() {
                                 type="text"
                                 placeholder="Enter Slot"
                                 value={currentData.slot_Kendaraan}
-                                onChange={e => setCurrentData({ ...currentData, slot_Kendaraan: e.target.value })}
+                                onChange={e => {
+                                    const value = e.target.value;
+                                    if (/^\d*$/.test(value)) {
+                                        setCurrentData({ ...currentData, slot_Kendaraan: value });
+                                    }
+                                }}
                             />
                         </Form.Group>
+                       
+
+                        <Form.Group controlId="tipe_pallet" className="mt-3">
+                        <Form.Label>Type Pallet</Form.Label>
+                        <Form.Control
+                        as="select"
+                        value={currentData.tipe_pallet}
+                        onChange={(e) => setCurrentData({ ...currentData, tipe_pallet: e.target.value })}
+                        >
+                        <option value="">Select Pallet Type</option>
+                        <option value="PALLET">PALLET</option>
+                        <option value="NON_PALLET">NON_PALLET</option>
+                        </Form.Control>
+                        </Form.Group>
+
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

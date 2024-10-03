@@ -65,6 +65,8 @@ const ChartWareHouseGrpoLate = () => {
     //     }
     // };
 
+    const totalValue = data.reduce((sum, entry) => sum + entry.value, 0);
+
     const handleClick = (entry) => {
         const urlMap = {
             // 'Bin IN Store Late': '/kaliurang/bininlatedetail',
@@ -111,7 +113,9 @@ const ChartWareHouseGrpoLate = () => {
                                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                                     ))}
                                    <Label 
-                                 value={data.find(item => item.value > 0) ? `${data.find(item => item.value > 0).value} Late` : "No Late Data"} 
+                                value={
+                                    totalValue > 0 ? `${totalValue} Late` : "No Late Data"
+                                  } 
                                  position="center" 
                                 />
 

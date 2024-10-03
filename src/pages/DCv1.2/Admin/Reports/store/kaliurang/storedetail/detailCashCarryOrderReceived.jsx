@@ -38,11 +38,10 @@ function KaliurangDetailCashCarryOrderReceived ()
         if (Array.isArray(detailitrin)) { // Ensure detailbinin is an array
             const lowercasedSearch = search.toLowerCase();
             const filtered = detailitrin.filter(item =>
-               // item.CABANG_PENERIMA.toLowerCase().includes(lowercasedSearch) 
                 item.NODOKUMEN.toLowerCase().includes(lowercasedSearch) ||
-                item.CARDNAME.toLowerCase().includes(lowercasedSearch) 
-              //  item.UOM.toLowerCase().includes(lowercasedSearch) 
-                // item.QTY.toLowerCase().includes(lowercasedSearch)
+                item.CARDNAME.toLowerCase().includes(lowercasedSearch) ||
+                item.NODOKUMEN.toLowerCase().includes(lowercasedSearch) ||
+                item.ITEMNAME.toLowerCase().includes(lowercasedSearch) 
             );
             setFilteredData(filtered);
         }

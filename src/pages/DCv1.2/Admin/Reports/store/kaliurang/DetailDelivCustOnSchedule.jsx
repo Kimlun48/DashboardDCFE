@@ -41,7 +41,9 @@ function KaliurangDelivCustOnScheduleDetail() {
                 item.NOSTRUK.toLowerCase().includes(lowercasedSearch) ||
                 item.NODOKUMEN.toLowerCase().includes(lowercasedSearch) ||
                 item.ITEMNAME.toLowerCase().includes(lowercasedSearch) ||
-                item.UOM.toLowerCase().includes(lowercasedSearch) 
+                item.UOM.toLowerCase().includes(lowercasedSearch) ||
+                item.CARDNAME.toLowerCase().includes(lowercasedSearch) ||
+                item.COMMENTS.toLowerCase().includes(lowercasedSearch) 
                 // item.QTY.toLowerCase().includes(lowercasedSearch)
             );
             setFilteredData(filtered);
@@ -52,7 +54,7 @@ function KaliurangDelivCustOnScheduleDetail() {
         { name: 'NO STRUCK', selector: row => row.NOSTRUK, sortable: true, width: '200px' },
         { name: 'NO DOCUMENT', selector: row => row.NODOKUMEN, sortable: true, width: '200px'  },
         { name: 'DOC DATE', selector: row => row.DOCDATE ? formatDate(row.DOCDATE) : 'No Data', sortable: true, width: '150px' },
-        { name: 'COMMENTS', selector: row => row.COMMENTS, sortable: true,  width: '300px' },
+        { name: 'COMMENTS', selector: row => row.COMMENTS, sortable: true,  width: '350px' },
         { name: 'DEADLINE', selector:row => row.DEADLINE_DATE ? formatDate(row.DEADLINE_DATE) : 'No Data', sortable: true ,width: '150px'},
         { name: 'CARDCODE', selector: row => row.CARDCODE, sortable: true, width: '150px'},
         { name: 'CARDNAME', selector: row => row.CARDNAME, sortable: true,  width: '150px' },
