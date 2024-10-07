@@ -76,12 +76,12 @@ function TransaksiRequest() {
                 'Truck': item.nama_kendaraan,
                 'Booking Date': item.schedule.hari ? formatDate(item.schedule.hari) : 'No Data',
                 'Booking Time': item.schedule.mulai ,
-                'Date Arrived': item.date_arrived ? formatDate(item.date_arrived) : 'No Data',
-                'Time Arrived': item.date_arrived ? moment(item.date_arrived).format('HH:mm:ss') : 'No Data',
-                'Date Onload': item.date_loading_goods ? formatDate(item.date_loading_goods) : 'No Data',
-                'Time Onload': item.date_loading_goods ? moment(item.date_loading_goods).format('HH:mm:ss') : 'No Data',
-                'Date Completed': item.date_completed ? formatDate(item.date_completed) : 'No Data',
-                'Time Completed': item.date_completed ? moment(item.date_completed).format('HH:mm:ss') : 'No Data',
+                'Date CI Security': item.date_arrived ? formatDate(item.date_arrived) : 'No Data',
+                'Time CI Security': item.date_arrived ? moment(item.date_arrived).format('HH:mm:ss') : 'No Data',
+                'Date CI Inbound': item.date_loading_goods ? formatDate(item.date_loading_goods) : 'No Data',
+                'Time CI Inbound': item.date_loading_goods ? moment(item.date_loading_goods).format('HH:mm:ss') : 'No Data',
+                'Date CO Inbound': item.date_completed ? formatDate(item.date_completed) : 'No Data',
+                'Time CO Inbound': item.date_completed ? moment(item.date_completed).format('HH:mm:ss') : 'No Data',
             };
         });
     
@@ -138,16 +138,16 @@ const noBorderLeft = {
                                 <p><strong>Driver:</strong> {row.sopir}</p>
                                 <p><strong>Booking Date:</strong> {row.schedule.hari ? formatDate(row.schedule.hari): 'No Data'} </p>
                                 <p><strong>Booking Time:</strong> {row.schedule.mulai} </p>
-                                <p><strong>Date Onload:</strong> {row.date_loading_goods ? formatDate(row.date_loading_goods) : 'No Data'}</p>
-                                <p><strong>Time Onload:</strong> {row.date_loading_goods && moment(row.date_loading_goods).format('HH:mm:ss')}</p>
+                                <p><strong>Date CI Inbound:</strong> {row.date_loading_goods ? formatDate(row.date_loading_goods) : 'No Data'}</p>
+                                <p><strong>Time CI Inbound:</strong> {row.date_loading_goods && moment(row.date_loading_goods).format('HH:mm:ss')}</p>
                             </div>
                             <div style={{ flex: 1, paddingLeft: '10px' }}>
                                 <p><strong>No Receipt:</strong> {row.surat_jalan}</p>
                                 <p><strong>Truck:</strong> {row.nama_kendaraan}</p>
-                                <p><strong>Date Arrived:</strong> {row.date_arrived ? formatDate(row.date_arrived) : 'No Data'}</p>
-                                <p><strong>Time Arrived:</strong> {row.date_arrived && moment(row.date_arrived).format('HH:mm:ss')}</p>
-                                <p><strong>Date Completed:</strong> {row.date_completed ? formatDate(row.date_completed) : 'No Data'}</p>
-                                <p><strong>Time Completed:</strong> {row.date_completed && moment(row.date_completed).format('HH:mm:ss')}</p>
+                                <p><strong>Date CI Security:</strong> {row.date_arrived ? formatDate(row.date_arrived) : 'No Data'}</p>
+                                <p><strong>Time CI Security:</strong> {row.date_arrived && moment(row.date_arrived).format('HH:mm:ss')}</p>
+                                <p><strong>Date CO Inbound:</strong> {row.date_completed ? formatDate(row.date_completed) : 'No Data'}</p>
+                                <p><strong>Time Co Inbound:</strong> {row.date_completed && moment(row.date_completed).format('HH:mm:ss')}</p>
                             </div>
                         </div>
                     </AccordionDetails>

@@ -83,8 +83,8 @@ function Logistic() {
                                               }}
                                         >
                                             <Tab label="Schedules" {...a11yProps(0)} />
-                                            <Tab label="Lead Times" {...a11yProps(1)} />
-                                            <Tab label="Conveyance" {...a11yProps(2)} />
+                                            <Tab label="Jobs Task" {...a11yProps(1)} />
+                                            <Tab label="Transports" {...a11yProps(2)} />
                                             <Tab label="Vendor Transaction" {...a11yProps(3)} />
                                             <Tab label="QR Scan" {...a11yProps(4)} />
                                         </Tabs>

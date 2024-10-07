@@ -23,6 +23,7 @@ const QrScannerInbound = () => {
             const response = await Api.get('api/transaksireq_qr');
             setRequestTransaksiQr(response.data.data);
             setFilteredData(response.data.data);
+            console.log(response.data);
         } catch (error) {
             console.log('error fetching data :', error);
         }
@@ -41,28 +42,28 @@ const QrScannerInbound = () => {
         const filtered = requestTransaksiQr.filter(item => {
             const namaVendor = item.nama_vendor ? item.nama_vendor.toLowerCase() : '';
             const suratJalan = item.surat_jalan ? item.surat_jalan.toLowerCase() : '';
-            const idJadwal = item.id_jadwal ? item.id_jadwal.toLowerCase() : '';
+            const idReq = item.id_req ? String(item.id_req) : '';
             const idStatus = item.status ? item.status.toLowerCase() : '';
 
-            return (updatedId === null || item.id_jadwal === updatedId) &&
+            return (updatedId === null || item.id_req === updatedId) &&
                 (namaVendor.includes(lowercasedSearch) ||
                     suratJalan.includes(lowercasedSearch) ||
-                    idJadwal.includes(lowercasedSearch) ||
+                    idReq.includes(lowercasedSearch) ||
                     idStatus.includes(lowercasedSearch));
         });
         setFilteredData(filtered);
     }, [search, requestTransaksiQr, updatedId]);
 
     const columns = [
-        { name: 'Booking ID', selector: row => row.id_jadwal, sortable: true, width: '140px' },
+        { name: 'Booking ID', selector: row => row.id_req, sortable: true, width: '140px' },
         { name: 'Vendor', selector: row => row.nama_vendor, sortable: true, width: '350px' },
         // { name: 'No Receipt', selector: row => row.surat_jalan, sortable: true, width: '200px' },
         { name: 'Status', selector: row => row.status, sortable: true, width: '130px' },
         { name: 'Date Boking', selector: row => row.schedule.hari ? formatDate(row.schedule.hari) : 'No Data', sortable: true, width: '140px' },
-        { name: 'Date Onload', selector: row => row.date_loading_goods ? formatDate(row.date_loading_goods) : 'No Data', sortable: true, width: '150px' },
-        { name: 'Time Onload', selector: row => row.date_loading_goods && moment(row.date_loading_goods).format('HH:mm:ss'), sortable: true, width: '150px' },
-        { name: 'Date Finish', selector: row => row.date_completed ? formatDate(row.date_completed) : 'No Data', sortable: true, width: '140px' },
-        { name: 'Time Finish', selector: row => row.date_completed && moment(row.date_completed).format('HH:mm:ss'), sortable: true, width: '140px' },
+        { name: 'Date CI Inbound', selector: row => row.date_loading_goods ? formatDate(row.date_loading_goods) : 'No Data', sortable: true, width: '200px' },
+        { name: 'Time CI Inbound', selector: row => row.date_loading_goods ? moment(row.date_loading_goods).format('HH:mm:ss') : 'No Data', sortable: true, width: '200px' },
+        { name: 'Date CO Inbound', selector: row => row.date_completed ? formatDate(row.date_completed) : 'No Data', sortable: true, width: '200px' },
+        { name: 'Time CO Inbound', selector: row => row.date_completed ? moment(row.date_completed).format('HH:mm:ss') : 'No Data', sortable: true, width: '200px' },
     ];
 
     const customStyles = {
@@ -91,10 +92,15 @@ const QrScannerInbound = () => {
         return moment(now).format('YYYY-MM-DD HH:mm:ss.SSS');
     };
 
-    const updateStatus = async (id_jadwal) => {
-        const data = requestTransaksiQr.find(item => item.id_jadwal === id_jadwal);
+    
+
+    const updateStatus = async (id_req) => {
+      //  const data = requestTransaksiQr.find(item => item.id_req === id_req);
+        const data = requestTransaksiQr.find(item => Number(item.id_req) === Number(id_req));
+
         
         if (!data) {
+          
             toast.error('Booking ID not found', {
                 duration: 4000,
                 position: 'top-right',
@@ -127,7 +133,7 @@ const QrScannerInbound = () => {
     
         if (data.date_loading_goods) {
             if (data.date_arrived) {
-                newStatus = 'FINISH';
+                newStatus = 'CO INBOUND';
             } else {
                 toast.error('Process not yet loading', {
                     duration: 4000,
@@ -141,22 +147,22 @@ const QrScannerInbound = () => {
                 return;
             }
         } else if (data.date_arrived) {
-            newStatus = 'ONLOAD';
+            newStatus = 'CI INBOUND';
             updateFields.date_loading_goods = currentDateTime;
         } else {
-            newStatus = 'ARRIVED';
+            newStatus = 'CI SECURITY';
             updateFields.date_arrived = currentDateTime;
         }
     
         try {
-            const response = await Api.put(`/api/transaksireq_qr_all/${id_jadwal}`, {
+            const response = await Api.put(`/api/transaksireq_qr_all/${id_req}`, {
                 status: newStatus,
                 ...updateFields,
                 currentDateTime, // Kirim currentDateTime dari frontend
             });
     
             if (response.data.success) {
-                setUpdatedId(id_jadwal);
+                setUpdatedId(id_req);
                 fetchData();
                 toast.success(response.data.message, {
                     duration: 4000,
@@ -274,3 +280,6 @@ const QrScannerInbound = () => {
 };
 
 export default QrScannerInbound;
+
+
+

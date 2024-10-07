@@ -49,66 +49,18 @@ function Sidebar() {
         fetchData();
     }, [token]);
 
-    // const handleLogout = async () => {
-    //     try {
-    //         await Api.post("/api/logout", {}, {
-    //             headers: {
-    //                 Authorization: `Bearer ${Cookies.get("access_token")}`,
-    //             },
-    //         });
-    
-            
-    //         Cookies.remove("access_token");
-    //         Cookies.remove("refresh_token");
-    
-            
-    //         navigate("/");
-    
-            
-    //         toast.success("Logout Successfully.", {
-    //             duration: 4000,
-    //             position: "top-right",
-    //             style: {
-    //                 borderRadius: '10px',
-    //                 background: '#333',
-    //                 color: '#fff',
-    //             },
-    //         });
-    //     } catch (error) {
-    //         console.error("Error during logout", error);
-    //         toast.error("Logout Failed.", {
-    //             duration: 4000,
-    //             position: "top-right",
-    //             style: {
-    //                 borderRadius: '10px',
-    //                 background: '#333',
-    //                 color: '#fff',
-
-    //             },
-    //         });
-    //         Cookies.remove("access_token");
-    //         Cookies.remove("refresh_token");
-    
-            
-    //         navigate("/");
-    //     }
-    // };
     const handleLogout = async () => {
         try {
-            // await Api.post("/api/logout", {}, {
-            //     headers: {
-            //         Authorization: `Bearer ${Cookies.get("access_token")}`,
-            //     },
-            // });
+           
     
-            // Manually remove tokens from cookies after logout
+            
             Cookies.remove("access_token");
             Cookies.remove("refresh_token");
     
-            // Navigate to the home page after successful logout
+            
             navigate("/");
     
-            // Show success toast
+            
             toast.success("Logout Successfully.", {
                 duration: 4000,
                 position: "top-right",
@@ -120,8 +72,6 @@ function Sidebar() {
             });
         } catch (error) {
             console.error("Error during logout", error);
-    
-            // Show error toast
             toast.error("Logout Failed.", {
                 duration: 4000,
                 position: "top-right",
@@ -129,21 +79,66 @@ function Sidebar() {
                     borderRadius: '10px',
                     background: '#333',
                     color: '#fff',
+
                 },
             });
-    
-            // Remove tokens and navigate even if logout fails
-            // Cookies.remove("access_token");
-            // Cookies.remove("refresh_token");
-
             Cookies.remove("access_token");
             Cookies.remove("refresh_token");
-        
-            navigate("/");
     
-          //  navigate("/");
+            
+            navigate("/");
         }
     };
+
+    ////buat update terbaru
+    // const handleLogout = async () => {
+    //     try {
+    //         // Kirim permintaan logout ke API
+    //         const response = await Api.post("/api/logout");
+    //         console.log("Logout response:", response);
+    
+    //         // Periksa apakah logout berhasil
+    //         if (response.status === 200) {
+    //             // Hapus token dari cookies setelah logout berhasil
+    //             Cookies.remove("access_token");
+    //             Cookies.remove("refresh_token");
+    
+    //             // Arahkan ke halaman utama setelah logout sukses
+    //             navigate("/");
+    
+    //             // Tampilkan toast sukses
+    //             toast.success("Logout Successfully.", {
+    //                 duration: 4000,
+    //                 position: "top-right",
+    //                 style: {
+    //                     borderRadius: '10px',
+    //                     background: '#333',
+    //                     color: '#fff',
+    //                 },
+    //             });
+    //         }
+    //     } catch (error) {
+    //         console.error("Error during logout", error);
+    
+    //         // Tampilkan toast kesalahan
+    //         toast.error("Logout Failed.", {
+    //             duration: 4000,
+    //             position: "top-right",
+    //             style: {
+    //                 borderRadius: '10px',
+    //                 background: '#333',
+    //                 color: '#fff',
+    //             },
+    //         });
+    
+    //         // Hapus token dari cookies dan arahkan ke halaman utama
+    //         Cookies.remove("access_token");
+    //         Cookies.remove("refresh_token");
+    //         navigate("/");
+    //     }
+    // };
+    
+    
     
 
     const handleRadioChange = (path, dropdownName) => {

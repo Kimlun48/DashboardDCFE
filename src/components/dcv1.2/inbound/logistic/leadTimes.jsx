@@ -378,7 +378,7 @@ function GenerateLeadTimes() {
                                         To Excel
                                     </div>
                                 </div>
-                                <button className="btn btn-primary mb-3" onClick={handleGenerate}>Generate Lead Times</button>
+                                <button className="btn btn-primary mb-3" onClick={handleGenerate}>Generate Jobs Task</button>
                                 <input
                                     type="text"
                                     placeholder="Search"
@@ -435,7 +435,7 @@ function GenerateLeadTimes() {
                 >
                     <option value="">Select Activity</option>
                     <option value="ON LOAD">ON LOAD</option>
-                    <option value="OFF LOAD">OFF LOAD</option>
+                    {/* <option value="OFF LOAD">OFF LOAD</option> */}
                 </Form.Control>
             </Form.Group>
 
