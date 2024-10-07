@@ -89,22 +89,19 @@ const QrScannerVendor = () => {
             },
         },
     };
+  
+
     const getCurrentDateTime = () => {
         const now = new Date();
         return moment(now).format('YYYY-MM-DD HH:mm:ss.SSS');
     };
-
-    // const getCurrentDateTime = () => {
-    //     const now = new Date();
-    //     return moment(now).format('YYYY-MM-DD HH:mm:ss.SSS');
-    // };
-    const currentDateTime = getCurrentDateTime();
+   
 
     const updateStatusToArrived = async (id_req) => {
         try {
             const response = await Api.put(`/api/transaksireq_qr/${id_req}`, {
                 status: 'CI SECURITY',
-                date_arrived: currentDateTime(),
+                date_arrived: getCurrentDateTime,
             });
 
             if (response.data.success) {
