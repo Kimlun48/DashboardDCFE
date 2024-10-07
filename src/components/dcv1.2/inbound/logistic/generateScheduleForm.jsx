@@ -502,7 +502,7 @@ function GenerateScheduleForm() {
 
 
   const columns = [
-    { name: 'Id', selector: row => row.id, sortable: true, width: '150px'},
+    // { name: 'Id', selector: row => row.id, sortable: true, width: '150px'},
     { name: 'Date', selector: row => row.hari ? formatDate(row.hari) : 'No Data', sortable: true,  width: '150px' },
     { name: 'Start', selector: row => row.mulai, sortable: true, width: '100px' },
     { name: 'Finish', selector: row => row.akhir, sortable: true, width: '100px' },
@@ -510,15 +510,7 @@ function GenerateScheduleForm() {
     // { name: 'Slot', selector: row => row.slot, sortable: true, width: '100px' },
     { name: 'Av Slot', selector: row => row.available_slot, sortable: true, width: '150px' },
     { name: 'Status', selector: row => row.status ?? 'No Data', sortable: true },
-  //   {
-  //     name: 'Actions',
-  //     cell: row => (
-  //         <>
-  //             <button className="btn btn-primary btn-sm" onClick={() => handleEdit(row)}>Edit</button>
-  //             {/* <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(row.id)}>Delete</button> */}
-  //         </>
-  //     ),width: '90px'
-  // }
+ 
   ];
   const customStyles = {
     rows: {
@@ -586,7 +578,7 @@ function GenerateScheduleForm() {
 
   const handleRowClick = async (id_jadwal) => {
     try {
-      const response = await Api.get(`api/transaksireq/${id_jadwal}`);
+      const response = await Api.get(`api/transaksireq_jadwal/${id_jadwal}`);
       setRequestTransaksi(response.data.data);
       console.log('Request Transaksi Data:', response.data.data);
       setShowModal(true);
@@ -612,68 +604,29 @@ function GenerateScheduleForm() {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.${milliseconds}`;
 };
 
-const handleInputChange = (index, field, value) => {
-    const updatedTransaksi = [...requestTransaksi];
 
-    // Update field value
-    updatedTransaksi[index][field] = value;
-
-    // Check if the status is "ARRIVED" or "COMPLETED" and update date fields accordingly
-    if (field === 'status') {
-        if (value === 'ARRIVED') {
-            updatedTransaksi[index]['date_arrived'] = getCurrentDateTime();
-        } else if (value === 'COMPLETED') {
-            updatedTransaksi[index]['date_completed'] = getCurrentDateTime();
-        } else if (value === 'ONLOAD') {
-            updatedTransaksi[index]['date_loading_goods'] = getCurrentDateTime();
-        }
-    }
-
-    // Update state with modified transaction
-    setRequestTransaksi(updatedTransaksi);
-};
-
-const handleSave = async (id_req, index) => {
-    try {
-        const updatedTransaksi = requestTransaksi[index];
-        await Api.put(`api/transaksireq/${id_req}`, updatedTransaksi);
-        toast.success("Update Data Successfully", {
-            duration: 4000,
-            position: "top-right",
-            style: {
-                borderRadius: '10px',
-                background: '#1f59a1',
-                color: '#fff',
-            },
-        });
-        fetchData(); // Reload data after save
-    } catch (error) {
-        toast.error("Failed to save data!", {
-            duration: 4000,
-            position: "top-right",
-            style: {
-                borderRadius: '10px',
-                background: '#d9534f',
-                color: '#fff',
-            },
-        });
-    }
-};
   return (
     <React.Fragment>
-      <div className="form-container">
-        <form onSubmit={handleSubmit} className="form-content">
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="slot">Slot:</label>
-              <input
-                id="slot"
-                type="number"
-                value={slot}
-                onChange={(e) => setSlot(e.target.value)}
-                required
-                className="form-input"
-              />
+     
+
+      <div className="containers mt-4 mb-5">
+        <div className="row mt-4">
+          <div className="col-md-12">
+            <div className="card border-0 rounded shadow-sm border-top-success">
+              <div className="card-body">
+               
+              <form onSubmit={handleSubmit} className="form-content">
+               <div className="form-row">
+                  <div className="form-group">
+                  <label htmlFor="slot">Slot:</label>
+                  <input
+                   id="slot"
+                  type="number"
+                  value={slot}
+                  onChange={(e) => setSlot(e.target.value)}
+                  required
+                  className="form-input"
+                />
             </div>
             <div className="form-group">
               <label htmlFor="jenisJam">Times:</label>
@@ -721,6 +674,10 @@ const handleSave = async (id_req, index) => {
             )}
           </button>
         </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="containers mt-4 mb-5">
@@ -765,19 +722,19 @@ const handleSave = async (id_req, index) => {
       <Table striped bordered hover responsive>
         <thead>
           <tr>
-            <th>Document ID</th>
+            {/* <th>Document ID</th> */}
             <th>Transport Type</th>
             <th>Vendor Name</th>
             <th>Request Slot</th>
-            <th>Driver</th>
+            {/* <th>Driver</th> */}
             <th>Status</th>
-            <th>Actions</th>
+            {/* <th>Actions</th> */}
           </tr>
         </thead>
         <tbody>
           {requestTransaksi.map((transaksi, index) => (
-            <tr key={transaksi.id_req}>
-              <td>{transaksi.surat_jalan}</td>
+            <tr key={transaksi.id_jadwal}>
+              {/* <td>{transaksi.surat_jalan}</td> */}
              
               <td>{transaksi.nama_kendaraan}</td>
               
@@ -785,38 +742,8 @@ const handleSave = async (id_req, index) => {
              
                <td>{transaksi.slot_req}</td>
              
-               <td>{transaksi.sopir}</td>
-               <td>
-      <select
-        value={transaksi.status}
-        onChange={(e) =>
-          handleInputChange(index, "status", e.target.value)
-        }
-        required
-        className="form-input-req"
-      >
-        <option value="SHIPPING">Shipping</option>
-        <option value="ARRIVED">Arrived</option>
-        <option value="ONLOAD">Onload</option>
-        <option value="COMPLETED">Completed</option>
-        <option value="RESCHEDULE">Reschedule</option>
-        
-      </select>
-    </td>
-              <td>
-              {/* <Button
-                  variant="primary"
-                  onClick={() => handleSave(transaksi.id_req, index)}
-                >
-                  Edit
-                </Button> */}
-                <Button
-                  variant="primary"
-                  onClick={() => handleSave(transaksi.id_req, index)}
-                >
-                  Save
-                </Button>
-              </td>
+               <td>{transaksi.status}</td>
+               
             </tr>
           ))}
         </tbody>

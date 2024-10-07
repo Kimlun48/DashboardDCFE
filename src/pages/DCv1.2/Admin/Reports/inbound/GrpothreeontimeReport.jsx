@@ -35,20 +35,20 @@ function GrpothreeontimeReport() {
     }, [search, grpothreeontime]);
 
     const columns = [
-        {name : 'TRAILING_STS', selector: row => row.TRAILING_STS, sortable:true, width:'100px'},
-        {name : 'RECEIPT_ID', selector: row => row.RECEIPT_ID, sortable:true, width:'100px'},
-        {name : 'RECEIPT_ID_TYPE', selector: row => row.RECEIPT_ID_TYPE, sortable:true, width:'100px'},
+        {name : 'TRAILING STS', selector: row => row.TRAILING_STS, sortable:true, width:'150px'},
+        {name : 'RECEIPT ID', selector: row => row.RECEIPT_ID, sortable:true, width:'150px'},
+        {name : 'RECEIPT ID TYPE', selector: row => row.RECEIPT_ID_TYPE, sortable:true, width:'200px'},
         //{name : 'RECEIPT_DATE', selector: row => row.RECEIPT_DATE, sortable:true, width:'100px'},
-        { name: 'RECEIPT_DATE', selector: row => row.RECEIPT_DATE ? formatDate(row.RECEIPT_DATE) : 'No Data', sortable: true },
-        {name : 'SOURCE_NAME', selector: row => row.SOURCE_NAME, sortable:true, width:'100px'},
-        {name : 'ITEM', selector: row => row.ITEM, sortable:true, width:'100px'},
-        {name : 'ITEM_DESC', selector: row => row.ITEM_DESC, sortable:true, width:'100px'},
-        {name : 'OPEN_QTY', selector: row => row.OPEN_QTY, sortable:true, width:'100px'},
+        { name: 'RECEIPT DATE', selector: row => row.RECEIPT_DATE ? formatDate(row.RECEIPT_DATE) : 'No Data', sortable: true },
+        {name : 'SOURCE NAME', selector: row => row.SOURCE_NAME, sortable:true, width:'300px'},
+        {name : 'ITEM', selector: row => row.ITEM, sortable:true, width:'150px'},
+        {name : 'ITEM DESC', selector: row => row.ITEM_DESC, sortable:true, width:'400px'},
+        {name : 'OPEN QTY', selector: row => row.OPEN_QTY, sortable:true, width:'150px'},
         //{name : 'DATE_TIME_STAMP', selector: row => row.DATE_TIME_STAMP, sortable:true, width:'100px'},
         { name: 'DATE_TIME_STAMP', selector: row => row.DATE_TIME_STAMP ? formatDate(row.DATE_TIME_STAMP) : 'No Data', sortable: true },
-        {name : 'DEADLINE', selector: row => row.DEADLINE, sortable:true, width:'100px'},
-        {name : 'CLOSE_DATE', selector: row => row.CLOSE_DATE, sortable:true, width:'100px'}, 
-        {name : 'DAYS_TO_CLOSE', selector: row => row.DAYS_TO_CLOSE, sortable:true, width:'100px'},              
+        {name : 'DEADLINE', selector: row => row.DEADLINE, sortable:true, width:'150px'},
+        {name : 'CLOSE_DATE', selector: row => row.CLOSE_DATE, sortable:true, width:'150px'}, 
+        {name : 'DAYS_TO_CLOSE', selector: row => row.DAYS_TO_CLOSE, sortable:true, width:'150px'},              
     ];
 
     const customStyles = {
