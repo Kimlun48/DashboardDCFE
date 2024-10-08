@@ -1,4 +1,8 @@
-//import react  
+
+
+
+
+
 import React,{useEffect, useState} from "react";
 import useFormatDate from "../../../utilites/useFormatDate";
 import DataTable from "react-data-table-component";
@@ -12,6 +16,9 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Modal, Button, Table, Spinner } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function TransaksiRequest() {
     const [transaksirequest, setTransaksiRequest] = useState ([]);
@@ -22,6 +29,8 @@ function TransaksiRequest() {
     const convertToGMT7 = (date) => {
         return moment(date).tz('Asia/Jakarta').format('YYYY-MM-DD HH:mm:ss');
     };
+    const [showModal, setShowModal] = useState(false);
+    const [transaksiLogDoc, setTransaksiLogDoc] = useState([]);
 
    // const time = 2 * 60 * 1000; 
 
@@ -115,47 +124,65 @@ const noBorderLeft = {
 
 
    
-    const columns = [
-        { name: 'Vendor', selector: row => row.nama_vendor, sortable: true, width: '400px' },
-        // { name: 'No Receipt', selector: row => row.surat_jalan, sortable: true, width: '300px' },
-        // { name: 'Status', selector: row => row.status, sortable: true, width: '150px' },
-        {
-            name: 'Details',
-            cell: row => (
-                <Accordion style={{ width: '100%' }}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls={`panel-content-${row.id_req}`}
-                        id={`panel-header-${row.id_req}`}
-                        style={{ minWidth: '500px' }} // Mengatur lebar minimum summary
-                    >
-                        View Details
-                    </AccordionSummary>
-                    <AccordionDetails style={{ width: '100%' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                            <div style={{ flex: 1, paddingRight: '10px' }}>
-                                <p><strong>Status:</strong> {row.status}</p>
-                                <p><strong>Driver:</strong> {row.sopir}</p>
-                                <p><strong>Booking Date:</strong> {row.schedule.hari ? formatDate(row.schedule.hari): 'No Data'} </p>
-                                <p><strong>Booking Time:</strong> {row.schedule.mulai} </p>
-                                <p><strong>Date CI Inbound:</strong> {row.date_loading_goods ? formatDate(row.date_loading_goods) : 'No Data'}</p>
-                                <p><strong>Time CI Inbound:</strong> {row.date_loading_goods && moment(row.date_loading_goods).format('HH:mm:ss')}</p>
-                            </div>
-                            <div style={{ flex: 1, paddingLeft: '10px' }}>
-                                <p><strong>No Receipt:</strong> {row.surat_jalan}</p>
-                                <p><strong>Truck:</strong> {row.nama_kendaraan}</p>
-                                <p><strong>Date CI Security:</strong> {row.date_arrived ? formatDate(row.date_arrived) : 'No Data'}</p>
-                                <p><strong>Time CI Security:</strong> {row.date_arrived && moment(row.date_arrived).format('HH:mm:ss')}</p>
-                                <p><strong>Date CO Inbound:</strong> {row.date_completed ? formatDate(row.date_completed) : 'No Data'}</p>
-                                <p><strong>Time Co Inbound:</strong> {row.date_completed && moment(row.date_completed).format('HH:mm:ss')}</p>
-                            </div>
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-            ),
-            // width: '550px' 
-        }
+    // const columns = [
+    //     { name: 'Vendor', selector: row => row.nama_vendor, sortable: true, width: '400px' },
+    //     // { name: 'No Receipt', selector: row => row.surat_jalan, sortable: true, width: '300px' },
+    //     // { name: 'Status', selector: row => row.status, sortable: true, width: '150px' },
+    //     {
+    //         name: 'Details',
+    //         cell: row => (
+    //             <Accordion style={{ width: '100%' }}>
+    //                 <AccordionSummary
+    //                     expandIcon={<ExpandMoreIcon />}
+    //                     aria-controls={`panel-content-${row.id_req}`}
+    //                     id={`panel-header-${row.id_req}`}
+    //                     style={{ minWidth: '500px' }} // Mengatur lebar minimum summary
+    //                 >
+    //                     View Details
+    //                 </AccordionSummary>
+    //                 <AccordionDetails style={{ width: '100%' }}>
+    //                     <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+    //                         <div style={{ flex: 1, paddingRight: '10px' }}>
+    //                             <p><strong>Status:</strong> {row.status}</p>
+    //                             <p><strong>Driver:</strong> {row.sopir}</p>
+    //                             <p><strong>Booking Date:</strong> {row.schedule.hari ? formatDate(row.schedule.hari): 'No Data'} </p>
+    //                             <p><strong>Booking Time:</strong> {row.schedule.mulai} </p>
+    //                             <p><strong>Date CI Inbound:</strong> {row.date_loading_goods ? formatDate(row.date_loading_goods) : 'No Data'}</p>
+    //                             <p><strong>Time CI Inbound:</strong> {row.date_loading_goods && moment(row.date_loading_goods).format('HH:mm:ss')}</p>
+    //                         </div>
+    //                         <div style={{ flex: 1, paddingLeft: '10px' }}>
+    //                             <p><strong>No Receipt:</strong> {row.surat_jalan}</p>
+    //                             <p><strong>Truck:</strong> {row.nama_kendaraan}</p>
+    //                             <p><strong>Date CI Security:</strong> {row.date_arrived ? formatDate(row.date_arrived) : 'No Data'}</p>
+    //                             <p><strong>Time CI Security:</strong> {row.date_arrived && moment(row.date_arrived).format('HH:mm:ss')}</p>
+    //                             <p><strong>Date CO Inbound:</strong> {row.date_completed ? formatDate(row.date_completed) : 'No Data'}</p>
+    //                             <p><strong>Time Co Inbound:</strong> {row.date_completed && moment(row.date_completed).format('HH:mm:ss')}</p>
+    //                         </div>
+    //                     </div>
+    //                 </AccordionDetails>
+    //             </Accordion>
+    //         ),
+    //         // width: '550px' 
+    //     }
         
+    // ];
+    const columns = [
+        { name: 'Booking ID', selector: row => row.id_req, sortable: true, width: '150px' },
+        { name: 'Vendor', selector: row => row.nama_vendor, sortable: true, width: '350px' },
+        // { name: 'No Receipt', selector: row => row.surat_jalan, sortable: true, width: '200px' },
+        { name: 'Status', selector: row => row.status, sortable: true, width: '150px' },
+        { name: 'Date Boking', selector: row => row.schedule?.hari ? formatDate(row.schedule.hari) : 'No Data', sortable: true, width: '140px' },
+        { name: 'Jam Boking', selector: row => row.schedule?.mulai ? row.schedule.mulai : 'No Data', sortable: true, width: '140px' },
+        { name: 'Date CI Security', selector: row => row.date_arrived ? formatDate(row.date_arrived) : 'No Data', sortable: true, width: '200px' },
+        { name: 'Time CI Security', selector: row => row.date_arrived ? moment(row.date_arrived).format('HH:mm:ss') : 'No Data', sortable: true, width: '200px' },
+        { name: 'Date CI Inbound', selector: row => row.date_loading_goods ? formatDate(row.date_loading_goods) : 'No Data', sortable: true, width: '200px' },
+        { name: 'Time CI Inbound', selector: row => row.date_loading_goods ? moment(row.date_loading_goods).format('HH:mm:ss') : 'No Data', sortable: true, width: '200px' },
+        { name: 'Date CO Inbound', selector: row => row.date_arrived ? formatDate(row.date_arrived) : 'No Data', sortable: true, width: '200px' },
+        { name: 'Time CO Inbound', selector: row => row.date_arrived ? moment(row.date_arrived).format('HH:mm:ss') : 'No Data', sortable: true, width: '200px' },
+        { name: 'Date CO Security', selector: row => row.date_completed ? formatDate(row.date_completed) : 'No Data', sortable: true, width: '200px' },
+        { name: 'Time CO Security', selector: row => row.date_completed ? moment(row.date_completed).format('HH:mm:ss') : 'No Data', sortable: true, width: '200px' },
+       
+       
     ];
 
     const customStyles = {
@@ -178,6 +205,21 @@ const noBorderLeft = {
             },
         },
     };
+
+    const handleRowClick = async (id_req) => {
+        try {
+          const response = await Api.get(`api/transaksilogdoc/${id_req}`);
+          setTransaksiLogDoc(response.data.data);
+        //   console.log('Request Transaksi Data:', response.data.data);
+          setShowModal(true);
+        } catch (error) {
+          console.error('Error fetching request transaksi data:', error);
+        }
+      };
+    
+      useEffect(() => {
+        // console.log('Current Request Transaksi State:', requestTransaksi);
+      }, [transaksiLogDoc]);
 
     return(
         <React.Fragment>
@@ -210,6 +252,7 @@ const noBorderLeft = {
                                         paginationRowsPerPageOptions={[5, 10, 15, 20]}
                                         highlightOnHover
                                         customStyles={customStyles}
+                                     
                                         noDataComponent={
                                             <div className="alert alert-danger mb-0">
                                                 Data Belum Tersedia!

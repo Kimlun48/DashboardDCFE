@@ -43,7 +43,7 @@ body {
    -moz-osx-font-smoothing: grayscale;
    line-height: 1.6;
    letter-spacing: 0.5;
-   font-size: small !important;
+   /* font-size:medium !important; */
    
   
    

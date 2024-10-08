@@ -246,7 +246,9 @@ function ListUser() {
                                     <option value="">Select Role</option>
                                     <option value="admin">Admin</option>
                                     <option value="user">User</option>
-                                    <option value="inbound">Inbound</option>
+                                    <option value="user_inbound">Inbound</option>
+                                    <option value="user_storage">Storage</option>
+                                    <option value="user_outbound">Outbound</option>
                                     {/* Add other roles as needed */}
                                 </Form.Control>
                             </Form.Group>
