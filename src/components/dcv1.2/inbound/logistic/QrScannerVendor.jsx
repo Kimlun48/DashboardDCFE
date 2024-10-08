@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import Api from '../../../../api';
 import toast from 'react-hot-toast';
@@ -17,14 +16,27 @@ const QrScannerVendor = () => {
     const { formatDate } = useFormatDate();
     const { formatTime } = FormatTime();
     const [updatedId, setUpdatedId] = useState(null);
-    const time = 1 * 60 * 1000; // 1 minute
+    const [updateSuccess, setUpdateSuccess] = useState(false);
+    const time = 1 * 60 * 1000; // 1 menit
 
     const fetchData = async () => {
         try {
-            const response = await Api.get('api/transaksireq_qr');
-            console.log('API Response:', response);
-            setRequestTransaksiQr(response.data.data);
-            setFilteredData(response.data.data);
+        const response = await Api.get('api/transaksireq_qr');
+        const today = moment().format('YYYY-MM-DD');
+        
+        const filteredData = response.data.data.filter(item => {
+            const scheduleDate = item.schedule?.hari ? moment(item.schedule.hari).format('YYYY-MM-DD') : null;
+            return scheduleDate === today;
+        });
+
+        setRequestTransaksiQr(filteredData);
+       setFilteredData(filteredData);
+    //    try {
+    //     const response = await Api.get('api/transaksireq_qr');
+    //     console.log('API Response:', response.data.data); // Periksa data yang diterima
+    //     setRequestTransaksiQr(response.data.data);
+    //     setFilteredData(response.data.data);
+    
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -39,22 +51,33 @@ const QrScannerVendor = () => {
     }, []);
 
     useEffect(() => {
+        console.log('Searching for:', search);
+        console.log('Request Data:', requestTransaksiQr);
+        console.log('Updated ID:', updatedId);
+    
         const lowercasedSearch = search.toLowerCase();
         const filtered = requestTransaksiQr.filter(item => {
             const namaVendor = item.nama_vendor ? item.nama_vendor.toLowerCase() : '';
-            const suratJalan = item.surat_jalan ? item.surat_jalan.toLowerCase() : '';
             const idReq = item.id_req ? String(item.id_req) : '';
-            const idStatus = item.status ? item.status.toLowerCase() : '';
-
-            return (updatedId === null || item.id_req === updatedId) &&
-                (namaVendor.includes(lowercasedSearch) ||
-                    suratJalan.includes(lowercasedSearch) ||
-                    idReq.includes(lowercasedSearch) ||
-                    idStatus.includes(lowercasedSearch)
-                ) ;
+    
+            // Sederhanakan filter sementara
+            return namaVendor.includes(lowercasedSearch) || idReq.includes(lowercasedSearch);
         });
+    
+        // Jika tidak ada hasil, cek untuk ID yang diperbarui
+        if (filtered.length === 0 && updatedId !== null) {
+            const updatedItem = requestTransaksiQr.find(item => item.id_req === updatedId);
+            if (updatedItem) {
+                filtered.push(updatedItem);
+            }
+        }
+    
+        console.log('Filtered Data:', filtered);
         setFilteredData(filtered);
     }, [search, requestTransaksiQr, updatedId]);
+    
+    
+    
 
     const columns = [
         { name: 'Booking ID', selector: row => row.id_req, sortable: true, width: '150px' },
@@ -62,13 +85,14 @@ const QrScannerVendor = () => {
         { name: 'No Receipt', selector: row => row.surat_jalan, sortable: true, width: '200px' },
         { name: 'Status', selector: row => row.status, sortable: true, width: '150px' },
         { name: 'Date Boking', selector: row => row.schedule?.hari ? formatDate(row.schedule.hari) : 'No Data', sortable: true, width: '140px' },
+        { name: 'Jam Boking', selector: row => row.schedule?.mulai ? row.schedule.mulai : 'No Data', sortable: true, width: '140px' },
         { name: 'Date CI Security', selector: row => row.date_arrived ? formatDate(row.date_arrived) : 'No Data', sortable: true, width: '200px' },
         { name: 'Time CI Security', selector: row => row.date_arrived ? moment(row.date_arrived).format('HH:mm:ss') : 'No Data', sortable: true, width: '200px' },
         { name: 'Date CO Security', selector: row => row.date_checkout_security ? formatDate(row.date_checkout_security) : 'No Data', sortable: true, width: '200px' },
         { name: 'Time CO Security', selector: row => row.date_checkout_security ? moment(row.date_checkout_security).format('HH:mm:ss') : 'No Data', sortable: true, width: '200px' },
+       
     ];
     
-
     const customStyles = {
         headCells: {
             style: {
@@ -90,22 +114,21 @@ const QrScannerVendor = () => {
         },
     };
   
-
     const getCurrentDateTime = () => {
         const now = new Date();
         return moment(now).format('YYYY-MM-DD HH:mm:ss.SSS');
     };
    
-
     const updateStatusToArrived = async (id_req) => {
         try {
             const response = await Api.put(`/api/transaksireq_qr/${id_req}`, {
                 status: 'CI SECURITY',
-                date_arrived: getCurrentDateTime,
+                date_arrived: getCurrentDateTime(), // Panggil fungsi untuk mendapatkan waktu sekarang
             });
 
             if (response.data.success) {
-                setUpdatedId(id_req);
+                // setUpdatedId(id_req);
+                setUpdateSuccess(true); // Tandai bahwa status telah berhasil diperbarui
                 fetchData();
                 toast.success(response.data.message, {
                     duration: 4000,
@@ -233,15 +256,9 @@ const QrScannerVendor = () => {
                                     columns={columns}
                                     data={filteredData}
                                     pagination
-                                    paginationPerPage={5}
-                                    paginationRowsPerPageOptions={[5, 10, 15, 20]}
-                                    highlightOnHover
                                     customStyles={customStyles}
-                                    noDataComponent={
-                                        <div className="alert alert-danger mb-0">
-                                            Data Belum Tersedia!
-                                        </div>
-                                    }
+                                    highlightOnHover
+                                    responsive
                                 />
                             </div>
                         </div>
@@ -253,5 +270,3 @@ const QrScannerVendor = () => {
 };
 
 export default QrScannerVendor;
-
-

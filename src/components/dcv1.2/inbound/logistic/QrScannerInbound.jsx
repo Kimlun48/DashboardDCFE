@@ -20,10 +20,21 @@ const QrScannerInbound = () => {
 
     const fetchData = async () => {
         try {
+            // const response = await Api.get('api/transaksireq_qr');
+            // setRequestTransaksiQr(response.data.data);
+            // setFilteredData(response.data.data);
+            // console.log(response.data);
+
             const response = await Api.get('api/transaksireq_qr');
-            setRequestTransaksiQr(response.data.data);
-            setFilteredData(response.data.data);
-            console.log(response.data);
+            const today = moment().format('YYYY-MM-DD');
+            
+            const filteredData = response.data.data.filter(item => {
+                const scheduleDate = item.schedule?.hari ? moment(item.schedule.hari).format('YYYY-MM-DD') : null;
+                return scheduleDate === today;
+            });
+    
+            setRequestTransaksiQr(filteredData);
+            setFilteredData(filteredData);
         } catch (error) {
             console.log('error fetching data :', error);
         }
@@ -162,7 +173,7 @@ const QrScannerInbound = () => {
             });
     
             if (response.data.success) {
-                setUpdatedId(id_req);
+              //  setUpdatedId(id_req);
                 fetchData();
                 toast.success(response.data.message, {
                     duration: 4000,

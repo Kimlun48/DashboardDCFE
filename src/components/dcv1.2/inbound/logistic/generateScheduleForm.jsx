@@ -451,12 +451,13 @@ function GenerateScheduleForm() {
   const [monthYear, setMonthYear] = useState(new Date());
   const [schedule, setSchedule] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [searchDate, setSearchDate] = useState(null);
+  //const [searchDate, setSearchDate] = useState(null);
   const { formatDate } = useFormatDate();
   const [masterHour, setMasterHour] = useState([]);
   const [requestTransaksi, setRequestTransaksi] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [searchDate, setSearchDate] = useState(new Date());
 
   const fetchDataHour = async () => {
     try {
@@ -502,7 +503,7 @@ function GenerateScheduleForm() {
 
 
   const columns = [
-    // { name: 'Id', selector: row => row.id, sortable: true, width: '150px'},
+    { name: 'Id', selector: row => row.id, sortable: true, width: '150px'},
     { name: 'Date', selector: row => row.hari ? formatDate(row.hari) : 'No Data', sortable: true,  width: '150px' },
     { name: 'Start', selector: row => row.mulai, sortable: true, width: '100px' },
     { name: 'Finish', selector: row => row.akhir, sortable: true, width: '100px' },
