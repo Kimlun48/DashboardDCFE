@@ -24,17 +24,16 @@ const QrScannerInbound = () => {
             // setRequestTransaksiQr(response.data.data);
             // setFilteredData(response.data.data);
             // console.log(response.data);
+             const response = await Api.get('api/transaksireq_qr');
+        const today = moment().format('YYYY-MM-DD');
+        
+        const filteredData = response.data.data.filter(item => {
+            const scheduleDate = item.schedule?.hari ? moment(item.schedule.hari).format('YYYY-MM-DD') : null;
+            return scheduleDate === today;
+        });
 
-            const response = await Api.get('api/transaksireq_qr');
-            const today = moment().format('YYYY-MM-DD');
-            
-            const filteredData = response.data.data.filter(item => {
-                const scheduleDate = item.schedule?.hari ? moment(item.schedule.hari).format('YYYY-MM-DD') : null;
-                return scheduleDate === today;
-            });
-    
-            setRequestTransaksiQr(filteredData);
-            setFilteredData(filteredData);
+        setRequestTransaksiQr(filteredData);
+       setFilteredData(filteredData);
         } catch (error) {
             console.log('error fetching data :', error);
         }
