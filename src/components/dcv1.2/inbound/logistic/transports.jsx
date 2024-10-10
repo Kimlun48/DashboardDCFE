@@ -7,11 +7,8 @@ import { saveAs } from 'file-saver';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import toast from "react-hot-toast";
 import { Modal, Button, Form } from 'react-bootstrap';
-//import react-confirm-alert
 import { confirmAlert } from 'react-confirm-alert';
-
-//import CSS react-confirm-alert
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 function Transports() {
     const [transport, setTransport] = useState([]);
@@ -19,8 +16,22 @@ function Transports() {
     const [search, setSearch] = useState('');
     const { formatDate } = useFormatDate();
     const [showModal, setShowModal] = useState(false);
-    const [modalType, setModalType] = useState('add'); // 'add' or 'edit'
-    const [currentData, setCurrentData] = useState({ id_kendaraan: '', Jenis_Kendaraan: '', slot_Kendaraan: '', tipe_pallet: '' });
+    const [modalType, setModalType] = useState('add'); 
+    const [currentData, setCurrentData] = useState({ id_kendaraan: '', Jenis_Kendaraan: '', tipe_kendaraan:'',slot_Kendaraan: '', tipe_pallet: '' });
+    const [masterKendaraan, setMasterKendaraan] = useState([]);
+
+    const fetchMasterKendaraan = async () => {
+        try {
+            const response = await Api.get('api/masterkendaraan');
+            setMasterKendaraan(response.data.data)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchMasterKendaraan();
+    }, []);
 
     const fetchData = async () => {
         try {
@@ -54,7 +65,7 @@ function Transports() {
     };
 
     const handleAdd = () => {
-        setCurrentData({ id_kendaraan: '', Jenis_Kendaraan: '', slot_Kendaraan: '', tipe_pallet: ''});
+        setCurrentData({ id_kendaraan: '', Jenis_Kendaraan: '', tipe_kendaraan:'',slot_Kendaraan: '', tipe_pallet: ''});
         setModalType('add');
         setShowModal(true);
     };
@@ -62,6 +73,7 @@ function Transports() {
     const handleEdit = (row) => {
         setCurrentData({ id_kendaraan: row.id_kendaraan, 
                         Jenis_Kendaraan: row.Jenis_Kendaraan, 
+                        tipe_kendaraan :row.tipe_kendaraan,
                         slot_Kendaraan: row.slot_Kendaraan,
                         tipe_pallet: row.tipe_pallet });
         setModalType('edit');
@@ -105,51 +117,98 @@ function Transports() {
         });
     };
 
+    // const handleSave = async () => {
+    //     try {
+    //         if (modalType === 'add') {
+    //             await Api.post('api/kendaraan', currentData);
+    //             toast.success(response.data.message ||"Add Data Successfully!", {
+    //                 duration: 4000,
+    //                 position: "top-right",
+    //                 style: {
+    //                   borderRadius: '10px',
+    //                   background: '#1f59a1',
+    //                   color: '#fff',
+    //                 },
+    //               });
+    //         } else {
+    //             await Api.put(`api/kendaraan/${currentData.id_kendaraan}`, currentData);
+    //             toast.success(response.data.message ||"Update Data Successfully!", {
+    //                 duration: 4000,
+    //                 position: "top-right",
+    //                 style: {
+    //                   borderRadius: '10px',
+    //                   background: '#1f59a1',
+    //                   color: '#fff',
+    //                 },
+    //               });
+    //         }
+           
+    //         fetchData(); // Refresh data after save
+    //         setShowModal(false);
+    //     } catch (error) {
+    //         const errorMessage = error.response?.data?.message || "Failed to save data!";
+    //          toast.error(errorMessage, {
+    //                 duration: 4000,
+    //                 position: "top-right",
+    //                 style: {
+    //                   borderRadius: '10px',
+    //                   background: '#d9534f',
+    //                   color: '#fff',
+    //                 },
+    //               });
+    //     }
+    // };
     const handleSave = async () => {
         try {
+            let response;
             if (modalType === 'add') {
-                await Api.post('api/kendaraan', currentData);
-                toast.success("Add Data Successfully!", {
+                response = await Api.post('api/kendaraan', currentData);
+                toast.success(response.data.message || "Add Data Successfully!", {
                     duration: 4000,
                     position: "top-right",
                     style: {
-                      borderRadius: '10px',
-                      background: '#1f59a1',
-                      color: '#fff',
+                        borderRadius: '10px',
+                        background: '#1f59a1',
+                        color: '#fff',
                     },
-                  });
+                });
             } else {
-                await Api.put(`api/kendaraan/${currentData.id_kendaraan}`, currentData);
-                toast.success("Update Data Successfully!", {
+                response = await Api.put(`api/kendaraan/${currentData.id_kendaraan}`, currentData);
+                toast.success(response.data.message || "Update Data Successfully!", {
                     duration: 4000,
                     position: "top-right",
                     style: {
-                      borderRadius: '10px',
-                      background: '#1f59a1',
-                      color: '#fff',
+                        borderRadius: '10px',
+                        background: '#1f59a1',
+                        color: '#fff',
                     },
-                  });
+                });
             }
-           
+    
             fetchData(); // Refresh data after save
             setShowModal(false);
         } catch (error) {
-             toast.error("Failed to save data!", {
-                    duration: 4000,
-                    position: "top-right",
-                    style: {
-                      borderRadius: '10px',
-                      background: '#d9534f',
-                      color: '#fff',
-                    },
-                  });
+            // Cek jika ada respons dari server di error
+            const errorMessage = error.response?.data?.message || "Failed to save data!";
+            toast.error(errorMessage, {
+                duration: 4000,
+                position: "top-right",
+                style: {
+                    borderRadius: '10px',
+                    background: '#d9534f',
+                    color: '#fff',
+                },
+            });
         }
     };
+    
 
     const columns = [
-        { name: 'Type', selector: row => row.Jenis_Kendaraan ?? 'No Data', sortable: true },
+        { name: 'Type Transport', selector: row => row.Jenis_Kendaraan ?? 'No Data', sortable: true, width:'200px' },
+        { name: 'Id Transport', selector: row => row.tipe_kendaraan ?? 'No Data', sortable: true },
         { name: 'Slot', selector: row => row.slot_Kendaraan ?? 'No Data', sortable: true },
         { name: 'Type Pallet', selector: row => row.tipe_pallet ?? 'No Data', sortable: true },
+       
         {
             name: 'Actions',
             cell: row => (
@@ -185,6 +244,27 @@ function Transports() {
                 color: 'white',
             },
         },
+    };
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+
+       
+        if (name === 'Jenis_Kendaraan') {
+            const selectedMasterKendaraan = masterKendaraan.find(b => b.tipe === value);
+            if (selectedMasterKendaraan) {
+                setCurrentData(prevState => ({
+                    ...prevState,
+                    Jenis_Kendaraan: selectedMasterKendaraan.tipe,
+                    tipe_kendaraan: selectedMasterKendaraan.id  
+                }));
+            }
+        } else {
+            setCurrentData(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
     };
 
     return (
@@ -236,27 +316,53 @@ function Transports() {
                 <Modal.Body>
                     <Form>
                         <Form.Group controlId="Jenis_Kendaraan">
-                            <Form.Label>Type</Form.Label>
+                            <Form.Label>Type Transport</Form.Label>
                             <Form.Control
-                                type="text"
-                                placeholder="Enter Type"
-                                value={currentData.Jenis_Kendaraan}
-                                onChange={e => setCurrentData({ ...currentData, Jenis_Kendaraan: e.target.value })}
-                            />
+                            as="select"
+                            placeholder="Enter Type"
+                            name="Jenis_Kendaraan"
+                            value={currentData.Jenis_Kendaraan}
+                            onChange={handleInputChange}
+                            >
+                        <option value="" disabled>
+                        Type Transport
+                        </option>
+                        {masterKendaraan.map(option => (
+                        <option key={option.id} value={option.tipe}>
+                        {option.tipe}
+                    </option>
+                         ))}
+                    </Form.Control>
                         </Form.Group>
+
+                        <Form.Group controlId="tipe_kendaraan" className="mt-3">
+                                <Form.Label>Id Transport</Form.Label>
+                                <Form.Control 
+                                type="text" 
+                                placeholder="Enter Id Transport"
+                                controlId="tipe_kendaraan" 
+                                value={currentData.tipe_kendaraan} 
+                                onChange={handleInputChange} 
+                                disabled />
+                        </Form.Group>
+                        
                         <Form.Group controlId="slot_Kendaraan" className="mt-3">
                             <Form.Label>Slot</Form.Label>
                             <Form.Control
-                                type="text"
+                                as="select"
                                 placeholder="Enter Slot"
                                 value={currentData.slot_Kendaraan}
                                 onChange={e => {
                                     const value = e.target.value;
-                                    if (/^\d*$/.test(value)) {
-                                        setCurrentData({ ...currentData, slot_Kendaraan: value });
-                                    }
+                                   
+                                        setCurrentData({ ...currentData, slot_Kendaraan: e.target.value  });
+                                    
                                 }}
-                            />
+                            >
+                            <option value="">Select Slot</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            </Form.Control>
                         </Form.Group>
                        
 

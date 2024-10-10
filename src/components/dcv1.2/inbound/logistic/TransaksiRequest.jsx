@@ -13,6 +13,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Modal, Button, Table } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import DatePicker from 'react-datepicker';
 
 function TransaksiRequest() {
     const [transaksirequest, setTransaksiRequest] = useState([]);
@@ -25,6 +26,9 @@ function TransaksiRequest() {
     };
     const [showModal, setShowModal] = useState(false);
     const [transaksiLogDoc, setTransaksiLogDoc] = useState([]);
+    //const [searchDate, setSearchDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
 
     const fetchData = async () => {
         try {
@@ -41,28 +45,67 @@ function TransaksiRequest() {
         fetchData();
     }, []);
 
+    // useEffect(() => {
+    //     const lowercasedSearch = search.toLowerCase();
+    //     const filtered = transaksirequest.filter(item => {
+    //         const idReq = item.id_req ? String(item.id_req) : '';
+    //         const namaVendor = item.nama_vendor ? item.nama_vendor.toLowerCase() : '';
+    //         const suratJalan = item.surat_jalan ? item.surat_jalan.toLowerCase() : '';
+    //         const status = item.status ? item.status.toLowerCase() : '';
+            
+    //         // Format hari dari schedule untuk dibandingkan
+    //         const scheduleDate = item.schedule?.hari ? moment(item.schedule.hari).format('YYYY-MM-DD') : '';
+    //         const searchDateFormatted = searchDate ? moment(searchDate).format('YYYY-MM-DD') : '';
+
+    //         return (
+    //             (idReq.includes(lowercasedSearch) ||
+    //             namaVendor.includes(lowercasedSearch) ||
+    //             suratJalan.includes(lowercasedSearch) ||
+    //             status.includes(lowercasedSearch)) &&
+    //             (!searchDate || scheduleDate === searchDateFormatted) // Filter berdasarkan tanggal jika searchDate dipilih
+    //         );
+    //     });
+        
+    //     setFilteredData(filtered);
+    // }, [search, transaksirequest, searchDate]);
+
+    // const updatedFilteredData = filteredData.map(item => ({
+    //     ...item,
+    //     updated_at: item.updated_at ? convertToGMT7(item.updated_at) : ''
+    // }));
+
     useEffect(() => {
         const lowercasedSearch = search.toLowerCase();
         const filtered = transaksirequest.filter(item => {
             const idReq = item.id_req ? String(item.id_req) : '';
-           // const idJadwal = item.id_req ? item.id_req.toLowerCase() : '';
             const namaVendor = item.nama_vendor ? item.nama_vendor.toLowerCase() : '';
             const suratJalan = item.surat_jalan ? item.surat_jalan.toLowerCase() : '';
             const status = item.status ? item.status.toLowerCase() : '';
-        
-            return idReq.includes(lowercasedSearch) ||
-                   namaVendor.includes(lowercasedSearch) ||
-                   suratJalan.includes(lowercasedSearch) ||
-                   status.includes(lowercasedSearch);
+
+            // Format hari dari schedule untuk dibandingkan
+            const scheduleDate = item.schedule?.hari ? moment(item.schedule.hari).format('YYYY-MM-DD') : '';
+
+            // Memeriksa apakah tanggal jatuh dalam rentang yang dipilih
+            const isWithinDateRange = (startDate ? moment(scheduleDate).isSameOrAfter(moment(startDate).startOf('day')) : true) &&
+                                       (endDate ? moment(scheduleDate).isSameOrBefore(moment(endDate).endOf('day')) : true);
+
+            return (
+                (idReq.includes(lowercasedSearch) ||
+                namaVendor.includes(lowercasedSearch) ||
+                suratJalan.includes(lowercasedSearch) ||
+                status.includes(lowercasedSearch)) &&
+                isWithinDateRange // Filter berdasarkan rentang tanggal
+            );
         });
-        
+
         setFilteredData(filtered);
-    }, [search, transaksirequest]);
+    }, [search, transaksirequest, startDate, endDate]);
 
     const updatedFilteredData = filteredData.map(item => ({
         ...item,
         updated_at: item.updated_at ? convertToGMT7(item.updated_at) : ''
     }));
+
 
     const exportToExcel = () => {
         const exportData = updatedFilteredData.map(item => ({
@@ -79,6 +122,8 @@ function TransaksiRequest() {
             'Time CI Inbound': item.date_loading_goods ? moment(item.date_loading_goods).format('HH:mm:ss') : 'No Data',
             'Date CO Inbound': item.date_completed ? formatDate(item.date_completed) : 'No Data',
             'Time CO Inbound': item.date_completed ? moment(item.date_completed).format('HH:mm:ss') : 'No Data',
+            'Date CO Security': item.date_checkout_security ? formatDate(item.date_checkout_security) : 'No Data',
+            'Time CO Security': item.date_checkout_security ? moment(item.date_checkout_security).format('HH:mm:ss') : 'No Data',
         }));
 
         const worksheet = XLSX.utils.json_to_sheet(exportData);
@@ -95,7 +140,7 @@ function TransaksiRequest() {
         { name: 'Vendor', selector: row => row.nama_vendor, sortable: true, width: '350px' },
         { name: 'Status', selector: row => row.status, sortable: true, width: '150px' },
         { name: 'Date Boking', selector: row => row.schedule?.hari ? formatDate(row.schedule.hari) : 'No Data', sortable: true, width: '140px' },
-        { name: 'Jam Boking', selector: row => row.schedule?.mulai ? row.schedule.mulai : 'No Data', sortable: true, width: '140px' },
+        { name: 'Time Boking', selector: row => row.schedule?.mulai ? row.schedule.mulai : 'No Data', sortable: true, width: '200px' },
         { name: 'Date CI Security', selector: row => row.date_arrived ? formatDate(row.date_arrived) : 'No Data', sortable: true, width: '200px' },
         { name: 'Time CI Security', selector: row => row.date_arrived ? moment(row.date_arrived).format('HH:mm:ss') : 'No Data', sortable: true, width: '200px' },
         { name: 'Date CI Inbound', selector: row => row.date_loading_goods ? formatDate(row.date_loading_goods) : 'No Data', sortable: true, width: '200px' },
@@ -127,36 +172,10 @@ function TransaksiRequest() {
         },
     };
 
-    // const handleRowClick = async (id_req) => {
-    //     try {
-    //         const response = await Api.get(`api/transaksilogdoc/${id_req}`);
-    //         setTransaksiLogDoc(response.data.data);
-    //         setShowModal(true);
-    //         console.log(response.data);
-    //     } catch (error) {
-    //         console.error('Error fetching request transaksi data:', error);
-    //     }
-    // };
-    // const handleRowClick = async (id_req) => {
-    //     try {
-    //         const response = await Api.get(`api/transaksilogdoc/${id_req}`);
-    //         console.log(response.data); // Untuk memastikan bahwa datanya ada
-    //         setTransaksiLogDoc(response.data.data);
-    //         console.log(transaksiLogDoc); // Pastikan state diperbarui
-    //         setShowModal(true);
-    //     } catch (error) {
-    //         console.error('Error fetching request transaksi data:', error);
-    //     }
-    // };
-    // useEffect(() => {
-    //     if (transaksiLogDoc.length > 0) {
-    //         console.log('Updated transaksiLogDoc:', transaksiLogDoc); // Pastikan state sudah di-update
-    //     }
-    // }, [transaksiLogDoc]);
     const handleRowClick = async (id_req) => {
         try {
             const response = await Api.get(`api/transaksilogdoc/${id_req}`);
-            console.log('Response data:', response.data); // Cek struktur data
+           // console.log('Response data:', response.data); // Cek struktur data
             setTransaksiLogDoc(response.data.data[0].logdoc); // Simpan logdoc ke state
             setShowModal(true);
         } catch (error) {
@@ -168,8 +187,34 @@ function TransaksiRequest() {
             console.log('Updated transaksiLogDoc:', transaksiLogDoc);
         }
     }, [transaksiLogDoc]);
+
+    const exportToExcelDetail = () => {
+        // Buat workbook baru
+        const wb = XLSX.utils.book_new();
+        
+        // Buat data untuk worksheet
+        const wsData = [
+          ['Driver', 'ID Booking', 'No PO', 'No SJ', 'Item Code', 'Item Name', 'Qty', 'UoM', 'Remarks'], // Header
+          ...transaksiLogDoc.map(logdoc => [
+            logdoc.cp_driver,
+            logdoc.id_trans_req,
+            logdoc.no_po,
+            logdoc.no_sj,
+            logdoc.kode_barang,
+            logdoc.nama_barang,
+            logdoc.qty,
+            logdoc.uom,
+            logdoc.keterangan,
+          ]),
+        ];
+        
+        // Buat worksheet dari data
+        const ws = XLSX.utils.aoa_to_sheet(wsData);
+        XLSX.utils.book_append_sheet(wb, ws, 'Doc Upload vendor');
     
-    
+        // Ekspor workbook ke file Excel
+        XLSX.writeFile(wb, 'Doc Upload vendor.xlsx');
+      };
     
 
     return (
@@ -186,13 +231,45 @@ function TransaksiRequest() {
                                         To Excel
                                     </div>
                                 </div>
-                                <input
+                                {/* <input
                                     type="text"
                                     placeholder="Search"
                                     className="form-control mb-3"
                                     value={search}
                                     onChange={e => setSearch(e.target.value)}
-                                />
+                                /> */}
+                                {/* <DatePicker
+                                selected={searchDate}
+                                onChange={(date) => setSearchDate(date)}
+                                dateFormat="dd/MM/yyyy"
+                                placeholderText="Search by date"
+                                className="form-control mb-3"
+                                /> */}
+                               
+            <div className="d-flex align-items-center mb-3">
+                <input 
+                    type="text" 
+                    placeholder="Search..." 
+                    value={search} 
+                    onChange={(e) => setSearch(e.target.value)} 
+                    className="form-control me-2"
+                />
+                <DatePicker 
+                    selected={startDate} 
+                    onChange={date => setStartDate(date)} 
+                    className="form-control me-2"
+                    dateFormat="dd/MM/yyyy"
+                    placeholderText="Tanggal Awal"
+                />
+                <DatePicker 
+                    selected={endDate} 
+                    onChange={date => setEndDate(date)} 
+                    className="form-control"
+                    dateFormat="dd/MM/yyyy"
+                    placeholderText="Tanggal Akhir"
+                />
+            </div>
+
                                 <DataTable
                                     columns={columns}
                                     data={filteredData}
@@ -206,7 +283,7 @@ function TransaksiRequest() {
                                             Data Belum Tersedia!
                                         </div>
                                     }
-                                    onRowClicked={row => handleRowClick(row.id_req)} // Menangani klik baris
+                                    onRowClicked={row => handleRowClick(row.id_req)} 
                                 />
                             </div>
                         </div>
@@ -217,14 +294,14 @@ function TransaksiRequest() {
          
 
             <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
-  <Modal.Header closeButton>
-    <Modal.Title>Request Transaksi</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    {Array.isArray(transaksiLogDoc) && transaksiLogDoc.length > 0 ? (
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
+            <Modal.Header closeButton>
+             <Modal.Title>Request Transaksi</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            {Array.isArray(transaksiLogDoc) && transaksiLogDoc.length > 0 ? (
+             <Table striped bordered hover responsive>
+                <thead>
+            <tr>
             <th>Driver</th>
             <th>ID Booking</th>
             <th>No PO</th>
@@ -235,10 +312,11 @@ function TransaksiRequest() {
             <th>UoM</th>
             <th>Remarks</th>
           </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
           {transaksiLogDoc.map((logdoc) => (
             <tr key={logdoc.id}> 
+            
               <td>{logdoc.cp_driver}</td>
               <td>{logdoc.id_trans_req}</td>
               <td>{logdoc.no_po}</td> 
@@ -251,16 +329,24 @@ function TransaksiRequest() {
             </tr>
           ))}
         </tbody>
-      </Table>
+        </Table>
     ) : (
       <div>No data available</div>
     )}
   </Modal.Body>
-  <Modal.Footer>
+  {/* <Modal.Footer>
     <Button variant="secondary" onClick={() => setShowModal(false)}>
       Close
     </Button>
-  </Modal.Footer>
+  </Modal.Footer> */}
+  <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowModal(false)}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={exportToExcelDetail}>
+          Export to Excel
+        </Button>
+      </Modal.Footer>
 </Modal>
 
 
