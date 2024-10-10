@@ -482,9 +482,6 @@ function GenerateLeadTimes() {
         </option>)}
         </Form.Control>
         </Form.Group>
-
-        
-
         </Form>
     </Modal.Body>
     <Modal.Footer>
