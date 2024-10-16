@@ -322,7 +322,11 @@ function ListRole() {
             />
             
             {/* Modal for Add/Edit */}
-            <Modal show={showModal} onHide={() => setShowModal(false)}>
+            <Modal show={showModal}
+             onHide={() => setShowModal(false)}
+             size="lg"
+            className="custom-modal"
+             >
                 <Modal.Header closeButton>
                     <Modal.Title>{modalType === 'add' ? 'Add Role' : 'Edit Role'}</Modal.Title>
                 </Modal.Header>

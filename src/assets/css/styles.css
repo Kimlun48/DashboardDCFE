@@ -1692,6 +1692,11 @@ body {
 
 }
 
+.custom-modal .modal-body {
+  font-size: 13px; /* Sesuaikan ukuran font di sini */
+}
+
+
 @media (max-width: 768px) {
   .custom-col {
     flex: 0 0 48%; /* Dua kolom per baris pada layar kecil */

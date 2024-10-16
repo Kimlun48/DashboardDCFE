@@ -7,6 +7,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { confirmAlert } from 'react-confirm-alert';
 // import { useUserPermissions } from "../../utilites/UserPermissionsContext";
 import { useQuery } from "@tanstack/react-query";
+import Visibility from '@mui/icons-material/Visibility'; // Import icon untuk melihat password
+import VisibilityOff from '@mui/icons-material/VisibilityOff'; // Import icon untuk menyembunyikan password
 
 
 function ListUser() {
@@ -26,26 +28,11 @@ function ListUser() {
         name_branch: '',
         password: '',
         password_confirmation: '',
+        current_password:'', 
         role: ''
     });
+    const [showPassword, setShowPassword] = useState(false);
    
-    // const [userPermissions, setUserPermissions] = useState ([]);
-    // const fetchDataPermissions = async () => {
-    //     try {
-    //         const response = await Api.get('/api/userpermission')
-    //         setUserPermissions(response.data.permissions);
-    //     } catch (error) {
-    //         console.error("Error fetching permissions data:", error);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     fetchDataPermissions();
-    // },[]);
-
-    // const hasPermission = (permission) => {
-    //     return userPermissions.includes(permission);
-    //   };
     const { data: userPermissions = [], isLoading } = useQuery({
         queryKey: ['permissions'], 
         queryFn: async () => {
@@ -111,12 +98,40 @@ function ListUser() {
         fetchCurrentUser();
     }, []);
 
+    // const handleSave = async () => {
+    //     if (!currentData.name || !currentData.email || !currentData.role) {
+    //         toast.error("Please fill in all required fields!");
+    //         return;
+    //     }
+    
+    //     try {
+    //         if (modalType === 'add') {
+    //             await Api.post('api/createuser', currentData);
+    //             toast.success("User added successfully!");
+    //         } else {
+    //             await Api.put(`api/updateuser/${currentData.id}`, currentData);
+    //             toast.success("User updated successfully!");
+    //         }
+    //         fetchData();
+    //         setShowModal(false);
+    //     } catch (error) {
+    //         // Cek apakah error memiliki respons dan ambil pesan kesalahan dari backend
+    //         const errorMessage = error.response?.data?.message || "Failed to save data!";
+    //         toast.error(errorMessage);
+    //     }
+    // };
     const handleSave = async () => {
         if (!currentData.name || !currentData.email || !currentData.role) {
             toast.error("Please fill in all required fields!");
             return;
         }
     
+        // Add validation for current_password in edit mode
+        if (modalType === 'edit' && !currentData.current_password) {
+            toast.error("Please enter your current password!");
+            return;
+        }
+        
         try {
             if (modalType === 'add') {
                 await Api.post('api/createuser', currentData);
@@ -128,11 +143,11 @@ function ListUser() {
             fetchData();
             setShowModal(false);
         } catch (error) {
-            // Cek apakah error memiliki respons dan ambil pesan kesalahan dari backend
             const errorMessage = error.response?.data?.message || "Failed to save data!";
             toast.error(errorMessage);
         }
     };
+    
     
 
     const handleSearch = (event) => {
@@ -218,7 +233,7 @@ function ListUser() {
 
     const columns = [
         { name: 'Name', selector: row => row.name, sortable: true },
-        { name: 'Email', selector: row => row.email, sortable: true },
+        { name: 'Email', selector: row => row.email, sortable: true , width: '250px'},
         { name: 'Branch', selector: row => row.name_branch, sortable: true, width: '250px' },
         { name: 'Role', selector: row => getRoles(row.roles), sortable: true },
         { name: 'Actions', cell: row => (
@@ -226,23 +241,10 @@ function ListUser() {
                 {hasPermission('users.edit') && <Button variant="primary" onClick={() => handleEdit(row)}>Edit</Button>}
                 {hasPermission('users.delete') && <Button variant="danger" onClick={() => handleDelete(row.id)} className="ms-2">Delete</Button>}
             </>
-        )}
+        ), width:'200px'}
         
     ];
-    // if (hasPermission('users.edit') || hasPermission('users.delete')) {
-    //     columns.push({
-    //         name: 'Actions',
-    //         width: '250px',
-    //         cell: row => (
-    //             <>
-    //                 {/* {hasPermission('roles.edit') && <Button variant="primary" onClick={() => handleEdit(row)}>Edit</Button>}
-    //                 {hasPermission('roles.delete') && <Button variant="danger" onClick={() => handleDelete(row.id)} className="ms-2">Delete</Button>} */}
-    //                <Button variant="primary" onClick={() => handleEdit(row)}>Edit</Button>
-    //                <Button variant="danger" onClick={() => handleDelete(row.id)} className="ms-2">Delete</Button>
-    //             </>
-    //         ),
-    //     });
-    // }
+   
 
     const customStyles = {
         rows: {
@@ -268,15 +270,31 @@ function ListUser() {
         <React.Fragment>
             <div className="containers mt-4 mb-5">
                 <div className="mb-3">
-                    <Form.Control type="text" placeholder="Search by name" value={search} onChange={handleSearch} />
+                    <Form.Control 
+                        type="text" 
+                        placeholder="Search by name" 
+                        value={search} 
+                        onChange={handleSearch} 
+                    />
                     {currentUser && currentUser.roles.includes('super_admin') && (
-                        <Button variant="primary" className="mt-3" onClick={handleAddUserClick}>Add User</Button>
+                        <Button 
+                            variant="primary" 
+                            className="mt-3" 
+                            onClick={handleAddUserClick}
+                        >
+                            Add User
+                        </Button>
                     )}
                 </div>
-
-                <DataTable columns={columns} customStyles={customStyles} data={filteredData} pagination />
-
-                <Modal show={showModal} onHide={() => setShowModal(false)}>
+    
+                <DataTable 
+                    columns={columns} 
+                    customStyles={customStyles} 
+                    data={filteredData} 
+                    pagination 
+                />
+    
+                <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
                     <Modal.Header closeButton>
                         <Modal.Title>{modalType === 'add' ? 'Add User' : 'Edit User'}</Modal.Title>
                     </Modal.Header>
@@ -284,55 +302,129 @@ function ListUser() {
                         <Form>
                             <Form.Group>
                                 <Form.Label>User Name</Form.Label>
-                                <Form.Control type="text" name="name" value={currentData.name} onChange={handleInputChange} required />
+                                <Form.Control 
+                                    type="text" 
+                                    name="name" 
+                                    value={currentData.name} 
+                                    onChange={handleInputChange} 
+                                    required 
+                                />
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control type="email" name="email" value={currentData.email} onChange={handleInputChange} required />
+                                <Form.Control 
+                                    type="email" 
+                                    name="email" 
+                                    value={currentData.email} 
+                                    onChange={handleInputChange} 
+                                    required 
+                                />
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Id Branch</Form.Label>
-                                <Form.Control type="text" name="id_branch" value={currentData.id_branch} onChange={handleInputChange} disabled />
+                                <Form.Control 
+                                    type="text" 
+                                    name="id_branch" 
+                                    value={currentData.id_branch} 
+                                    onChange={handleInputChange} 
+                                    disabled 
+                                />
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Name Branch</Form.Label>
-                                <Form.Control as="select" name="name_branch" value={currentData.name_branch} onChange={handleInputChange} required>
+                                <Form.Control 
+                                    as="select" 
+                                    name="name_branch" 
+                                    value={currentData.name_branch} 
+                                    onChange={handleInputChange} 
+                                    required
+                                >
                                     <option value="" disabled>Choose Nama Branch</option>
-                                    {branch.map(option => <option key={option.PrcCode} value={option.PrcName}>{option.PrcName}</option>)}
+                                    {branch.map(option => (
+                                        <option key={option.PrcCode} value={option.PrcName}>
+                                            {option.PrcName}
+                                        </option>
+                                    ))}
                                 </Form.Control>
                             </Form.Group>
+
                             <Form.Group>
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" name="password" value={currentData.password} onChange={handleInputChange} placeholder ="password" required />
+                                <div className="input-group">
+                                    <Form.Control
+                                        type={showPassword ? "text" : "password"}
+                                        name="password" 
+                                        value={currentData.password} 
+                                        onChange={handleInputChange} 
+                                        placeholder="Enter password" 
+                                        autoComplete="new-password"
+                                        required 
+                                    />
+                                    <span className="input-group-text" onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </span>
+                                </div>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Confirm Password</Form.Label>
-                                <Form.Control type="password" name="password_confirmation" value={currentData.password_confirmation} onChange={handleInputChange} placeholder ="confirm_password"required />
+                                <div className="input-group">
+                                <Form.Control 
+                                    type={showPassword ? "text" : "password"}
+                                    name="password_confirmation" 
+                                    value={currentData.password_confirmation} 
+                                    onChange={handleInputChange} 
+                                    placeholder="Confirm password"
+                                    required 
+                                />
+                                 <span className="input-group-text" onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </span>
+                                </div>
                             </Form.Group>
+                            {modalType === 'edit' && (
+                                <Form.Group>
+                                    <Form.Label>Current Password</Form.Label>
+                                        <Form.Control 
+                                        type={showPassword ? "text" : "password"}
+                                        name="current_password" 
+                                        value={currentData.current_password} 
+                                        onChange={handleInputChange} 
+                                        placeholder="Enter current password"
+                                        required 
+                                    />
+                                </Form.Group>
+                            )}
+
                             <Form.Group>
                                 <Form.Label>Role</Form.Label>
-                                <Form.Control as="select" name="role" value={currentData.role} onChange={handleInputChange} required>
-                                    {/* <option value="">Select Role</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="user">User</option>
-                                    <option value="user_inbound">Inbound</option>
-                                    <option value="user_storage">Storage</option>
-                                    <option value="user_outbound">Outbound</option> */}
-                                    {/* Add other roles as needed */}
+                                <Form.Control 
+                                    as="select" 
+                                    name="role" 
+                                    value={currentData.role} 
+                                    onChange={handleInputChange} 
+                                    required
+                                >
                                     <option value="" disabled>Choose Role</option>
-                                    {roles.map(option => <option key={option.id} value={option.name}>{option.name}</option>)}
+                                    {roles.map(option => (
+                                        <option key={option.id} value={option.name}>
+                                            {option.name}
+                                        </option>
+                                    ))}
                                 </Form.Control>
                             </Form.Group>
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
-                        <Button variant="primary" onClick={handleSave}>{modalType === 'add' ? 'Add' : 'Save'}</Button>
+                        <Button variant="primary" onClick={handleSave}>
+                            {modalType === 'add' ? 'Add' : 'Save'}
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </div>
         </React.Fragment>
     );
+    
 }
 
 export default ListUser;
