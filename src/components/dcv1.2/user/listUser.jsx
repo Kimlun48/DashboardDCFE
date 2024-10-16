@@ -232,7 +232,7 @@ function ListUser() {
     };
 
     const columns = [
-        { name: 'Name', selector: row => row.name, sortable: true },
+        { name: 'User Name', selector: row => row.name, sortable: true },
         { name: 'Email', selector: row => row.email, sortable: true , width: '250px'},
         { name: 'Branch', selector: row => row.name_branch, sortable: true, width: '250px' },
         { name: 'Role', selector: row => getRoles(row.roles), sortable: true },
