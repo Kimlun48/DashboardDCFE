@@ -140,7 +140,7 @@ Api.interceptors.request.use(
     }
 );
 
-// Interceptor untuk menangani respons dan logika penyegaran token
+
 Api.interceptors.response.use(
     (response) => {
         return response;
@@ -148,26 +148,26 @@ Api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        // Cek jika status respons adalah 401 (Tidak Terautentikasi) dan logika retry belum diterapkan
+        
         if (error.response.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true; // Tandai permintaan sebagai yang telah dicoba
+            originalRequest._retry = true; 
             try {
-                const refreshToken = Cookies.get('refresh_token'); // Ambil refresh token
+                const refreshToken = Cookies.get('refresh_token'); 
 
                 if (refreshToken) {
-                    // Coba untuk menyegarkan token akses
+                    
                     const response = await Api.post('/api/refresh', { refresh_token: refreshToken });
 
                     if (response.status === 200) {
-                        const { access_token } = response.data; // Pastikan Anda mengambil kunci yang benar dari respons
-                        // Simpan token akses baru di cookies
+                        const { access_token } = response.data;
+                       
                         Cookies.set('access_token', access_token, {
                             secure: process.env.NODE_ENV === 'production',
                             sameSite: 'None'
                         });
-                        // Perbarui header otorisasi pada permintaan asli
+                       
                         originalRequest.headers['Authorization'] = `Bearer ${access_token}`;
-                        // Coba ulang permintaan asli dengan token baru
+                       
                         return Api(originalRequest);
                     }
                 }
@@ -180,6 +180,45 @@ Api.interceptors.response.use(
         }
         return Promise.reject(error);
     }
-);
+//     async (error) => {
+//         const originalRequest = error.config;
+    
+//         // Jika respons 401 dan belum dicoba ulang
+//         if (error.response && error.response.status === 401 && !originalRequest._retry) {
+//             originalRequest._retry = true;
+    
+//             try {
+//                 const refreshToken = Cookies.get('refresh_token');
+//                 if (refreshToken) {
+//                     // Dapatkan token baru
+//                     const response = await Api.post('/api/refresh', { refresh_token: refreshToken });
+//                     if (response.status === 200) {
+//                         const { access_token } = response.data;
+//                         Cookies.set('access_token', access_token, {
+//                             secure: process.env.NODE_ENV === 'production',
+//                             sameSite: 'None',
+//                         });
+//                         originalRequest.headers['Authorization'] = `Bearer ${access_token}`;
+//                         return Api(originalRequest);
+//                     }
+//                 }
+//             } catch (refreshError) {
+//                 // Jika refresh gagal, arahkan ke login
+//                 Cookies.remove('access_token');
+//                 Cookies.remove('refresh_token');
+//                 window.location = '/admin/login';
+//             }
+//         }
+    
+//         // Jika error bukan 401, atau token refresh juga gagal
+//         if (error.response && error.response.status === 403) {
+//             // Penanganan khusus untuk status 403 (Forbidden)
+//             alert('Anda tidak memiliki izin untuk melakukan aksi ini.');
+//         }
+    
+//         return Promise.reject(error);
+//     }
+    
+ );
 
 export default Api;

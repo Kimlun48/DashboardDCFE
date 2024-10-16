@@ -5,6 +5,9 @@ import toast from "react-hot-toast";
 import { Modal, Button, Form } from 'react-bootstrap';
 import 'react-datepicker/dist/react-datepicker.css';
 import { confirmAlert } from 'react-confirm-alert';
+// import { useUserPermissions } from "../../utilites/UserPermissionsContext";
+import { useQuery } from "@tanstack/react-query";
+
 
 function ListUser() {
     const [users, setUsers] = useState([]);
@@ -14,6 +17,7 @@ function ListUser() {
     const [modalType, setModalType] = useState('add');
     const [currentUser, setCurrentUser] = useState(null); 
     const [branch, setBranch] = useState([]);
+    const [roles, setRoles] = useState ([]);
     const [currentData, setCurrentData] = useState({
         id: null,
         name: '',
@@ -24,6 +28,51 @@ function ListUser() {
         password_confirmation: '',
         role: ''
     });
+   
+    // const [userPermissions, setUserPermissions] = useState ([]);
+    // const fetchDataPermissions = async () => {
+    //     try {
+    //         const response = await Api.get('/api/userpermission')
+    //         setUserPermissions(response.data.permissions);
+    //     } catch (error) {
+    //         console.error("Error fetching permissions data:", error);
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     fetchDataPermissions();
+    // },[]);
+
+    // const hasPermission = (permission) => {
+    //     return userPermissions.includes(permission);
+    //   };
+    const { data: userPermissions = [], isLoading } = useQuery({
+        queryKey: ['permissions'], 
+        queryFn: async () => {
+            const response = await Api.get('/api/userpermission');
+            return response.data.permissions;
+        },
+        cacheTime: 10 * 60 * 1000, 
+        staleTime: 30000, 
+    });
+
+    const hasPermission = (permission) => {
+        return userPermissions.includes(permission);
+    };
+
+
+    const fetchDataRoles = async () => {
+        try {
+            const response = await Api.get('/api/getrole');
+            setRoles(response.data.data);
+        } catch (error) {
+            console.error('Error fetching branch data:', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchDataRoles();
+    },[]);
 
     const fetchDataBranch = async () => {
         try {
@@ -67,7 +116,7 @@ function ListUser() {
             toast.error("Please fill in all required fields!");
             return;
         }
-
+    
         try {
             if (modalType === 'add') {
                 await Api.post('api/createuser', currentData);
@@ -79,9 +128,12 @@ function ListUser() {
             fetchData();
             setShowModal(false);
         } catch (error) {
-            toast.error("Failed to save data!");
+            // Cek apakah error memiliki respons dan ambil pesan kesalahan dari backend
+            const errorMessage = error.response?.data?.message || "Failed to save data!";
+            toast.error(errorMessage);
         }
     };
+    
 
     const handleSearch = (event) => {
         const value = event.target.value.toLowerCase();
@@ -171,11 +223,26 @@ function ListUser() {
         { name: 'Role', selector: row => getRoles(row.roles), sortable: true },
         { name: 'Actions', cell: row => (
             <>
-                <Button variant="primary" onClick={() => handleEdit(row)}>Edit</Button>
-                <Button variant="danger" onClick={() => handleDelete(row.id)} className="ms-2">Delete</Button>
+                {hasPermission('users.edit') && <Button variant="primary" onClick={() => handleEdit(row)}>Edit</Button>}
+                {hasPermission('users.delete') && <Button variant="danger" onClick={() => handleDelete(row.id)} className="ms-2">Delete</Button>}
             </>
         )}
+        
     ];
+    // if (hasPermission('users.edit') || hasPermission('users.delete')) {
+    //     columns.push({
+    //         name: 'Actions',
+    //         width: '250px',
+    //         cell: row => (
+    //             <>
+    //                 {/* {hasPermission('roles.edit') && <Button variant="primary" onClick={() => handleEdit(row)}>Edit</Button>}
+    //                 {hasPermission('roles.delete') && <Button variant="danger" onClick={() => handleDelete(row.id)} className="ms-2">Delete</Button>} */}
+    //                <Button variant="primary" onClick={() => handleEdit(row)}>Edit</Button>
+    //                <Button variant="danger" onClick={() => handleDelete(row.id)} className="ms-2">Delete</Button>
+    //             </>
+    //         ),
+    //     });
+    // }
 
     const customStyles = {
         rows: {
@@ -195,12 +262,14 @@ function ListUser() {
         },
     };
 
+    
+
     return (
         <React.Fragment>
             <div className="containers mt-4 mb-5">
                 <div className="mb-3">
                     <Form.Control type="text" placeholder="Search by name" value={search} onChange={handleSearch} />
-                    {currentUser && currentUser.roles.includes('admin') && (
+                    {currentUser && currentUser.roles.includes('super_admin') && (
                         <Button variant="primary" className="mt-3" onClick={handleAddUserClick}>Add User</Button>
                     )}
                 </div>
@@ -214,7 +283,7 @@ function ListUser() {
                     <Modal.Body>
                         <Form>
                             <Form.Group>
-                                <Form.Label>Name</Form.Label>
+                                <Form.Label>User Name</Form.Label>
                                 <Form.Control type="text" name="name" value={currentData.name} onChange={handleInputChange} required />
                             </Form.Group>
                             <Form.Group>
@@ -243,13 +312,15 @@ function ListUser() {
                             <Form.Group>
                                 <Form.Label>Role</Form.Label>
                                 <Form.Control as="select" name="role" value={currentData.role} onChange={handleInputChange} required>
-                                    <option value="">Select Role</option>
+                                    {/* <option value="">Select Role</option>
                                     <option value="admin">Admin</option>
                                     <option value="user">User</option>
                                     <option value="user_inbound">Inbound</option>
                                     <option value="user_storage">Storage</option>
-                                    <option value="user_outbound">Outbound</option>
+                                    <option value="user_outbound">Outbound</option> */}
                                     {/* Add other roles as needed */}
+                                    <option value="" disabled>Choose Role</option>
+                                    {roles.map(option => <option key={option.id} value={option.name}>{option.name}</option>)}
                                 </Form.Control>
                             </Form.Group>
                         </Form>

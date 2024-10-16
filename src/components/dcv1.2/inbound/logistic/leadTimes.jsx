@@ -148,6 +148,7 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import { setHours, setMinutes } from "date-fns";
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { useQuery } from "@tanstack/react-query";
 
 function GenerateLeadTimes() {
     const [leadtime, setLeadTimes] = useState([]);
@@ -159,6 +160,22 @@ function GenerateLeadTimes() {
     const [userBranch, setUserBranch] = useState([]);
     const [branch, setBranch] = useState([]);
     const [currentData, setCurrentData] = useState({ id: '', mulai: null, akhir: null, jenis_aktivitas: '', status: '', slot: '', jenis_jam: '', branch: '', });
+
+
+    const { data: userPermissions = [], isLoading } = useQuery({
+        queryKey: ['permissions'], 
+        queryFn: async () => {
+            const response = await Api.get('/api/userpermission');
+            return response.data.permissions;
+        },
+        cacheTime: 10 * 60 * 1000, 
+        staleTime: 30000, 
+    });
+
+    const hasPermission = (permission) => {
+        return userPermissions.includes(permission);
+    };
+
 
     const fetchDataBranch = async () => {
         try {
@@ -172,6 +189,8 @@ function GenerateLeadTimes() {
     useEffect(() => {
         fetchDataBranch();
     }, []);
+
+
 
     const fetchUserBranch = async () => {
         try {
@@ -331,12 +350,25 @@ function GenerateLeadTimes() {
             name: 'Actions',
             cell: row => (
                 <>
-                    <button className="btn btn-primary btn-sm" onClick={() => handleEdit(row)}>Edit</button>
-                    {/* <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(row.id)}>Delete</button> */}
+                   {hasPermission('jobtask.edit') &&  <button className="btn btn-primary btn-sm" onClick={() => handleEdit(row)}>Edit</button>}
+                   {hasPermission('jobtask.delete') &&  <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(row.id)}>Delete</button>}
                 </>
             ),width: '250px'
         }
     ];
+    // if (hasPermission('jobtask.action')) {
+    //     columns.push({
+    //         name: 'Actions',
+    //         width: '250px',
+    //         cell: row => (
+    //             <>
+    //                <button className="btn btn-primary btn-sm" onClick={() => handleEdit(row)}>Edit</button>
+    //                <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(row.id)}>Delete</button>
+    //             </>
+    //         ),
+    //     });
+    // }
+
 
     const customStyles = {
         rows: {
@@ -378,7 +410,7 @@ function GenerateLeadTimes() {
                                         To Excel
                                     </div>
                                 </div>
-                                <button className="btn btn-primary mb-3" onClick={handleGenerate}>Generate Jobs Task</button>
+                                {hasPermission('jobtask.create') &&  <button className="btn btn-primary mb-3" onClick={handleGenerate}>Generate Jobs Task</button>}
                                 <input
                                     type="text"
                                     placeholder="Search"

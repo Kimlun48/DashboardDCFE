@@ -1,21 +1,17 @@
-// Import hook react
 import React, { useState } from "react";
-
 // Import BASE URL API
 import Api from "../../../../api";
-
 // Import toast
-import toast, {Toaster}from "react-hot-toast";
-
+import toast, { Toaster } from "react-hot-toast";
 // Import js cookie
 import Cookies from "js-cookie";
-
 // Import react router dom
 import { useNavigate } from "react-router-dom";
-
 import FooterDc from "../../../../components/footer";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import WarehouseIcon from '@mui/icons-material/Warehouse';
+import Visibility from '@mui/icons-material/Visibility'; // Import icon untuk melihat password
+import VisibilityOff from '@mui/icons-material/VisibilityOff'; // Import icon untuk menyembunyikan password
 
 function Login() {
     // Set title page
@@ -28,6 +24,9 @@ function Login() {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
 
+    // State untuk visibilitas password
+    const [showPassword, setShowPassword] = useState(false);
+
     // Initialize loading state
     const [isLoading, setLoading] = useState(false);
 
@@ -38,18 +37,15 @@ function Login() {
     const loginHandler = async (e) => {
         e.preventDefault();
         setLoading(true);
-    
+
         try {
             const response = await Api.post("/api/login", {
                 name: name,
                 password: password,
             });
-    
-            // Log the entire response for debugging
-            // console.log("API Response:", response);
-    
+
             setLoading(false);
-    
+
             toast.success("Login Successfully.", {
                 duration: 4000,
                 position: "top-right",
@@ -60,43 +56,22 @@ function Login() {
                 },
                 icon: '✅',
             });
-    
+
             // Extract tokens from response
             const accessToken = response.data.access_token;
             const refreshToken = response.data.refresh_token;
-    
-           
+
             if (accessToken && refreshToken) {
-                Cookies.set("access_token", accessToken, { 
-                  //  secure: process.env.NODE_ENV === 'production', //untuk produksi dengan HTTPS
-                  //  sameSite: "None" //untuk produksi dengan HTTPS
-                });
-                Cookies.set("refresh_token", refreshToken, { 
-                    // secure: process.env.NODE_ENV === 'production', // untuk produksi dengan HTTPS
-                    //  sameSite: "None" // untuk produksi dengan HTTPS
-                });
-    
-                // Verify cookies are set correctly
-                // console.log("Access Token from Cookies:", Cookies.get("access_token"));
-                // console.log("Refresh Token from Cookies:", Cookies.get("refresh_token"));
-    
+                Cookies.set("access_token", accessToken, {});
+                Cookies.set("refresh_token", refreshToken, {});
                 navigate("/admin/dashboard");
             } else {
                 console.error("Tokens are not defined in the response");
             }
         } catch (error) {
-        //     setLoading(false);
-        //     if (error.response && error.response.data) {
-        //         setValidation(error.response.data);
-        //     } else {
-        //         console.error("Login Error:", error);
-        //     }
-        // }
-        setLoading(false);
+            setLoading(false);
             if (error.response && error.response.data) {
                 setValidation(error.response.data);
-
-                
                 if (error.response.data.message) {
                     toast.error(error.response.data.message, {
                         duration: 4000,
@@ -112,7 +87,6 @@ function Login() {
             }
         }
     };
-    
 
     // Check if access token exists, redirect to dashboard if true
     if (Cookies.get("access_token")) {
@@ -121,65 +95,66 @@ function Login() {
 
     return (
         <div className="container-fluid container-login d-flex justify-content-center align-items-center min-vh-100">
-    <Toaster />
-    <div className="row justify-content-center w-100">
-        <div className="col-lg-4 col-md-6 col-sm-8 col-10 mt-5">
-            <div className="text-center mb-4">
-                {/* Mengganti <i> dengan komponen icon untuk lebih konsisten */}
-                <h4><WarehouseIcon className="me-2 custom-icon" /><strong>Distribution Center</strong></h4>
-            </div>
-            <div className="card border-0 rounded shadow-sm">
-                <div className="card-body-login">
-                    <div className="text-center">
-                        <h6 className="fw-bold">LOGIN ADMIN</h6>
-                        <hr />
+            <Toaster />
+            <div className="row justify-content-center w-100">
+                <div className="col-lg-4 col-md-6 col-sm-8 col-10 mt-5">
+                    <div className="text-center mb-4">
+                        <h4><WarehouseIcon className="me-2 custom-icon" /><strong>Distribution Center</strong></h4>
                     </div>
-                    <form onSubmit={loginHandler}>
-                        <label className="mb-1">USERNAME</label>
-                        <div className="input-group mb-3">
-                            <span className="input-group-text"><i className="fa fa-user"></i></span>
-                            <input 
-                                type="text" 
-                                className="form-control" 
-                                value={name} 
-                                onChange={(e) => setName(e.target.value)} 
-                                placeholder="Username" 
-                                required
-                            />
-                        </div>
+                    <div className="card border-0 rounded shadow-sm">
+                        <div className="card-body-login">
+                            <div className="text-center">
+                                <h6 className="fw-bold">LOGIN ADMIN</h6>
+                                <hr />
+                            </div>
+                            <form onSubmit={loginHandler}>
+                                <label className="mb-1">USERNAME</label>
+                                <div className="input-group mb-3">
+                                    <span className="input-group-text"><i className="fa fa-user"></i></span>
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        value={name} 
+                                        onChange={(e) => setName(e.target.value)} 
+                                        placeholder="Username" 
+                                        required
+                                    />
+                                </div>
 
-                        <label className="mb-1">PASSWORD</label>
-                        <div className="input-group mb-3">
-                            <span className="input-group-text"><i className="fa fa-lock"></i></span>
-                            <input 
-                                type="password" 
-                                className="form-control" 
-                                value={password} 
-                                onChange={(e) => setPassword(e.target.value)} 
-                                placeholder="Password" 
-                                required
-                            />
-                        </div>
+                                <label className="mb-1">PASSWORD</label>
+                                <div className="input-group mb-3">
+                                    <span className="input-group-text"><i className="fa fa-lock"></i></span>
+                                    <input 
+                                        type={showPassword ? "text" : "password"} // Mengubah tipe input berdasarkan state
+                                        className="form-control" 
+                                        value={password} 
+                                        onChange={(e) => setPassword(e.target.value)} 
+                                        placeholder="Password" 
+                                        required
+                                    />
+                                    <span className="input-group-text" onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                                        {showPassword ? <VisibilityOff /> : <Visibility />} {/* Menampilkan icon toggle */}
+                                    </span>
+                                </div>
 
-                        <button 
-                            className="btn btn-primary shadow-sm rounded-sm px-4 w-100" 
-                            type="submit" 
-                            disabled={isLoading}
-                        >
-                            {isLoading ? "LOADING..." : "LOGIN"}
-                        </button>
-                    </form>
+                                <button 
+                                    className="btn btn-primary shadow-sm rounded-sm px-4 w-100" 
+                                    type="submit" 
+                                    disabled={isLoading}
+                                >
+                                    {isLoading ? "LOADING..." : "LOGIN"}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-       
     );
 }
 
 export default Login;
+
 
 
 // import React, { useEffect, useState } from "react";

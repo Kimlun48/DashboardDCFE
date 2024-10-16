@@ -1,23 +1,17 @@
-import React, {useState, useEffect, useRef} from "react";
+import React from "react";
 
-import Api from "../../api";
+
 import { Card } from "react-bootstrap";
 import LayoutAdmin from "../../layouts/Admin";
-import ChartPie from "../../components/chartpie";
-import PlaySound from "../../components/utilites/sound";
+
 import { Link } from "react-router-dom";
-import Chart from "../../components/chartpie";
-import ChartDS from "../../components/chartpieds";
-import ChartPA from "../../components/chartpiePa";
+
 import FooterDc from "../../components/footer";
 
 
 function Home() {
     document.title = "Home";
 
-    
-      
-          
 
     return(
         <React.Fragment>
