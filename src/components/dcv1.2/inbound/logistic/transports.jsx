@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { Modal, Button, Form } from 'react-bootstrap';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import { useQuery } from "@tanstack/react-query";
 
 function Transports() {
     const [transport, setTransport] = useState([]);
@@ -19,6 +20,21 @@ function Transports() {
     const [modalType, setModalType] = useState('add'); 
     const [currentData, setCurrentData] = useState({ id_kendaraan: '', Jenis_Kendaraan: '', tipe_kendaraan:'',slot_Kendaraan: '', tipe_pallet: '' });
     const [masterKendaraan, setMasterKendaraan] = useState([]);
+
+
+    const { data: userPermissions = [], isLoading } = useQuery({
+        queryKey: ['permissions'], 
+        queryFn: async () => {
+            const response = await Api.get('/api/userpermission');
+            return response.data.permissions;
+        },
+        cacheTime: 10 * 60 * 1000, 
+        staleTime: 30000, 
+    });
+
+    const hasPermission = (permission) => {
+        return userPermissions.includes(permission);
+    };
 
     const fetchMasterKendaraan = async () => {
         try {
@@ -213,12 +229,25 @@ function Transports() {
             name: 'Actions',
             cell: row => (
                 <>
-                    <button className="btn btn-primary btn-sm" onClick={() => handleEdit(row)}>Edit</button>
-                    <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(row.id_kendaraan)}>Delete</button>
+                  {hasPermission('transport.edit') &&  <button className="btn btn-primary btn-sm" onClick={() => handleEdit(row)}>Edit</button>}
+                  {hasPermission('transport.delete') &&  <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(row.id_kendaraan)}>Delete</button>}
                 </>
             )
         }
     ];
+
+    // if (hasPermission('transport.action')) {
+    //     columns.push({
+    //         name: 'Actions',
+    //         width: '250px',
+    //         cell: row => (
+    //             <>
+    //                <button className="btn btn-primary btn-sm" onClick={() => handleEdit(row)}>Edit</button>
+    //                <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(row.id_kendaraan)}>Delete</button>
+    //             </>
+    //         ),
+    //     });
+    // }
 
     const customStyles = {
         rows: {
@@ -281,7 +310,7 @@ function Transports() {
                                         To Excel
                                     </div>
                                 </div>
-                                <button className="btn btn-primary mb-3" onClick={handleAdd}>Add Transport</button>
+                                {hasPermission('transport.create') && <button className="btn btn-primary mb-3" onClick={handleAdd}>Add Transport</button>}
                                 <input
                                     type="text"
                                     placeholder="Search"

@@ -849,9 +849,28 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
 
 
 .table-responsive {
-  max-height: 400px; 
+  max-height: 500px; 
   overflow-y: auto;
   position: relative;
+}
+
+/* styles.css */
+.data-table-container {
+  overflow-x: auto; /* Memungkinkan menggulir jika konten lebih lebar dari tabel */
+}
+
+
+
+.permissions-cell {
+  word-wrap: break-word; /* Memungkinkan kata untuk terputus jika terlalu panjang */
+  white-space: normal; /* Memungkinkan konten untuk melanjutkan ke baris baru */
+}
+
+
+.permissions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Menyesuaikan kolom dengan lebar minimum 150px */
+  gap: 1.5px; /* Jarak antar checkbox */
 }
 
 

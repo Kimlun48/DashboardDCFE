@@ -444,6 +444,8 @@ import useFormatDate from '../../../utilites/useFormatDate';
 import DataTable from 'react-data-table-component';
 import { Modal, Button, Table, Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useQuery } from '@tanstack/react-query';
+
 
 function GenerateScheduleForm() {
   const [slot, setSlot] = useState('');
@@ -458,6 +460,20 @@ function GenerateScheduleForm() {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [searchDate, setSearchDate] = useState(new Date());
+
+  const { data: userPermissions = [], isLoading } = useQuery({
+    queryKey: ['permissions'], 
+    queryFn: async () => {
+        const response = await Api.get('/api/userpermission');
+        return response.data.permissions;
+    },
+    cacheTime: 10 * 60 * 1000, 
+    staleTime: 30000, 
+});
+
+const hasPermission = (permission) => {
+    return userPermissions.includes(permission);
+};
 
   const fetchDataHour = async () => {
     try {
@@ -609,7 +625,7 @@ function GenerateScheduleForm() {
   return (
     <React.Fragment>
      
-
+     {hasPermission('schedule.create') && 
       <div className="containers mt-4 mb-5">
         <div className="row mt-4">
           <div className="col-md-12">
@@ -680,6 +696,7 @@ function GenerateScheduleForm() {
           </div>
         </div>
       </div>
+}
 
       <div className="containers mt-4 mb-5">
         <div className="row mt-4">

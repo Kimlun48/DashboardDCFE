@@ -124,7 +124,7 @@ function RoutesIndex() {
              <Route path="/admin/login" element={<Login />} />
 
       
-             {/* route "/" */}
+             {/* route "/HomeDc" */}
              <Route path="/HomeDc" element={<HomeDc />} />
 
              {/* route "/inbound/chart" */}
@@ -151,7 +151,7 @@ function RoutesIndex() {
 
            
 
-             {/* route "/das" */}
+             {/* route "/" */}
              <Route path="/" element={<Dashboard />} />
 
               {/* route "/dashboardstore" */}

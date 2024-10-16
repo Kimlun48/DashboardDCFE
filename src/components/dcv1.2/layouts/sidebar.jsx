@@ -14,7 +14,8 @@ import Api from "../../../api";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PersonIcon from '@mui/icons-material/Person';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-
+// import { useUserPermissions } from "../../utilites/UserPermissionsContext";
+import { useQuery } from "@tanstack/react-query";
 
 function Sidebar() {
     const navigate = useNavigate();
@@ -31,6 +32,30 @@ function Sidebar() {
         subLogistics:false
     });
     const token = Cookies.get('access_token');
+    //const [userPermissions, setUserPermissions] = useState ([]);
+
+    // const fetchDataPermissions = async () => {
+    //     try {
+    //         const response = await Api.get('/api/userpermission')
+    //         setUserPermissions(response.data.permissions);
+    //     } catch (error) {
+    //         console.error("Error fetching permissions data:", error);
+    //     }
+    // }
+    const { data: userPermissions = [], isLoading } = useQuery({
+        queryKey: ['permissions'], 
+        queryFn: async () => {
+            const response = await Api.get('/api/userpermission');
+            return response.data.permissions;
+        },
+        cacheTime: 10 * 60 * 1000, 
+        staleTime: 30000, 
+    });
+
+    
+
+
+   
 
     const fetchData = async () => {
         try {
@@ -47,81 +72,22 @@ function Sidebar() {
 
     useEffect(() => {
         fetchData();
+      
     }, [token]);
 
-    const handleLogout = async () => {
-        try {
-           
-    
-            
-            Cookies.remove("access_token");
-            Cookies.remove("refresh_token");
-    
-            
-            navigate("/");
-    
-            
-            toast.success("Logout Successfully.", {
-                duration: 4000,
-                position: "top-right",
-                style: {
-                    borderRadius: '10px',
-                    background: '#333',
-                    color: '#fff',
-                },
-            });
-        } catch (error) {
-            console.error("Error during logout", error);
-            toast.error("Logout Failed.", {
-                duration: 4000,
-                position: "top-right",
-                style: {
-                    borderRadius: '10px',
-                    background: '#333',
-                    color: '#fff',
-
-                },
-            });
-            Cookies.remove("access_token");
-            Cookies.remove("refresh_token");
-    
-            
-            navigate("/");
-        }
-    };
-
-    ////buat update terbaru
     // const handleLogout = async () => {
     //     try {
-    //         // Kirim permintaan logout ke API
-    //         const response = await Api.post("/api/logout");
-    //         console.log("Logout response:", response);
+           
+         
+            
+    //         Cookies.remove("access_token");
+    //         Cookies.remove("refresh_token");
     
-    //         // Periksa apakah logout berhasil
-    //         if (response.status === 200) {
-    //             // Hapus token dari cookies setelah logout berhasil
-    //             Cookies.remove("access_token");
-    //             Cookies.remove("refresh_token");
+            
+    //         navigate("/");
     
-    //             // Arahkan ke halaman utama setelah logout sukses
-    //             navigate("/");
-    
-    //             // Tampilkan toast sukses
-    //             toast.success("Logout Successfully.", {
-    //                 duration: 4000,
-    //                 position: "top-right",
-    //                 style: {
-    //                     borderRadius: '10px',
-    //                     background: '#333',
-    //                     color: '#fff',
-    //                 },
-    //             });
-    //         }
-    //     } catch (error) {
-    //         console.error("Error during logout", error);
-    
-    //         // Tampilkan toast kesalahan
-    //         toast.error("Logout Failed.", {
+            
+    //         toast.success("Logout Successfully.", {
     //             duration: 4000,
     //             position: "top-right",
     //             style: {
@@ -130,13 +96,75 @@ function Sidebar() {
     //                 color: '#fff',
     //             },
     //         });
-    
-    //         // Hapus token dari cookies dan arahkan ke halaman utama
+    //     } catch (error) {
+    //         console.error("Error during logout", error);
+    //         toast.error("Logout Failed.", {
+    //             duration: 4000,
+    //             position: "top-right",
+    //             style: {
+    //                 borderRadius: '10px',
+    //                 background: '#333',
+    //                 color: '#fff',
+
+    //             },
+    //         });
     //         Cookies.remove("access_token");
     //         Cookies.remove("refresh_token");
+    
+            
     //         navigate("/");
     //     }
     // };
+
+    ////buat update terbaru
+    const handleLogout = async () => {
+        try {
+            // Kirim permintaan logout ke API
+            const response = await Api.post("/api/logout");
+           // console.log("Logout response:", response);
+    
+            // Periksa apakah logout berhasil
+            if (response.status === 200) {
+                // Hapus token dari cookies setelah logout berhasil
+                Cookies.remove("access_token");
+                Cookies.remove("refresh_token");
+    
+                // Arahkan ke halaman utama setelah logout sukses
+                navigate("/");
+    
+                // Tampilkan toast sukses
+                toast.success("Logout Successfully.", {
+                    duration: 4000,
+                    position: "top-right",
+                    style: {
+                        borderRadius: '10px',
+                        background: '#333',
+                        color: '#fff',
+                    },
+                });
+            }
+        } catch (error) {
+            console.error("Error during logout", error);
+    
+            // Tampilkan toast kesalahan
+            toast.error("Logout Failed.", {
+                duration: 4000,
+                position: "top-right",
+                style: {
+                    borderRadius: '10px',
+                    background: '#333',
+                    color: '#fff',
+                },
+            });
+    
+            // Hapus token dari cookies dan arahkan ke halaman utama
+            Cookies.remove("access_token");
+            Cookies.remove("refresh_token");
+            navigate("/");
+        }
+    };
+
+    
     
     
     
@@ -173,6 +201,11 @@ function Sidebar() {
     }, [pathname]);
 
     const isAdmin = user.name === 'admin';
+    const isSuperAdmin = user.name ==='superadmin';
+
+    const hasPermission = (permission) => {
+        return userPermissions.includes(permission);
+    }; 
 
     return (
         <React.Fragment>
@@ -183,7 +216,7 @@ function Sidebar() {
             </Link>
             </div>
             <div className="side-report">
-            {(isAdmin || user.name === 'inbound' || user.name === 'storage' || user.name === 'outbound') && (
+            
                 <div className="list-group-item list-group-item-action list-group-item-light p-3 transparent-background">
                     <div onClick={() => toggleDropdown('reports')} className="d-flex justify-content-between align-items-center">
                         <span><LibraryBooksIcon className="me-2 custom-icon" />Report</span>
@@ -191,7 +224,7 @@ function Sidebar() {
                     </div>
                     
                         <div className={`dropdown-content ${dropdowns.reports ? 'show' : ''}`}>
-                        {(user.name === 'inbound' || isAdmin) && (
+                        {hasPermission('inbound.index')  && (
                             
                                 <div className="list-group-item list-group-item-action list-group-item-light p-3 transparent-background">
                                 <div onClick={() => toggleDropdown('subReports')} className="d-flex justify-content-between align-items-center">
@@ -217,16 +250,13 @@ function Sidebar() {
                                             <input className="form-check-input" type="radio" name="inboundOptions" id="crossdock" checked={pathname.includes("crossdock")} onChange={() => handleRadioChange("/admin/inbound/crossdockreport", 'subReports')} />
                                             <label className="form-check-label" htmlFor="crossdock">Crossdock</label>
                                         </div>
-                                        {/* <div className="form-check custom-radio mb-2" key="logistic">
-                                            <input className="form-check-input" type="radio" name="inboundOptions" id="logistic" checked={pathname.includes("logistic")} onChange={() => handleRadioChange("/admin/inbound/logistic", 'subReports')} />
-                                            <label className="form-check-label" htmlFor="logistic">Logistic</label>
-                                        </div> */}
+                                        
                                     </form>
                                 </div>
                             </div>
                         )}
 
-                        {(user.name === 'storage' || isAdmin) && (
+                        {hasPermission('storage.index')  && (
                             <div className="list-group-item list-group-item-action list-group-item-light p-3 transparent-background">
                                 <div onClick={() => toggleDropdown('subReports2')} className="d-flex justify-content-between align-items-center">
                                     <span><StorageIcon className="me-2 custom-icon" /> Storage</span>
@@ -265,7 +295,7 @@ function Sidebar() {
                             </div>
                         )}
 
-                        {(user.name === 'outbound' || isAdmin) && (
+                        {hasPermission('outbound.index') && (
                             <div className="list-group-item list-group-item-action list-group-item-light p-3 transparent-background">
                                 <div onClick={() => toggleDropdown('subReports3')} className="d-flex justify-content-between align-items-center">
                                     <span><OutputIcon className="me-2 custom-icon" />Outbound</span>
@@ -296,12 +326,12 @@ function Sidebar() {
                     </div>
                     
                 </div>
-            )}
+            
             </div>
 
 
             <div className="side-report">
-            {(isAdmin || user.name === 'inbound' || user.name === 'storage' || user.name === 'outbound') && (
+            
                 <div className="list-group-item list-group-item-action list-group-item-light p-3 transparent-background">
                     <div onClick={() => toggleDropdown('logistics')} className="d-flex justify-content-between align-items-center">
                         <span><LocalShippingIcon className="me-2 custom-icon" />Shipment</span>
@@ -309,7 +339,7 @@ function Sidebar() {
                     </div>
                     
                         <div className={`dropdown-content ${dropdowns.logistics ? 'show' : ''}`}>
-                        {(user.name === 'inbound' || isAdmin) && (
+                        {hasPermission('shipment.inbound.index') && (
                             
                                 <div className="list-group-item list-group-item-action list-group-item-light p-3 transparent-background">
                                 <div onClick={() => toggleDropdown('subLogistics')} className="d-flex justify-content-between align-items-center">
@@ -333,12 +363,12 @@ function Sidebar() {
                     </div>
                     
                 </div>
-            )}
+            
             </div>
 
 
             <div className="side-dash">
-            {(isAdmin || user.name === 'inbound' || user.name === 'storage' || user.name === 'outbound') && (
+            {hasPermission('users.index')  && (
             <Link className={`list-group-item list-group-item-action  p-3 transparent-background`} to="/admin/user">
                 <PersonIcon className="me-2 custom-icon" />User
             </Link>      
@@ -362,4 +392,6 @@ function Sidebar() {
 }
 
 export default Sidebar;
+
+
 
