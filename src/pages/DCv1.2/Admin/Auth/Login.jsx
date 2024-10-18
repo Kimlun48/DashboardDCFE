@@ -1,39 +1,29 @@
 import React, { useState } from "react";
-// Import BASE URL API
 import Api from "../../../../api";
-// Import toast
 import toast, { Toaster } from "react-hot-toast";
-// Import js cookie
 import Cookies from "js-cookie";
-// Import react router dom
 import { useNavigate } from "react-router-dom";
 import FooterDc from "../../../../components/footer";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import WarehouseIcon from '@mui/icons-material/Warehouse';
-import Visibility from '@mui/icons-material/Visibility'; // Import icon untuk melihat password
-import VisibilityOff from '@mui/icons-material/VisibilityOff'; // Import icon untuk menyembunyikan password
+import Visibility from '@mui/icons-material/Visibility'; 
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 function Login() {
-    // Set title page
+    
     document.title = "Login - Administrator";
 
-    // Initialize navigate
+    
     const navigate = useNavigate();
 
-    // Initialize state for user credentials
+    
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-
-    // State untuk visibilitas password
     const [showPassword, setShowPassword] = useState(false);
-
-    // Initialize loading state
     const [isLoading, setLoading] = useState(false);
-
-    // Initialize state for validation errors
     const [validation, setValidation] = useState({});
 
-    // Function to handle login submission
+    
     const loginHandler = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -58,6 +48,9 @@ function Login() {
             });
 
             // Extract tokens from response
+            sessionStorage.setItem("access_token", response.data.access_token);
+            sessionStorage.setItem("refresh_token", response.data.refresh_token);
+
             const accessToken = response.data.access_token;
             const refreshToken = response.data.refresh_token;
 

@@ -32,6 +32,7 @@ function ListUser() {
         role: ''
     });
     const [showPassword, setShowPassword] = useState(false);
+    const [isOnline, setIsOnline] = useState(false);
    
     const { data: userPermissions = [], isLoading } = useQuery({
         queryKey: ['permissions'], 
@@ -54,6 +55,17 @@ function ListUser() {
             setRoles(response.data.data);
         } catch (error) {
             console.error('Error fetching branch data:', error);
+        }
+    }
+
+    const changeOffline = async (id) => {
+        try {
+            await Api.put(`api/update_status_offline/${id}`);
+            toast.success("User status offline successfuly");
+            fetchData();
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || "Failed to save data!";
+            toast.error(errorMessage);
         }
     }
 
@@ -98,28 +110,7 @@ function ListUser() {
         fetchCurrentUser();
     }, []);
 
-    // const handleSave = async () => {
-    //     if (!currentData.name || !currentData.email || !currentData.role) {
-    //         toast.error("Please fill in all required fields!");
-    //         return;
-    //     }
-    
-    //     try {
-    //         if (modalType === 'add') {
-    //             await Api.post('api/createuser', currentData);
-    //             toast.success("User added successfully!");
-    //         } else {
-    //             await Api.put(`api/updateuser/${currentData.id}`, currentData);
-    //             toast.success("User updated successfully!");
-    //         }
-    //         fetchData();
-    //         setShowModal(false);
-    //     } catch (error) {
-    //         // Cek apakah error memiliki respons dan ambil pesan kesalahan dari backend
-    //         const errorMessage = error.response?.data?.message || "Failed to save data!";
-    //         toast.error(errorMessage);
-    //     }
-    // };
+  
     const handleSave = async () => {
         if (!currentData.name || !currentData.email || !currentData.role) {
             toast.error("Please fill in all required fields!");
@@ -171,6 +162,8 @@ function ListUser() {
         setModalType('edit');
         setShowModal(true);
     };
+
+
 
     const handleDelete = async (id) => {
         confirmAlert({
@@ -232,16 +225,18 @@ function ListUser() {
     };
 
     const columns = [
-        { name: 'User Name', selector: row => row.name, sortable: true },
+        { name: 'UserName', selector: row => row.name, sortable: true , width:'250px'},
         { name: 'Email', selector: row => row.email, sortable: true , width: '250px'},
         { name: 'Branch', selector: row => row.name_branch, sortable: true, width: '250px' },
-        { name: 'Role', selector: row => getRoles(row.roles), sortable: true },
+        { name: 'Role', selector: row => getRoles(row.roles), sortable: true, width: '200px' },
+        { name: 'Status', selector: row => row.is_online, sortable: true },
         { name: 'Actions', cell: row => (
             <>
                 {hasPermission('users.edit') && <Button variant="primary" onClick={() => handleEdit(row)}>Edit</Button>}
                 {hasPermission('users.delete') && <Button variant="danger" onClick={() => handleDelete(row.id)} className="ms-2">Delete</Button>}
+                {hasPermission('users.status') && <Button variant="warning" onClick={() => changeOffline(row.id)} className="ms-2">Offline</Button>}
             </>
-        ), width:'200px'}
+        ), width:'300px'}
         
     ];
    
