@@ -32,16 +32,6 @@ function Sidebar() {
         subLogistics:false
     });
     const token = Cookies.get('access_token');
-    //const [userPermissions, setUserPermissions] = useState ([]);
-
-    // const fetchDataPermissions = async () => {
-    //     try {
-    //         const response = await Api.get('/api/userpermission')
-    //         setUserPermissions(response.data.permissions);
-    //     } catch (error) {
-    //         console.error("Error fetching permissions data:", error);
-    //     }
-    // }
     const { data: userPermissions = [], isLoading } = useQuery({
         queryKey: ['permissions'], 
         queryFn: async () => {
@@ -51,11 +41,6 @@ function Sidebar() {
         cacheTime: 10 * 60 * 1000, 
         staleTime: 30000, 
     });
-
-    
-
-
-   
 
     const fetchData = async () => {
         try {
@@ -74,65 +59,19 @@ function Sidebar() {
         fetchData();
       
     }, [token]);
-
-    // const handleLogout = async () => {
-    //     try {
-           
-         
-            
-    //         Cookies.remove("access_token");
-    //         Cookies.remove("refresh_token");
-    
-            
-    //         navigate("/");
-    
-            
-    //         toast.success("Logout Successfully.", {
-    //             duration: 4000,
-    //             position: "top-right",
-    //             style: {
-    //                 borderRadius: '10px',
-    //                 background: '#333',
-    //                 color: '#fff',
-    //             },
-    //         });
-    //     } catch (error) {
-    //         console.error("Error during logout", error);
-    //         toast.error("Logout Failed.", {
-    //             duration: 4000,
-    //             position: "top-right",
-    //             style: {
-    //                 borderRadius: '10px',
-    //                 background: '#333',
-    //                 color: '#fff',
-
-    //             },
-    //         });
-    //         Cookies.remove("access_token");
-    //         Cookies.remove("refresh_token");
-    
-            
-    //         navigate("/");
-    //     }
-    // };
-
-    ////buat update terbaru
     const handleLogout = async () => {
         try {
-            // Kirim permintaan logout ke API
+            
             const response = await Api.post("/api/logout");
-           // console.log("Logout response:", response);
-    
-            // Periksa apakah logout berhasil
+        
             if (response.status === 200) {
-                // Hapus token dari cookies setelah logout berhasil
                 Cookies.remove("access_token");
                 Cookies.remove("refresh_token");
     
-                // Arahkan ke halaman utama setelah logout sukses
+               
                 navigate("/");
     
-                // Tampilkan toast sukses
+                
                 toast.success("Logout Successfully.", {
                     duration: 4000,
                     position: "top-right",
@@ -145,8 +84,6 @@ function Sidebar() {
             }
         } catch (error) {
             console.error("Error during logout", error);
-    
-            // Tampilkan toast kesalahan
             toast.error("Logout Failed.", {
                 duration: 4000,
                 position: "top-right",
@@ -157,17 +94,11 @@ function Sidebar() {
                 },
             });
     
-            // Hapus token dari cookies dan arahkan ke halaman utama
             Cookies.remove("access_token");
             Cookies.remove("refresh_token");
             navigate("/");
         }
     };
-
-    
-    
-    
-    
 
     const handleRadioChange = (path, dropdownName) => {
         navigate(path);

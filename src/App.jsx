@@ -8,6 +8,7 @@ import LogoutOnClose from "./components/utilites/LogoutOnClose"
 import React from "react"
 import { UserPermissionsProvider } from "./components/utilites/UserPermissionsContext"
 import GlobalBeforeUnloadListener from "./components/utilites/GlobalBeforeUnloadListener"
+import LogoutHandler from "./components/utilites/LogoutHandler"
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
     <>
     {/* <UserPermissionsProvider> */}
     {/* <GlobalBeforeUnloadListener /> */}
+    {/* <LogoutHandler /> */}
       <RoutesIndex />
       <Toaster />
       {/* <LogoutOnClose /> */}
@@ -24,4 +26,3 @@ function App() {
 }
 
 export default App
-//
