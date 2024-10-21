@@ -270,7 +270,7 @@ function GenerateLeadTimes() {
                                     <div className="icon" onClick={exportToExcel}>
                                         <ContentCopyIcon />
                                         <br />
-                                        To Excel
+                                        To Excels
                                     </div>
                                 </div>
                                 {hasPermission('jobtask.create') &&  <button className="btn btn-primary mb-3" onClick={handleGenerate}>Generate Jobs Task</button>}
