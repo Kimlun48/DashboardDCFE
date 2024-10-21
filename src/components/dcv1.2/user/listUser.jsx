@@ -58,6 +58,12 @@ function ListUser() {
         }
     }
 
+    
+
+    useEffect(() => {
+        fetchDataRoles();
+    },[]);
+
     const changeOffline = async (id) => {
         try {
             await Api.put(`api/update_status_offline/${id}`);
@@ -68,10 +74,6 @@ function ListUser() {
             toast.error(errorMessage);
         }
     }
-
-    useEffect(() => {
-        fetchDataRoles();
-    },[]);
 
     const fetchDataBranch = async () => {
         try {
@@ -259,6 +261,28 @@ function ListUser() {
         },
     };
 
+    // useEffect(() => {
+    //     // Fungsi yang akan dijalankan ketika browser ditutup atau di-refresh
+    //     const handleBrowserClose = async (event) => {
+    //         event.preventDefault();
+    //         if (currentUser && currentUser.id) {
+    //             try {
+    //                 await changeOffline(currentUser.id);  // Memanggil fungsi changeOffline
+    //             } catch (error) {
+    //                 console.error("Failed to set user offline:", error);
+    //             }
+    //         }
+    //     };
+    
+    //     // Menambahkan event listener untuk beforeunload
+    //     window.addEventListener('beforeunload', handleBrowserClose);
+    
+    //     // Membersihkan event listener saat komponen di-unmount
+    //     return () => {
+    //         window.removeEventListener('beforeunload', handleBrowserClose);
+    //     };
+    // }, [currentUser]);  // Menjalankan ketika currentUser berubah
+    
     
 
     return (
