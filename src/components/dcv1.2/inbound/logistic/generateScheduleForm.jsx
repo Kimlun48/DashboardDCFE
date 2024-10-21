@@ -519,10 +519,10 @@ const hasPermission = (permission) => {
 
 
   const columns = [
-    { name: 'Id', selector: row => row.id, sortable: true, width: '150px'},
+    // { name: 'No', selector: row => row.id, sortable: true, width: '150px'},
     { name: 'Date', selector: row => row.hari ? formatDate(row.hari) : 'No Data', sortable: true,  width: '150px' },
-    { name: 'Start', selector: row => row.mulai, sortable: true, width: '100px' },
-    { name: 'Finish', selector: row => row.akhir, sortable: true, width: '100px' },
+    { name: 'Start', selector: row => row.mulai, sortable: true, width: '150px' },
+    { name: 'Finish', selector: row => row.akhir, sortable: true, width: '150px' },
     { name: 'Activity', selector: row => row.jenis_aktivitas, sortable: true, width: '150px' },
     // { name: 'Slot', selector: row => row.slot, sortable: true, width: '100px' },
     { name: 'Av Slot', selector: row => row.available_slot, sortable: true, width: '150px' },
