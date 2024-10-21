@@ -50,6 +50,7 @@
     "react-qr-scanner": "^1.0.0-alpha.11",
     "react-router-dom": "^6.24.1",
     "react-text-to-speech": "^0.16.1",
+    "react-toastify": "^10.0.6",
     "recharts": "^2.12.7",
     "styled-components": "^6.1.11",
     "xlsx": "^0.18.5"

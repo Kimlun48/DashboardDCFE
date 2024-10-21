@@ -41,6 +41,21 @@ function Sidebar() {
         cacheTime: 10 * 60 * 1000, 
         staleTime: 30000, 
     });
+    const [currentUser, setCurrentUser] = useState(null); 
+
+    const fetchCurrentUser = async () => {
+        try {
+            const response = await Api.get('api/getcurrentuser');
+            setCurrentUser(response.data.data);
+        } catch (error) {
+            console.error('Error fetching current user:', error);
+        }
+    };
+
+    useEffect(() => {
+       
+        fetchCurrentUser();
+    }, []);
 
     const fetchData = async () => {
         try {
@@ -137,6 +152,38 @@ function Sidebar() {
     const hasPermission = (permission) => {
         return userPermissions.includes(permission);
     }; 
+
+    const changeOffline = async (id) => {
+        try {
+            await Api.put(`api/update_status_offline/${id}`);
+           // toast.success("User status offline successfuly");
+            fetchData();
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || "Failed to save data!";
+           // toast.error(errorMessage);
+        }
+    }
+    useEffect(() => {
+        // Fungsi yang akan dijalankan ketika browser ditutup atau di-refresh
+        const handleBrowserClose = async (event) => {
+            event.preventDefault();
+            if (currentUser && currentUser.id) {
+                try {
+                    await changeOffline(currentUser.id);  // Memanggil fungsi changeOffline
+                } catch (error) {
+                    console.error("Failed to set user offline:", error);
+                }
+            }
+        };
+    
+        // Menambahkan event listener untuk beforeunload
+        window.addEventListener('beforeunload', handleBrowserClose);
+    
+        // Membersihkan event listener saat komponen di-unmount
+        return () => {
+            window.removeEventListener('beforeunload', handleBrowserClose);
+        };
+    }, [currentUser]);  // Menjalankan ketika currentUser berubah
 
     return (
         <React.Fragment>
