@@ -164,13 +164,13 @@ function GenerateLeadTimes() {
             return; 
         }
        
-        const loadingToastId = toast.loading("Processing...");
-    
+      //  const loadingToastId = toast.loading("Processing...");
+        setLoading(true);
         try {
             if (modalType === 'generate') {
                 await Api.post('api/masterhour', currentData);
                 toast.success("Generate Data Successfully!", {
-                    id: loadingToastId,
+                 //   id: loadingToastId,
                     duration: 8000,
                     position: "top-right",
                     style: {
@@ -182,7 +182,7 @@ function GenerateLeadTimes() {
             } else {
                 await Api.put(`api/masterhour/${currentData.id}`, currentData);
                 toast.success("Update Data Successfully!", {
-                    id: loadingToastId,
+                 //   id: loadingToastId,
                     duration: 8000,
                     position: "top-right",
                     style: {
@@ -207,7 +207,8 @@ function GenerateLeadTimes() {
                 },
             });
         } finally {
-            toast.dismiss(loadingToastId);
+          //  toast.dismiss(loadingToastId);
+          setLoading(false);
         }
     };
     
@@ -302,7 +303,7 @@ function GenerateLeadTimes() {
                 </div>
             </div>
 
-            {/* <Modal show={showModal} onHide={() => setShowModal(false)}>
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
     <Modal.Header closeButton>
         <Modal.Title>{modalType === 'generate' ? 'Generate Lead Times' : 'Edit Lead Times'}</Modal.Title>
     </Modal.Header>
@@ -363,24 +364,33 @@ function GenerateLeadTimes() {
             Cancel
         </Button>
         <Button variant="primary" onClick={handleSave} disabled={loading}>
-        {loading ? 'Processing...' : 'Save'}
+        {loading ? (
+              <>
+               <div className="spinner-container">
+              <div className="spinner-custom"></div>
+            </div>
+                Processing...
+              </>
+            ) : (
+              'Save'
+            )}
         </Button>
     </Modal.Footer>
-</Modal> */}
-            <Modal 
+</Modal>
+            {/* <Modal 
     show={showModal} 
     onHide={() => { 
         if (!loading) {
             setShowModal(false); 
         }
-    }} // Prevent closing the modal while loading
+    }} 
 >
     <Modal.Header closeButton={!loading}>
         <Modal.Title>{modalType === 'generate' ? 'Generate Lead Times' : 'Edit Lead Times'}</Modal.Title>
     </Modal.Header>
     <Modal.Body>
         <Form>
-            {/* Jenis Aktivitas */}
+
             <Form.Group controlId="jenis_aktivitas">
                 <Form.Label>Jenis Aktivitas</Form.Label>
                 <Form.Control
@@ -393,7 +403,7 @@ function GenerateLeadTimes() {
                 </Form.Control>
             </Form.Group>
 
-            {/* Jenis Jam */}
+           
             <Form.Group controlId="jenis_jam">
                 <Form.Label>Jenis Jam</Form.Label>
                 <Form.Control
@@ -408,7 +418,7 @@ function GenerateLeadTimes() {
                 </Form.Control>
             </Form.Group>
 
-            {/* Branch */}
+          
             <Form.Group controlId="branch">
                 <Form.Label>Branch</Form.Label>
                 <Form.Control
@@ -445,7 +455,7 @@ function GenerateLeadTimes() {
             )}
         </Button>
     </Modal.Footer>
-</Modal>
+</Modal> */}
 
 
         </React.Fragment>
