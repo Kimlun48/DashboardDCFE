@@ -68,7 +68,7 @@ const QrScannerInbound = () => {
         { name: 'Booking ID', selector: row => row.id_req, sortable: true, width: '140px' },
         { name: 'Vendor', selector: row => row.nama_vendor, sortable: true, width: '350px' },
         // { name: 'No Receipt', selector: row => row.surat_jalan, sortable: true, width: '200px' },
-        { name: 'Status', selector: row => row.status, sortable: true, width: '130px' },
+        { name: 'Position Status', selector: row => row.status, sortable: true, width: '200px' },
         { name: 'Date Boking', selector: row => row.schedule.hari ? formatDate(row.schedule.hari) : 'No Data', sortable: true, width: '140px' },
         { name: 'Jam Boking', selector: row => row.schedule?.mulai ? row.schedule.mulai : 'No Data', sortable: true, width: '140px' },
         { name: 'Date CI Inbound', selector: row => row.date_loading_goods ? formatDate(row.date_loading_goods) : 'No Data', sortable: true, width: '200px' },

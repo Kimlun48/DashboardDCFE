@@ -111,7 +111,7 @@ function TransaksiRequest() {
         const exportData = updatedFilteredData.map(item => ({
             'Vendor': item.nama_vendor,
             'No Receipt': item.surat_jalan,
-            'Status': item.status,
+            'Position Status': item.status,
             'Driver': item.sopir,
             'Truck': item.nama_kendaraan,
             'Booking Date': item.schedule.hari ? formatDate(item.schedule.hari) : 'No Data',
@@ -138,7 +138,7 @@ function TransaksiRequest() {
     const columns = [
         { name: 'Booking ID', selector: row => row.id_req, sortable: true, width: '150px' },
         { name: 'Vendor', selector: row => row.nama_vendor, sortable: true, width: '350px' },
-        { name: 'Status', selector: row => row.status, sortable: true, width: '150px' },
+        { name: 'Position Status', selector: row => row.status, sortable: true, width: '200px' },
         { name: 'Date Boking', selector: row => row.schedule?.hari ? formatDate(row.schedule.hari) : 'No Data', sortable: true, width: '140px' },
         { name: 'Time Boking', selector: row => row.schedule?.mulai ? row.schedule.mulai : 'No Data', sortable: true, width: '200px' },
         { name: 'Date CI Security', selector: row => row.date_arrived ? formatDate(row.date_arrived) : 'No Data', sortable: true, width: '200px' },

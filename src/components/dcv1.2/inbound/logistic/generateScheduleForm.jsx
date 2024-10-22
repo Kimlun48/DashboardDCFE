@@ -741,11 +741,13 @@ const hasPermission = (permission) => {
         <thead>
           <tr>
             {/* <th>Document ID</th> */}
+            <th>Id jadwal</th>
+            <th>Id Booking</th>
             <th>Transport Type</th>
             <th>Vendor Name</th>
             <th>Request Slot</th>
             {/* <th>Driver</th> */}
-            <th>Status</th>
+            <th>Position Status</th>
             {/* <th>Actions</th> */}
           </tr>
         </thead>
@@ -753,7 +755,8 @@ const hasPermission = (permission) => {
           {requestTransaksi.map((transaksi, index) => (
             <tr key={transaksi.id_jadwal}>
               {/* <td>{transaksi.surat_jalan}</td> */}
-             
+              <td>{transaksi.id_jadwal}</td>
+              <td>{transaksi.id_req}</td>
               <td>{transaksi.nama_kendaraan}</td>
               
                <td>{transaksi.nama_vendor}</td>
