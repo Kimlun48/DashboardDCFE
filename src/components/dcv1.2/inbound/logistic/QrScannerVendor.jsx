@@ -256,6 +256,8 @@ const QrScannerVendor = () => {
                                     columns={columns}
                                     data={filteredData}
                                     pagination
+                                    paginationPerPage={5}
+                                    paginationRowsPerPageOptions={[5, 10, 15, 20]}
                                     customStyles={customStyles}
                                     highlightOnHover
                                     responsive
