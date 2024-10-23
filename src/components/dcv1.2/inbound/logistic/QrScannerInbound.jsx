@@ -441,7 +441,7 @@ const QrScannerInbound = () => {
     return (
         <React.Fragment>
             <div style={{ textAlign: 'center', marginTop: '20px', color: 'white' }}>
-            <h4>Scan Barcode or QR Code</h4>
+                  <h4>Scan Barcode or QR Code</h4>
                 <ScannerInput
                     barcodeData={barcodeData}
                     handleInputChange={handleInputChange}
@@ -463,6 +463,8 @@ const QrScannerInbound = () => {
                                     data={filteredData}
                                     customStyles={customStyles}
                                     pagination
+                                    paginationPerPage={5}
+                                    paginationRowsPerPageOptions={[5, 10, 15, 20]}
                                     fixedHeader
                                     highlightOnHover
                                     pointerOnHover
