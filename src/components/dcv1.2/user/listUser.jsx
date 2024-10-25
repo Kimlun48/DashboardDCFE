@@ -110,6 +110,13 @@ function ListUser() {
     useEffect(() => {
         fetchData();
         fetchCurrentUser();
+        // Set interval for polling every 5 seconds (10000 ms)
+        const intervalId = setInterval(() => {
+            fetchData();
+            fetchCurrentUser();
+          }, 5000);
+      
+          return () => clearInterval(intervalId);
     }, []);
 
   
@@ -231,7 +238,13 @@ function ListUser() {
         { name: 'Email', selector: row => row.email, sortable: true , width: '250px'},
         { name: 'Branch', selector: row => row.name_branch, sortable: true, width: '250px' },
         { name: 'Role', selector: row => getRoles(row.roles), sortable: true, width: '200px' },
-        { name: 'Status', selector: row => row.is_online, sortable: true },
+        // { name: 'Status', selector: row => row.is_online, sortable: true },
+        {
+            name: 'Status',
+            selector: row => row.is_online === 0 ? 'Offline' : 'Online',
+            sortable: true, width:'150px'
+          },
+          
         { name: 'Actions', cell: row => (
             <>
                 {hasPermission('users.edit') && <Button variant="primary" onClick={() => handleEdit(row)}>Edit</Button>}
