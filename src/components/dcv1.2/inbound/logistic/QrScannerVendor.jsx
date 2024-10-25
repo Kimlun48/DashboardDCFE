@@ -7,6 +7,7 @@ import DataTable from "react-data-table-component";
 import moment from 'moment-timezone';
 import SearchInput from '../../../utilites/SearchInput';
 import ScannerInput from '../../../utilites/ScannerInput';
+import { useQuery } from '@tanstack/react-query';
 
 const QrScannerVendor = () => {
     const [barcodeData, setBarcodeData] = useState('');
@@ -18,6 +19,20 @@ const QrScannerVendor = () => {
     const [updatedId, setUpdatedId] = useState(null);
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const time = 1 * 60 * 1000; // 1 menit
+
+    const { data: userPermissions = [], isLoading } = useQuery({
+        queryKey: ['permissions'], 
+        queryFn: async () => {
+            const response = await Api.get('/api/userpermission');
+            return response.data.permissions;
+        },
+        cacheTime: 10 * 60 * 1000, 
+        staleTime: 30000, 
+    });
+
+    const hasPermission = (permission) => {
+        return userPermissions.includes(permission);
+    };
 
     const fetchData = async () => {
         try {
@@ -80,7 +95,14 @@ const QrScannerVendor = () => {
     
 
     const columns = [
-        { name: 'Booking ID', selector: row => row.id_req, sortable: true, width: '150px' },
+       // { name: 'Booking ID', selector: row => row.id_req, sortable: true, width: '150px' },
+        // Tambahkan kolom "Booking ID" hanya jika user memiliki izin
+        ...(hasPermission('view.idbooking') ? [{
+            name: 'Booking ID',
+            selector: row => row.id_req,
+            sortable: true,
+            width: '150px'
+             }] : []),
         { name: 'Vendor', selector: row => row.nama_vendor, sortable: true, width: '350px' },
         { name: 'No Receipt', selector: row => row.surat_jalan, sortable: true, width: '200px' },
         { name: 'Position Status', selector: row => row.status, sortable: true, width: '200px' },
