@@ -14,6 +14,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Modal, Button, Table } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DatePicker from 'react-datepicker';
+import { useQuery } from "@tanstack/react-query";
 
 function TransaksiRequest() {
     const [transaksirequest, setTransaksiRequest] = useState([]);
@@ -30,6 +31,20 @@ function TransaksiRequest() {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
 
+    const { data: userPermissions = [], isLoading } = useQuery({
+        queryKey: ['permissions'], 
+        queryFn: async () => {
+            const response = await Api.get('/api/userpermission');
+            return response.data.permissions;
+        },
+        cacheTime: 10 * 60 * 1000, 
+        staleTime: 30000, 
+    });
+
+    const hasPermission = (permission) => {
+        return userPermissions.includes(permission);
+    };
+
     const fetchData = async () => {
         try {
             const response = await Api.get('api/transaksireq');
@@ -45,34 +60,6 @@ function TransaksiRequest() {
         fetchData();
     }, []);
 
-    // useEffect(() => {
-    //     const lowercasedSearch = search.toLowerCase();
-    //     const filtered = transaksirequest.filter(item => {
-    //         const idReq = item.id_req ? String(item.id_req) : '';
-    //         const namaVendor = item.nama_vendor ? item.nama_vendor.toLowerCase() : '';
-    //         const suratJalan = item.surat_jalan ? item.surat_jalan.toLowerCase() : '';
-    //         const status = item.status ? item.status.toLowerCase() : '';
-            
-    //         // Format hari dari schedule untuk dibandingkan
-    //         const scheduleDate = item.schedule?.hari ? moment(item.schedule.hari).format('YYYY-MM-DD') : '';
-    //         const searchDateFormatted = searchDate ? moment(searchDate).format('YYYY-MM-DD') : '';
-
-    //         return (
-    //             (idReq.includes(lowercasedSearch) ||
-    //             namaVendor.includes(lowercasedSearch) ||
-    //             suratJalan.includes(lowercasedSearch) ||
-    //             status.includes(lowercasedSearch)) &&
-    //             (!searchDate || scheduleDate === searchDateFormatted) // Filter berdasarkan tanggal jika searchDate dipilih
-    //         );
-    //     });
-        
-    //     setFilteredData(filtered);
-    // }, [search, transaksirequest, searchDate]);
-
-    // const updatedFilteredData = filteredData.map(item => ({
-    //     ...item,
-    //     updated_at: item.updated_at ? convertToGMT7(item.updated_at) : ''
-    // }));
 
     useEffect(() => {
         const lowercasedSearch = search.toLowerCase();
@@ -136,7 +123,15 @@ function TransaksiRequest() {
     };
 
     const columns = [
-        { name: 'Booking ID', selector: row => row.id_req, sortable: true, width: '150px' },
+        // { name: 'Booking ID', selector: row => row.id_req, sortable: true, width: '150px' },
+        // Tambahkan kolom "Booking ID" hanya jika user memiliki izin
+        ...(hasPermission('view.idbooking') ? [{
+        name: 'Booking ID',
+        selector: row => row.id_req,
+        sortable: true,
+        width: '150px'
+         }] : []),
+        
         { name: 'Vendor', selector: row => row.nama_vendor, sortable: true, width: '350px' },
         { name: 'Position Status', selector: row => row.status, sortable: true, width: '200px' },
         { name: 'Date Booking', selector: row => row.schedule?.hari ? formatDate(row.schedule.hari) : 'No Data', sortable: true, width: '150px' },
@@ -303,7 +298,7 @@ function TransaksiRequest() {
                 <thead>
             <tr>
             <th>Driver</th>
-            <th>ID Booking</th>
+           {hasPermission('view.idbooking')&& <th>ID Booking</th>}
             <th>No PO</th>
             <th>No SJ</th>
             <th>Item Code</th>
@@ -318,7 +313,7 @@ function TransaksiRequest() {
             <tr key={logdoc.id}> 
             
               <td>{logdoc.cp_driver}</td>
-              <td>{logdoc.id_trans_req}</td>
+             {hasPermission('view.idbooking')&& <td>{logdoc.id_trans_req}</td>}
               <td>{logdoc.no_po}</td> 
               <td>{logdoc.no_sj}</td>
               <td>{logdoc.kode_barang}</td>
