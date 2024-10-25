@@ -202,7 +202,7 @@ function Sidebar() {
                     </div>
                     
                         <div className={`dropdown-content ${dropdowns.reports ? 'show' : ''}`}>
-                        {hasPermission('inbound.index')  && (
+                        {hasPermission('reports.inbound')  && (
                             
                                 <div className="list-group-item list-group-item-action list-group-item-light p-3 transparent-background">
                                 <div onClick={() => toggleDropdown('subReports')} className="d-flex justify-content-between align-items-center">
@@ -234,7 +234,7 @@ function Sidebar() {
                             </div>
                         )}
 
-                        {hasPermission('storage.index')  && (
+                        {hasPermission('reports.storage')  && (
                             <div className="list-group-item list-group-item-action list-group-item-light p-3 transparent-background">
                                 <div onClick={() => toggleDropdown('subReports2')} className="d-flex justify-content-between align-items-center">
                                     <span><StorageIcon className="me-2 custom-icon" /> Storage</span>
@@ -273,7 +273,7 @@ function Sidebar() {
                             </div>
                         )}
 
-                        {hasPermission('outbound.index') && (
+                        {hasPermission('reports.outbound') && (
                             <div className="list-group-item list-group-item-action list-group-item-light p-3 transparent-background">
                                 <div onClick={() => toggleDropdown('subReports3')} className="d-flex justify-content-between align-items-center">
                                     <span><OutputIcon className="me-2 custom-icon" />Outbound</span>
