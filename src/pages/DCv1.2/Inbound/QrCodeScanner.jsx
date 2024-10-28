@@ -26,7 +26,7 @@ const QrCodeScanner = () => {
                     }}
                 >
                     <Typography variant="h4" gutterBottom>
-                        QR Code Scanner
+                        QR Code Scanner Security
                     </Typography>
                     <QrScannerVendor />
                 </Box>

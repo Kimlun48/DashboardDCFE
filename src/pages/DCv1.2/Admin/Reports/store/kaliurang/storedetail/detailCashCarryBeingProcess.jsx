@@ -16,6 +16,7 @@ function KaliurangDetailCashCarryBeingProcess ()
     const { formatDate } = useFormatDate();
 
     const fetchData = async () => {
+        setLoading(true);
         try {
             const response = await Api.get('api/kaliurangcashcarrybeingprocess');
             const data = response.data.data; 
@@ -42,6 +43,7 @@ function KaliurangDetailCashCarryBeingProcess ()
                 item.CARDNAME.toLowerCase().includes(lowercasedSearch) ||
                 item.NODOKUMEN.toLowerCase().includes(lowercasedSearch) ||
                 item.ITEMNAME.toLowerCase().includes(lowercasedSearch)
+                // (item.COMMENTS?.toLowerCase().includes(lowercasedSearch) ?? false) ||
             );
             setFilteredData(filtered);
         }
@@ -57,6 +59,13 @@ function KaliurangDetailCashCarryBeingProcess ()
         { name: 'ITEM CODE', selector: row => row.ITEMCODE, sortable: true, width: '150px'},
         { name: 'ITEM NAME', selector: row => row.ITEMNAME, sortable: true, width: '450px'},
         { name: 'QTY', selector: row => row.QTY, sortable: true},
+
+        // { 
+        //     name: 'COMMENTS', 
+        //     selector: row => row.COMMENTS ?? 'No Data', 
+        //     sortable: true, 
+        //     width: '350px' 
+        //   },
        
         { name: 'DELIVERED', selector: row => row.DELIVERED, sortable: true, width: '150px'},
         { name: 'OPEN', selector: row => row.OPEN, sortable: true},
