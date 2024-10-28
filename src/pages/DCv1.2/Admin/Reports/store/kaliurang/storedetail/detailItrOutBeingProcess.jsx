@@ -15,7 +15,9 @@ function KaliurangDetailItrOutBeingProcess ()
     const [error, setError] = useState(null);
     const { formatDate } = useFormatDate();
 
+
     const fetchData = async () => {
+        setLoading(true)
         try {
             const response = await Api.get('api/kaliurangitroutbeingprocess');
             const data = response.data.data; 
@@ -110,25 +112,29 @@ function KaliurangDetailItrOutBeingProcess ()
                                     value={search}
                                     onChange={e => setSearch(e.target.value)}
                                 />
-                                {error && (
-                                    <div className="alert alert-danger">
-                                        {error}
-                                    </div>
-                                )}
-                                <DataTable
-                                    columns={columns}
-                                    data={filteredData}
-                                    pagination
-                                    paginationPerPage={10}
-                                    paginationRowsPerPageOptions={[10, 15, 20, 25]}
-                                    highlightOnHover
-                                    customStyles={customStyles}
-                                    noDataComponent={
-                                        <div className="alert alert-danger mb-0">
-                                            Data Belum Tersedia!
-                                        </div>
-                                    }
-                                />
+                                {loading ? (
+                                     <div class="spinner">
+                                     <div class="spinner-border"></div>
+                                     <img src="/icons/Group 1146.png" alt="Icon" class="icon"></img>
+                                   </div>
+                                   
+                                        
+                                    ) : (
+                                        <DataTable
+                                            columns={columns}
+                                            data={filteredData}
+                                            pagination
+                                            paginationPerPage={10}
+                                            paginationRowsPerPageOptions={[10, 15, 20]}
+                                            highlightOnHover
+                                            customStyles={customStyles}
+                                            noDataComponent={
+                                                <div className="alert alert-danger mb-0">
+                                                    Data Belum Tersedia!
+                                                </div>
+                                            }
+                                        />
+                                    )}
                             </div>
                         </div>
                     </div>
