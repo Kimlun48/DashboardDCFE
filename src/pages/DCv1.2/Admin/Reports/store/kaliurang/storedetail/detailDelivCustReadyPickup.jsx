@@ -14,8 +14,10 @@ function KaliurangDetailDelivCustReadyPickup ()
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const { formatDate } = useFormatDate();
+    
 
     const fetchData = async () => {
+        setLoading(true);
         try {
             const response = await Api.get('api/kaliurangdelivcusstorereadypickup');
             const data = response.data.data; 
@@ -38,25 +40,28 @@ function KaliurangDetailDelivCustReadyPickup ()
         if (Array.isArray(detailitrin)) { // Ensure detailbinin is an array
             const lowercasedSearch = search.toLowerCase();
             const filtered = detailitrin.filter(item =>
-                item.COMMENTS.toLowerCase().includes(lowercasedSearch) ||
+                (item.COMMENTS?.toLowerCase().includes(lowercasedSearch) ?? false) ||
                 // item.NODOKUMEN.toLowerCase().includes(lowercasedSearch) ||
                 item.ITEMNAME.toLowerCase().includes(lowercasedSearch) ||
                 item.UOM.toLowerCase().includes(lowercasedSearch) ||
-                item.CARDNAME.toLowerCase().includes(lowercasedSearch) ||
-                item.COMMENTS.toLowerCase().includes(lowercasedSearch) 
+                item.CARDNAME.toLowerCase().includes(lowercasedSearch) 
             );
             setFilteredData(filtered);
         }
     }, [search, detailitrin]);
 
     const columns = [
-        
         { name: 'NO STRUCK', selector: row => row.NOSTRUK, sortable: true, width: '200px'  },
         { name: 'NO DOCUMENT', selector: row => row.NODOKUMEN, sortable: true, width: '200px'  },
         { name: 'DOC DATE', selector: row => row.DOCDATE ? formatDate(row.DOCDATE) : 'No Data', sortable: true, width: '150px' },
         { name: 'DEADLINE', selector:row => row.DEADLINE_DATE ? formatDate(row.DEADLINE_DATE) : 'No Data', sortable: true ,width: '150px'},
         { name: 'CARD NAME', selector: row => row.CARDNAME, sortable: true, width:'150px'},
-        { name: 'COMMENTS', selector: row => row.COMMENTS, sortable: true, width: '350px'},
+        { 
+            name: 'COMMENTS', 
+            selector: row => row.COMMENTS ?? 'No Data', 
+            sortable: true, 
+            width: '350px' 
+          },
         { name: 'ITEM CODE', selector: row => row.ITEMCODE, sortable: true, width: '150px'},
         { name: 'ITEM NAME', selector: row => row.ITEMNAME, sortable: true, width: '450px'},
         { name: 'QTY', selector: row => row.QTY, sortable: true},
@@ -65,12 +70,7 @@ function KaliurangDetailDelivCustReadyPickup ()
         { name: 'OPEN', selector: row => row.OPEN, sortable: true},
         { name: 'RELEASED', selector: row => row.RELEASED, sortable: true, width: '150px'},
         { name: 'PICKED', selector: row => row.PICKED, sortable: true},
-        { name: 'STATUS', selector: row => row.STATUS, sortable: true, width: '150px'},
-
-
-
-         // { name: 'RECEIPT_DATE', selector: row => row.RECEIPT_DATE ? formatDate(row.RECEIPT_DATE) : 'No Data', sortable: true }, 
-        
+        { name: 'STATUS', selector: row => row.STATUS, sortable: true, width: '150px'}        
     ];
 
     const customStyles = {
@@ -113,25 +113,29 @@ function KaliurangDetailDelivCustReadyPickup ()
                                     value={search}
                                     onChange={e => setSearch(e.target.value)}
                                 />
-                                {error && (
-                                    <div className="alert alert-danger">
-                                        {error}
-                                    </div>
-                                )}
-                                <DataTable
-                                    columns={columns}
-                                    data={filteredData}
-                                    pagination
-                                    paginationPerPage={10}
-                                    paginationRowsPerPageOptions={[10, 15, 20, 25]}
-                                    highlightOnHover
-                                    customStyles={customStyles}
-                                    noDataComponent={
-                                        <div className="alert alert-danger mb-0">
-                                            Data Belum Tersedia!
-                                        </div>
-                                    }
-                                />
+                                {loading ? (
+                                     <div class="spinner">
+                                     <div class="spinner-border"></div>
+                                     <img src="/icons/Group 1146.png" alt="Icon" class="icon"></img>
+                                   </div>
+                                   
+                                        
+                                    ) : (
+                                        <DataTable
+                                            columns={columns}
+                                            data={filteredData}
+                                            pagination
+                                            paginationPerPage={10}
+                                            paginationRowsPerPageOptions={[10, 15, 20]}
+                                            highlightOnHover
+                                            customStyles={customStyles}
+                                            noDataComponent={
+                                                <div className="alert alert-danger mb-0">
+                                                    Data Belum Tersedia!
+                                                </div>
+                                            }
+                                        />
+                                    )}
                             </div>
                         </div>
                     </div>

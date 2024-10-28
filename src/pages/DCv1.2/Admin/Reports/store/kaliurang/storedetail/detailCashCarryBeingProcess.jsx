@@ -16,6 +16,7 @@ function KaliurangDetailCashCarryBeingProcess ()
     const { formatDate } = useFormatDate();
 
     const fetchData = async () => {
+        setLoading(true);
         try {
             const response = await Api.get('api/kaliurangcashcarrybeingprocess');
             const data = response.data.data; 
@@ -42,6 +43,7 @@ function KaliurangDetailCashCarryBeingProcess ()
                 item.CARDNAME.toLowerCase().includes(lowercasedSearch) ||
                 item.NODOKUMEN.toLowerCase().includes(lowercasedSearch) ||
                 item.ITEMNAME.toLowerCase().includes(lowercasedSearch)
+                // (item.COMMENTS?.toLowerCase().includes(lowercasedSearch) ?? false) ||
             );
             setFilteredData(filtered);
         }
@@ -57,6 +59,13 @@ function KaliurangDetailCashCarryBeingProcess ()
         { name: 'ITEM CODE', selector: row => row.ITEMCODE, sortable: true, width: '150px'},
         { name: 'ITEM NAME', selector: row => row.ITEMNAME, sortable: true, width: '450px'},
         { name: 'QTY', selector: row => row.QTY, sortable: true},
+
+        // { 
+        //     name: 'COMMENTS', 
+        //     selector: row => row.COMMENTS ?? 'No Data', 
+        //     sortable: true, 
+        //     width: '350px' 
+        //   },
        
         { name: 'DELIVERED', selector: row => row.DELIVERED, sortable: true, width: '150px'},
         { name: 'OPEN', selector: row => row.OPEN, sortable: true},
@@ -110,25 +119,29 @@ function KaliurangDetailCashCarryBeingProcess ()
                                     value={search}
                                     onChange={e => setSearch(e.target.value)}
                                 />
-                                {error && (
-                                    <div className="alert alert-danger">
-                                        {error}
-                                    </div>
-                                )}
-                                <DataTable
-                                    columns={columns}
-                                    data={filteredData}
-                                    pagination
-                                    paginationPerPage={10}
-                                    paginationRowsPerPageOptions={[10, 15, 20, 25]}
-                                    highlightOnHover
-                                    customStyles={customStyles}
-                                    noDataComponent={
-                                        <div className="alert alert-danger mb-0">
-                                            Data Belum Tersedia!
-                                        </div>
-                                    }
-                                />
+                               {loading ? (
+                                     <div class="spinner">
+                                     <div class="spinner-border"></div>
+                                     <img src="/icons/Group 1146.png" alt="Icon" class="icon"></img>
+                                   </div>
+                                   
+                                        
+                                    ) : (
+                                        <DataTable
+                                            columns={columns}
+                                            data={filteredData}
+                                            pagination
+                                            paginationPerPage={10}
+                                            paginationRowsPerPageOptions={[10, 15, 20]}
+                                            highlightOnHover
+                                            customStyles={customStyles}
+                                            noDataComponent={
+                                                <div className="alert alert-danger mb-0">
+                                                    Data Belum Tersedia!
+                                                </div>
+                                            }
+                                        />
+                                    )}
                             </div>
                         </div>
                     </div>

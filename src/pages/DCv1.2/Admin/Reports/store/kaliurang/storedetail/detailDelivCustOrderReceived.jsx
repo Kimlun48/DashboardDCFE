@@ -16,6 +16,7 @@ function KaliurangDetailDelivCustOrderReceived ()
     const { formatDate } = useFormatDate();
 
     const fetchData = async () => {
+        setLoading(true);
         try {
             const response = await Api.get('api/kaliurangdelivcusstoreorderreceived');
             const data = response.data.data; 
@@ -35,18 +36,18 @@ function KaliurangDetailDelivCustOrderReceived ()
     }, []);
 
     useEffect(() => {
-        if (Array.isArray(detailitrin)) { // Ensure detailbinin is an array
+        if (Array.isArray(detailitrin)) { // Ensure detailitrin is an array
             const lowercasedSearch = search.toLowerCase();
             const filtered = detailitrin.filter(item =>
-                item.COMMENTS.toLowerCase().includes(lowercasedSearch) ||
-                // item.NODOKUMEN.toLowerCase().includes(lowercasedSearch) ||
+                (item.COMMENTS?.toLowerCase().includes(lowercasedSearch) ?? false) ||
+                item.NODOKUMEN?.toLowerCase().includes(lowercasedSearch) ||
                 item.ITEMNAME.toLowerCase().includes(lowercasedSearch) ||
                 item.UOM.toLowerCase().includes(lowercasedSearch) ||
-                item.CARDNAME.toLowerCase().includes(lowercasedSearch) ||
-                item.COMMENTS.toLowerCase().includes(lowercasedSearch) 
+                item.CARDNAME.toLowerCase().includes(lowercasedSearch)
             );
             setFilteredData(filtered);
         }
+        
     }, [search, detailitrin]);
 
     const columns = [
@@ -55,11 +56,16 @@ function KaliurangDetailDelivCustOrderReceived ()
         { name: 'DOC DATE', selector: row => row.DOCDATE ? formatDate(row.DOCDATE) : 'No Data', sortable: true, width: '150px' },
         { name: 'DEADLINE', selector:row => row.DEADLINE_DATE ? formatDate(row.DEADLINE_DATE) : 'No Data', sortable: true ,width: '150px'},
         { name: 'CARD NAME', selector: row => row.CARDNAME, sortable: true, width:'150px'},
-        { name: 'COMMENTS', selector: row => row.COMMENTS, sortable: true, width: '350px'},
+        //for null
+        { 
+            name: 'COMMENTS', 
+            selector: row => row.COMMENTS ?? 'No Data', 
+            sortable: true, 
+            width: '350px' 
+          },
         { name: 'ITEM CODE', selector: row => row.ITEMCODE, sortable: true, width: '150px'},
         { name: 'ITEM NAME', selector: row => row.ITEMNAME, sortable: true, width: '450px'},
         { name: 'QTY', selector: row => row.QTY, sortable: true},
-       
         { name: 'DELIVERED', selector: row => row.DELIVERED, sortable: true, width: '150px'},
         { name: 'OPEN', selector: row => row.OPEN, sortable: true},
         { name: 'RELEASED', selector: row => row.RELEASED, sortable: true, width: '150px'},
@@ -112,25 +118,29 @@ function KaliurangDetailDelivCustOrderReceived ()
                                     value={search}
                                     onChange={e => setSearch(e.target.value)}
                                 />
-                                {error && (
-                                    <div className="alert alert-danger">
-                                        {error}
-                                    </div>
-                                )}
-                                <DataTable
-                                    columns={columns}
-                                    data={filteredData}
-                                    pagination
-                                    paginationPerPage={10}
-                                    paginationRowsPerPageOptions={[10, 15, 20, 25]}
-                                    highlightOnHover
-                                    customStyles={customStyles}
-                                    noDataComponent={
-                                        <div className="alert alert-danger mb-0">
-                                            Data Belum Tersedia!
-                                        </div>
-                                    }
-                                />
+                                {loading ? (
+                                     <div class="spinner">
+                                     <div class="spinner-border"></div>
+                                     <img src="/icons/Group 1146.png" alt="Icon" class="icon"></img>
+                                   </div>
+                                   
+                                        
+                                    ) : (
+                                        <DataTable
+                                            columns={columns}
+                                            data={filteredData}
+                                            pagination
+                                            paginationPerPage={10}
+                                            paginationRowsPerPageOptions={[10, 15, 20]}
+                                            highlightOnHover
+                                            customStyles={customStyles}
+                                            noDataComponent={
+                                                <div className="alert alert-danger mb-0">
+                                                    Data Belum Tersedia!
+                                                </div>
+                                            }
+                                        />
+                                    )}
                             </div>
                         </div>
                     </div>
