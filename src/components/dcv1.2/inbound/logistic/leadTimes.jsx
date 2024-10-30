@@ -221,15 +221,32 @@ function GenerateLeadTimes() {
         { name: 'Times', selector: row => row.jenis_jam, sortable: true, width: '150px' },
         // { name: 'Status', selector: row => row.status ?? 'No Data', sortable: true },  
         { name: 'Branch', selector: row => row.branch ?? 'No Data', sortable: true, width: '300px' },
-        {
+        
+        hasPermission('jobtask.action') && {
             name: 'Actions',
             cell: row => (
                 <>
-                   {hasPermission('jobtask.edit') &&  <button className="btn btn-primary btn-sm" onClick={() => handleEdit(row)}>Edit</button>}
-                   {hasPermission('jobtask.delete') &&  <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(row.id)}>Delete</button>}
+                    {hasPermission('jobtask.edit') && (
+                        <button 
+                            className="btn btn-primary btn-sm" 
+                            onClick={() => handleEdit(row)}
+                        >
+                            Edit
+                        </button>
+                    )}
+                    {hasPermission('jobtask.delete') && (
+                        <button 
+                            className="btn btn-danger btn-sm ms-2" 
+                            onClick={() => handleDelete(row.id)}
+                        >
+                            Delete
+                        </button>
+                    )}
                 </>
-            ),width: '250px'
+            ),
+            width: '250px'
         }
+        
     ];
   
 
