@@ -267,13 +267,16 @@ function GenerateLeadTimes() {
                     <div className="col-md-12">
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-body">
+                                {hasPermission('leadtime.excel') &&
                                 <div className="card-excel">
+                                
                                     <div className="icon" onClick={exportToExcel}>
                                         <ContentCopyIcon />
                                         <br />
                                         To Excels
                                     </div>
                                 </div>
+                                }
                                 {hasPermission('jobtask.create') &&  <button className="btn btn-primary mb-3" onClick={handleGenerate}>Generate Jobs Task</button>}
                                 <input
                                     type="text"
@@ -304,12 +307,11 @@ function GenerateLeadTimes() {
             </div>
 
             <Modal show={showModal} onHide={() => setShowModal(false)}>
-    <Modal.Header closeButton>
-        <Modal.Title>{modalType === 'generate' ? 'Generate Lead Times' : 'Edit Lead Times'}</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-        <Form>
-           
+            <Modal.Header closeButton>
+            <Modal.Title>{modalType === 'generate' ? 'Generate Lead Times' : 'Edit Lead Times'}</Modal.Title>
+            </Modal.Header>
+             <Modal.Body>
+             <Form>
 
            
             <Form.Group controlId="jenis_aktivitas">
@@ -322,6 +324,9 @@ function GenerateLeadTimes() {
                 >
                     <option value="">Select Activity</option>
                     <option value="ON LOAD">ON LOAD</option>
+                    {modalType !== 'generate' && (
+                        <option value="BREAKTIME">BREAKTIME</option>
+                    )}
                    
                 </Form.Control>
             </Form.Group>
@@ -340,26 +345,22 @@ function GenerateLeadTimes() {
                     <option value="PER_15MNT">PER_15MNT</option>
                 </Form.Control>
             </Form.Group>
-
-          
-
-          
-    <Form.Group controlId="branch">
-        <Form.Label>Branch</Form.Label>
-        <Form.Control
-        as="select"
-        value={currentData.branch}
-        onChange={(e) => setCurrentData({ ...currentData, branch: e.target.value })}
-        >
-         <option value="" disabled>Choose Nama Branch</option>
-         {branch.map(option => <option key={option.PrcCode} value={option.PrcName}>
+             <Form.Group controlId="branch">
+                 <Form.Label>Branch</Form.Label>
+                 <Form.Control
+                 as="select"
+                value={currentData.branch}
+                     onChange={(e) => setCurrentData({ ...currentData, branch: e.target.value })}
+            >
+                     <option value="" disabled>Choose Nama Branch</option>
+                {branch.map(option => <option key={option.PrcCode} value={option.PrcName}>
             {option.PrcName}
-        </option>)}
-        </Form.Control>
-        </Form.Group>
-        </Form>
-    </Modal.Body>
-    <Modal.Footer>
+            </option>)}
+            </Form.Control>
+            </Form.Group>
+            </Form>
+        </Modal.Body>
+        <Modal.Footer>
         <Button variant="secondary" onClick={() => setShowModal(false)}>
             Cancel
         </Button>

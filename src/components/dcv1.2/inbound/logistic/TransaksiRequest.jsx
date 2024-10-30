@@ -171,7 +171,7 @@ function TransaksiRequest() {
         try {
             const response = await Api.get(`api/transaksilogdoc/${id_req}`);
            // console.log('Response data:', response.data); // Cek struktur data
-            setTransaksiLogDoc(response.data.data[0].logdoc); // Simpan logdoc ke state
+            setTransaksiLogDoc(response.data.data[0].logdoc); 
             setShowModal(true);
         } catch (error) {
             console.error('Error fetching request transaksi data:', error);
@@ -184,10 +184,7 @@ function TransaksiRequest() {
     }, [transaksiLogDoc]);
 
     const exportToExcelDetail = () => {
-        // Buat workbook baru
         const wb = XLSX.utils.book_new();
-        
-        // Buat data untuk worksheet
         const wsData = [
           ['Driver', 'ID Booking', 'No PO', 'No SJ', 'Item Code', 'Item Name', 'Qty', 'UoM', 'Remarks'], // Header
           ...transaksiLogDoc.map(logdoc => [
@@ -203,11 +200,10 @@ function TransaksiRequest() {
           ]),
         ];
         
-        // Buat worksheet dari data
+       
         const ws = XLSX.utils.aoa_to_sheet(wsData);
         XLSX.utils.book_append_sheet(wb, ws, 'Doc Upload vendor');
     
-        // Ekspor workbook ke file Excel
         XLSX.writeFile(wb, 'Doc Upload vendor.xlsx');
       };
     
@@ -219,6 +215,7 @@ function TransaksiRequest() {
                     <div className="col-md-12">
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-body">
+                                {hasPermission('transaksi.excel')&&
                                 <div className="card-excel">
                                     <div className="icon" onClick={exportToExcel}>
                                         <ContentCopyIcon />
@@ -226,6 +223,7 @@ function TransaksiRequest() {
                                         To Excel
                                     </div>
                                 </div>
+                                }
                                 {/* <input
                                     type="text"
                                     placeholder="Search"
@@ -241,7 +239,7 @@ function TransaksiRequest() {
                                 className="form-control mb-3"
                                 /> */}
                                
-            <div className="d-flex align-items-center mb-3">
+                <div className="d-flex align-items-center mb-3">
                 <input 
                     type="text" 
                     placeholder="Search..." 

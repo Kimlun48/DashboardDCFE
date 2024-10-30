@@ -303,6 +303,7 @@ function Transports() {
                     <div className="col-md-12">
                         <div className="card border-0 rounded shadow-sm border-top-success">
                             <div className="card-body">
+                                {hasPermission('transport.excel')&&
                                 <div className="card-excel">
                                     <div className="icon" onClick={exportToExcel}>
                                         <ContentCopyIcon />
@@ -310,6 +311,7 @@ function Transports() {
                                         To Excel
                                     </div>
                                 </div>
+                                }
                                 {hasPermission('transport.create') && <button className="btn btn-primary mb-3" onClick={handleAdd}>Add Transport</button>}
                                 <input
                                     type="text"
