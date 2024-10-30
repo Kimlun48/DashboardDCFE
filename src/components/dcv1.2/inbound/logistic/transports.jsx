@@ -225,7 +225,7 @@ function Transports() {
         { name: 'Slot', selector: row => row.slot_Kendaraan ?? 'No Data', sortable: true },
         { name: 'Type Pallet', selector: row => row.tipe_pallet ?? 'No Data', sortable: true },
        
-        {
+        hasPermission('transport.action') && {
             name: 'Actions',
             cell: row => (
                 <>
